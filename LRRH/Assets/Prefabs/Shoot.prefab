@@ -26,9 +26,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 403126}
   - 212: {fileID: 21249192}
-  - 60: {fileID: 6060228}
   - 95: {fileID: 9589372}
   - 114: {fileID: 11443864}
+  - 61: {fileID: 6178856}
   m_Layer: 0
   m_Name: shot_sprite
   m_TagString: Untagged
@@ -78,8 +78,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
---- !u!60 &6060228
-PolygonCollider2D:
+--- !u!61 &6178856
+BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -90,18 +90,8 @@ PolygonCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
-  m_Points:
-    m_Paths:
-    - - {x: 16.5, y: 27.5}
-      - {x: -16.5, y: 27.5}
-      - {x: -36.5, y: 9.5}
-      - {x: -36.5, y: -7.5}
-      - {x: -25.5, y: -20.5}
-      - {x: -16.5, y: -27.5}
-      - {x: 15.5, y: -27.5}
-      - {x: 36.5, y: -8.5}
-      - {x: 36.5, y: 7.5}
-      - {x: 25.5, y: 19.5}
+  serializedVersion: 2
+  m_Size: {x: 24.333334, y: 18.333334}
 --- !u!95 &9589372
 Animator:
   serializedVersion: 3

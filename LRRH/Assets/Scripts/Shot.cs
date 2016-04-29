@@ -16,15 +16,20 @@ public class Shot : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (this.enabled == true)
 		transform.Translate(moveVector * Time.deltaTime);
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
-		anim.SetTrigger(collideHash);
-		GameObject collider = other.gameObject;
-		if(collider.GetComponentInParent<Player>() != null && other is BoxCollider2D == true){
-			collider.GetComponentInParent<Player>().Hit(hitDamage);
-		};
+        if (this.enabled) {
+            anim.SetTrigger(collideHash);
+            GameObject collider = other.gameObject;
+            if (collider.GetComponentInParent<Player>() != null && other is BoxCollider2D == true)
+            {
+                collider.GetComponentInParent<Player>().Hit(hitDamage);
+                this.enabled = false;
+            };
+        }
 	}
 
 }
