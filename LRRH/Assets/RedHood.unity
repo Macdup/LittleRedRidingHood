@@ -4764,7 +4764,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 105257337}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4054.9, y: 1260.9, z: 0}
+  m_LocalPosition: {x: 607, y: 1298, z: 0}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children:
   - {fileID: 921543268}
@@ -4784,8 +4784,8 @@ MonoBehaviour:
   player: {fileID: 1863661017}
   life: 100
   ShootPrefab: {fileID: 174666, guid: 90b6d05f710ec70409bdbcd7a3aeb4ed, type: 2}
-  ShootSpeed: 30
-  ShootCoolDown: 3
+  ShootSpeed: 100
+  ShootCoolDown: 4
 --- !u!1 &106039406
 GameObject:
   m_ObjectHideFlags: 0
@@ -32500,6 +32500,7 @@ GameObject:
   - 4: {fileID: 921543268}
   - 212: {fileID: 921543270}
   - 95: {fileID: 921543269}
+  - 114: {fileID: 921543271}
   m_Layer: 0
   m_Name: mushroomSprite
   m_TagString: Untagged
@@ -32566,6 +32567,17 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!114 &921543271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 921543267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f9aa03c70d2c1944a295154296231b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &922473869
 GameObject:
   m_ObjectHideFlags: 0
@@ -70629,7 +70641,7 @@ MonoBehaviour:
   JumpSpeed: 600
   MinJumpSpeed: 60
   TouchDetectionRadius: 0.2
-  Health: 2000
+  Health: 100
   BSMoveLeft: {fileID: 1955166043}
   BSMoveRight: {fileID: 840676216}
   BSJump: {fileID: 934247250}
