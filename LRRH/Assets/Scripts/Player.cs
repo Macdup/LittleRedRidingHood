@@ -281,5 +281,9 @@ public class Player : MonoBehaviour {
         if(isIdle == false)
             idleTimer = 0;
     }
+
+    void OnTriggerEnter2D(Collider2D other) {
+        Hit(20);
+    }
 		
 }

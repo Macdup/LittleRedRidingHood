@@ -3,9 +3,6 @@ using System.Collections;
 
 public class mushroomScript : MonoBehaviour {
 
-    public GameObject player;
-    public float life;
-
     public GameObject ShootPrefab;
     public float ShootSpeed = 10.0f;
     public float ShootCoolDown = 30f;
