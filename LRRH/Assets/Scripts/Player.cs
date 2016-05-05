@@ -30,7 +30,7 @@ public class Player : MonoBehaviour {
 	public float 		ShootSpeed = 1000.0f;
 	public float 		ShootCoolDown = 0.3f;
 
-	public float TouchDetectionRadius = 0.2f;
+	public float 		TouchDetectionRadius = 0.2f;
 
 
 
@@ -52,8 +52,8 @@ public class Player : MonoBehaviour {
 	private bool 		_shoot = false;
 	private LayerMask 	_wallsMask;
 	private float 		_idleTimer = 0.0f;
-	public bool _frontHitOn = false;
-	public float _moveDeb;
+	public bool 		_frontHitOn = false;
+	public float 		_moveDeb;
 
 
 
@@ -178,7 +178,13 @@ public class Player : MonoBehaviour {
 
 		// classic move
 		if (Mathf.Abs (move) > 0) {
-			m_RigidBody2D.velocity = new Vector2 (move * MoveSpeed, m_RigidBody2D.velocity.y);
+			if (!m_FrontTouched) {
+				m_RigidBody2D.velocity = new Vector2 (move * MoveSpeed, m_RigidBody2D.velocity.y);
+			} else if (m_FacingRight && move > 0) {
+				m_RigidBody2D.velocity = new Vector2 (move * MoveSpeed, m_RigidBody2D.velocity.y);
+			} else if (!m_FacingRight && move < 0) {
+				m_RigidBody2D.velocity = new Vector2 (move * MoveSpeed, m_RigidBody2D.velocity.y);
+			}
 		}
 
 		if(m_RigidBody2D.velocity.x > 0  && m_FacingRight)

@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class lifeBar : MonoBehaviour {
+public class LifeBar : MonoBehaviour {
 
 	public void OnEnable ()
 	{
