@@ -10984,6 +10984,10 @@ BoxCollider2D:
   m_Offset: {x: 15, y: 15}
   serializedVersion: 2
   m_Size: {x: 30, y: 30}
+--- !u!4 &285941507 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 458450, guid: 6e2a6d1ce993848448e235a624383fe6, type: 2}
+  m_PrefabInternal: {fileID: 1868715869}
 --- !u!1 &288568097
 GameObject:
   m_ObjectHideFlags: 0
@@ -16102,6 +16106,34 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!1 &431656517
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 431656518}
+  m_Layer: 0
+  m_Name: Mushrooms
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &431656518
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 431656517}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 2057571917}
+  m_Father: {fileID: 817609983}
+  m_RootOrder: 1
 --- !u!1 &432535783
 GameObject:
   m_ObjectHideFlags: 0
@@ -28537,6 +28569,35 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!1 &817609982
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 817609983}
+  m_Layer: 0
+  m_Name: Enemies
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &817609983
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 817609982}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1913.834, y: 1304.8987, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1244382859}
+  - {fileID: 431656518}
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
 --- !u!1 &819833433
 GameObject:
   m_ObjectHideFlags: 0
@@ -28972,15 +29033,15 @@ Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 431656518}
     m_Modifications:
     - target: {fileID: 429046, guid: cd3ce16239deb2b47b29e71ce30cffaf, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 4063
+      value: 2149.166
       objectReference: {fileID: 0}
     - target: {fileID: 429046, guid: cd3ce16239deb2b47b29e71ce30cffaf, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 1230
+      value: -74.89868
       objectReference: {fileID: 0}
     - target: {fileID: 429046, guid: cd3ce16239deb2b47b29e71ce30cffaf, type: 2}
       propertyPath: m_LocalPosition.z
@@ -29004,11 +29065,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 429046, guid: cd3ce16239deb2b47b29e71ce30cffaf, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6140394, guid: cd3ce16239deb2b47b29e71ce30cffaf, type: 2}
       propertyPath: m_IsTrigger
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 143578, guid: cd3ce16239deb2b47b29e71ce30cffaf, type: 2}
+      propertyPath: m_Name
+      value: mushroom 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cd3ce16239deb2b47b29e71ce30cffaf, type: 2}
@@ -40051,15 +40116,15 @@ Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1244382859}
     m_Modifications:
     - target: {fileID: 458450, guid: 6e2a6d1ce993848448e235a624383fe6, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 5033
+      value: 3119.166
       objectReference: {fileID: 0}
     - target: {fileID: 458450, guid: 6e2a6d1ce993848448e235a624383fe6, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 1471
+      value: 166.10132
       objectReference: {fileID: 0}
     - target: {fileID: 458450, guid: 6e2a6d1ce993848448e235a624383fe6, type: 2}
       propertyPath: m_LocalPosition.z
@@ -40083,7 +40148,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 458450, guid: 6e2a6d1ce993848448e235a624383fe6, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 460258, guid: 6e2a6d1ce993848448e235a624383fe6, type: 2}
       propertyPath: m_LocalPosition.x
@@ -40092,6 +40157,10 @@ Prefab:
     - target: {fileID: 434022, guid: 6e2a6d1ce993848448e235a624383fe6, type: 2}
       propertyPath: m_LocalPosition.x
       value: 140
+      objectReference: {fileID: 0}
+    - target: {fileID: 114252, guid: 6e2a6d1ce993848448e235a624383fe6, type: 2}
+      propertyPath: m_Name
+      value: boar 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6e2a6d1ce993848448e235a624383fe6, type: 2}
@@ -40528,6 +40597,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 445cac8352fc7a14cb15e38235592548, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fullSize: 0
 --- !u!1 &1114101831
 GameObject:
   m_ObjectHideFlags: 0
@@ -46066,6 +46136,35 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!1 &1244382858
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1244382859}
+  m_Layer: 0
+  m_Name: Boars
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1244382859
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1244382858}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 285941507}
+  - {fileID: 1252562138}
+  m_Father: {fileID: 817609983}
+  m_RootOrder: 0
 --- !u!1 &1244899666
 GameObject:
   m_ObjectHideFlags: 0
@@ -46490,6 +46589,10 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!4 &1252562138 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 458450, guid: 6e2a6d1ce993848448e235a624383fe6, type: 2}
+  m_PrefabInternal: {fileID: 1103611311}
 --- !u!1 &1253586135
 GameObject:
   m_ObjectHideFlags: 0
@@ -70750,15 +70853,15 @@ Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1244382859}
     m_Modifications:
     - target: {fileID: 458450, guid: 6e2a6d1ce993848448e235a624383fe6, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 1882
+      value: -31.833984
       objectReference: {fileID: 0}
     - target: {fileID: 458450, guid: 6e2a6d1ce993848448e235a624383fe6, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 1288.3
+      value: -16.598633
       objectReference: {fileID: 0}
     - target: {fileID: 458450, guid: 6e2a6d1ce993848448e235a624383fe6, type: 2}
       propertyPath: m_LocalPosition.z
@@ -70782,7 +70885,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 458450, guid: 6e2a6d1ce993848448e235a624383fe6, type: 2}
       propertyPath: m_RootOrder
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 460258, guid: 6e2a6d1ce993848448e235a624383fe6, type: 2}
       propertyPath: m_LocalPosition.x
@@ -70794,7 +70897,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114252, guid: 6e2a6d1ce993848448e235a624383fe6, type: 2}
       propertyPath: m_Name
-      value: boar (1)
+      value: boar 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6e2a6d1ce993848448e235a624383fe6, type: 2}
@@ -78637,6 +78740,10 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!4 &2057571917 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 429046, guid: cd3ce16239deb2b47b29e71ce30cffaf, type: 2}
+  m_PrefabInternal: {fileID: 841304299}
 --- !u!1 &2058449707
 GameObject:
   m_ObjectHideFlags: 0

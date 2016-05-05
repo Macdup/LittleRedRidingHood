@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+using AssemblyCSharp;
 
-public class boar : MonoBehaviour {
+
+public class boar : Enemy {
     Animator _anim;
     int shotHash = Animator.StringToHash("shot");
 
@@ -15,29 +17,28 @@ public class boar : MonoBehaviour {
     private bool isFacingRight;
 
     // Use this for initialization
-    void Start()
+    public override void Start()
     {
         _anim = GetComponentInChildren<Animator>();
         A = pointA.transform.position;
         B = pointB.transform.position;
         target = A;
         transform.localScale = (new Vector3(1, 1, 1));
+
+		base.Start();
     }
 
     // Update is called once per frame
-    void Update()
+	public override void Update()
     {
         transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
 
         if (transform.position == Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime))
             changeDirection();
+
+		base.Update ();
     }
-
-    void hit()
-    {
-
-    }
-
+		
     void changeDirection() {
         if (target == A)
            {
@@ -50,11 +51,5 @@ public class boar : MonoBehaviour {
                 transform.localScale = (new Vector3(1, 1, 1));
             }
     }
-
-
-    void death()
-    {
-
-    }
-
+		
 }
