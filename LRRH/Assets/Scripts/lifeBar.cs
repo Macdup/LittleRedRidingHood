@@ -6,7 +6,7 @@ public class lifeBar : MonoBehaviour {
 
 	public void OnEnable ()
 	{
-		Events.instance.AddListener<PlayerHit>(onPlayerHit);
+		Events.instance.AddListener<playerHit>(onPlayerHit);
 	}
 
 	int fullSize; 
@@ -23,11 +23,11 @@ public class lifeBar : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void onPlayerHit (PlayerHit e) {
-		UpdateBarSize(e.Health);
+	void onPlayerHit (playerHit e) {
+		updateBarSize(e.health);
 	}
 
-	void UpdateBarSize(float health){
+	void updateBarSize(int health){
 		Vector2 actualSize = this.GetComponent<RectTransform>().sizeDelta;
         Debug.Log(actualSize);
         Debug.Log(health);
