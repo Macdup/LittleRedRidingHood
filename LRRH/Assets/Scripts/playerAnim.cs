@@ -20,6 +20,6 @@ public class playerAnim : MonoBehaviour {
 	}
 
     public void idleEnd() {
-        playerScript.setIdle(false);
+        playerScript.SetIdle(false);
     }
 }
