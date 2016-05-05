@@ -52,7 +52,8 @@ public class Player : MonoBehaviour {
 	private bool 		_shoot = false;
 	private LayerMask 	_wallsMask;
 	private float 		_idleTimer = 0.0f;
-
+	public bool _frontHitOn = false;
+	public float _moveDeb;
 
 
 
@@ -93,11 +94,11 @@ public class Player : MonoBehaviour {
 
         if (m_RigidBody2D.velocity.x != 0 || m_RigidBody2D.velocity.y != 0)
         {
-            setIdle(false);
+            SetIdle(false);
         }
 
         if (_idleTimer >= 2) {
-            setIdle(true);
+            SetIdle(true);
         }
 
 		isJumpDown = Input.GetButtonDown ("Jump") || (BSJump.CurrentState == ButtonScript.ButtonState.Down);
@@ -146,7 +147,7 @@ public class Player : MonoBehaviour {
 			Invoke("ResetShoot", ShootCoolDown);
 		}
 
-		moveDeb = Mathf.Abs(move);
+		_moveDeb = Mathf.Abs(move);
 
 		// Evalute states
 		m_BottomTouched = m_BottoBox.IsTouchingLayers (_wallsMask) || m_BottomLeft.IsTouchingLayers (_wallsMask) || m_BottomRight.IsTouchingLayers (_wallsMask);
@@ -176,8 +177,9 @@ public class Player : MonoBehaviour {
 
 
 		// classic move
-		if(Mathf.Abs(move) > 0)
+		if (Mathf.Abs (move) > 0) {
 			m_RigidBody2D.velocity = new Vector2 (move * MoveSpeed, m_RigidBody2D.velocity.y);
+		}
 
 		if(m_RigidBody2D.velocity.x > 0  && m_FacingRight)
 			Flip ();				
@@ -208,11 +210,7 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-
-	public bool frontHitOn = false;
-	public float moveDeb;
-
-    public void setIdle(bool isIdle) {
+    public void SetIdle(bool isIdle) {
         _anim.SetBool(idleHash,isIdle);
         if(isIdle == false)
             _idleTimer = 0;
