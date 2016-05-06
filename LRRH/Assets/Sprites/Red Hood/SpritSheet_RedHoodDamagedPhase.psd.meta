@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: eae3344b7ccc0f744b2e5e190768cd55
-timeCreated: 1461697184
+guid: 0f999554cc9d8634b89ad8327710f830
+timeCreated: 1462544989
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: SpriteSheet_RedHoodStandbyPose_0
-    21300002: SpriteSheet_RedHoodStandbyPose_1
-    21300004: SpriteSheet_RedHoodStandbyPose_2
-    21300006: SpriteSheet_RedHoodStandbyPose_3
+    21300000: SpritSheet_RedHoodDamagedPhase_0
+    21300002: SpritSheet_RedHoodDamagedPhase_1
+    21300004: SpritSheet_RedHoodDamagedPhase_2
+    21300006: SpritSheet_RedHoodDamagedPhase_3
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -45,7 +45,7 @@ TextureImporter:
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 7
+  alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 1
@@ -54,50 +54,82 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: SpriteSheet_RedHoodStandbyPose_0
+    - name: SpritSheet_RedHoodDamagedPhase_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 29
-        height: 52
+        width: 38
+        height: 45
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-    - name: SpriteSheet_RedHoodStandbyPose_1
+      outline:
+      - - {x: -6, y: 45}
+        - {x: -19, y: 31}
+        - {x: -19, y: 13}
+        - {x: -9, y: 0}
+        - {x: 10, y: 0}
+        - {x: 18, y: 4}
+        - {x: 19, y: 7}
+        - {x: 19, y: 36}
+        - {x: 17, y: 45}
+    - name: SpritSheet_RedHoodDamagedPhase_1
       rect:
         serializedVersion: 2
-        x: 29
+        x: 38
         y: 0
-        width: 29
-        height: 52
+        width: 38
+        height: 45
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-    - name: SpriteSheet_RedHoodStandbyPose_2
+      outline:
+      - - {x: -6, y: 45}
+        - {x: -19, y: 31}
+        - {x: -19, y: 13}
+        - {x: -9, y: 0}
+        - {x: 10, y: 0}
+        - {x: 18, y: 4}
+        - {x: 19, y: 7}
+        - {x: 19, y: 36}
+        - {x: 17, y: 45}
+    - name: SpritSheet_RedHoodDamagedPhase_2
       rect:
         serializedVersion: 2
-        x: 58
+        x: 76
         y: 0
-        width: 29
-        height: 52
+        width: 38
+        height: 45
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-    - name: SpriteSheet_RedHoodStandbyPose_3
+      outline:
+      - - {x: -7, y: 45}
+        - {x: -19, y: 34}
+        - {x: -19, y: 15}
+        - {x: -12, y: 1}
+        - {x: -9, y: 0}
+        - {x: 19, y: 0}
+        - {x: 19, y: 45}
+    - name: SpritSheet_RedHoodDamagedPhase_3
       rect:
         serializedVersion: 2
-        x: 87
+        x: 114
         y: 0
-        width: 29
-        height: 52
+        width: 38
+        height: 45
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
+      outline:
+      - - {x: -7, y: 45}
+        - {x: -19, y: 34}
+        - {x: -19, y: 15}
+        - {x: -12, y: 1}
+        - {x: -9, y: 0}
+        - {x: 19, y: 0}
+        - {x: 19, y: 45}
     outline: []
   spritePackingTag: 
   userData: 
