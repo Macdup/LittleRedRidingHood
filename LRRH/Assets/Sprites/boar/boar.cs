@@ -31,10 +31,13 @@ public class boar : Enemy {
     // Update is called once per frame
 	public override void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
+		if (!m_Dead) {
+			
+			transform.position = Vector3.MoveTowards (transform.position, target, speed * Time.deltaTime);
 
-        if (transform.position == Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime))
-            changeDirection();
+			if (transform.position == Vector3.MoveTowards (transform.position, target, speed * Time.deltaTime))
+				changeDirection ();
+		}
 
 		base.Update ();
     }

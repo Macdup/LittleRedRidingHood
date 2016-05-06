@@ -29,8 +29,8 @@ public class LifeBar : MonoBehaviour {
 
 	void UpdateBarSize(float health){
 		Vector2 actualSize = this.GetComponent<RectTransform>().sizeDelta;
-        Debug.Log(actualSize);
-        Debug.Log(health);
+        //Debug.Log(actualSize);
+        //Debug.Log(health);
 		actualSize.x = health * fullSize / 100;
 		this.GetComponent<RectTransform>().sizeDelta = actualSize;
 	}

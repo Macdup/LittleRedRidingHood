@@ -1,13 +1,15 @@
 fileFormatVersion: 2
-guid: eae3344b7ccc0f744b2e5e190768cd55
-timeCreated: 1461697184
+guid: a7ea0e9953731114aa8788783d0aae92
+timeCreated: 1462539359
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: SpriteSheet_RedHoodStandbyPose_0
-    21300002: SpriteSheet_RedHoodStandbyPose_1
-    21300004: SpriteSheet_RedHoodStandbyPose_2
-    21300006: SpriteSheet_RedHoodStandbyPose_3
+    21300000: SpriteSheet_LittleShroom_attackPhase_0
+    21300002: SpriteSheet_LittleShroom_attackPhase_1
+    21300004: SpriteSheet_LittleShroom_attackPhase_2
+    21300006: SpriteSheet_LittleShroom_attackPhase_3
+    21300008: SpriteSheet_LittleShroom_attackPhase_4
+    21300010: SpriteSheet_LittleShroom_attackPhase_5
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -45,7 +47,7 @@ TextureImporter:
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 7
+  alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 1
@@ -54,46 +56,68 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: SpriteSheet_RedHoodStandbyPose_0
+    - name: SpriteSheet_LittleShroom_attackPhase_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 29
+        width: 37
+        height: 29
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: SpriteSheet_LittleShroom_attackPhase_1
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 29
+        width: 37
+        height: 29
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: SpriteSheet_LittleShroom_attackPhase_2
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 29
+        width: 37
+        height: 29
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: SpriteSheet_LittleShroom_attackPhase_3
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 29
-        height: 52
+        width: 37
+        height: 29
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: SpriteSheet_RedHoodStandbyPose_1
+    - name: SpriteSheet_LittleShroom_attackPhase_4
       rect:
         serializedVersion: 2
-        x: 29
+        x: 37
         y: 0
-        width: 29
-        height: 52
+        width: 37
+        height: 29
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: SpriteSheet_RedHoodStandbyPose_2
+    - name: SpriteSheet_LittleShroom_attackPhase_5
       rect:
         serializedVersion: 2
-        x: 58
+        x: 74
         y: 0
-        width: 29
-        height: 52
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-    - name: SpriteSheet_RedHoodStandbyPose_3
-      rect:
-        serializedVersion: 2
-        x: 87
-        y: 0
-        width: 29
-        height: 52
+        width: 37
+        height: 29
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

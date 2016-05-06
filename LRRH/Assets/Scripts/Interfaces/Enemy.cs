@@ -31,7 +31,7 @@ namespace AssemblyCSharp
 		virtual public void Update() {
 			if (m_Dead) {
 				if (_deathElapse <= m_DeathDuration) {
-					_deathElapse -= Time.deltaTime;
+					_deathElapse += Time.deltaTime;
 					Color c = m_SpriteRenderer.color;
 					c.a = 1.0f - (_deathElapse / m_DeathDuration);
 					m_SpriteRenderer.color = c;
@@ -49,6 +49,15 @@ namespace AssemblyCSharp
 
 		virtual public void Death() {
 			m_Dead = true;
+			Collider2D[] colliders = this.GetComponents<Collider2D> ();
+			foreach (Collider2D c in colliders) {
+				c.enabled = false;
+			}
+
+			colliders = this.GetComponentsInChildren<Collider2D> ();
+			foreach (Collider2D c in colliders) {
+				c.enabled = false;
+			}
 		}
 
 	}

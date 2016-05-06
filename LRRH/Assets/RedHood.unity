@@ -29037,7 +29037,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 429046, guid: cd3ce16239deb2b47b29e71ce30cffaf, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 2149.166
+      value: 2150.1
       objectReference: {fileID: 0}
     - target: {fileID: 429046, guid: cd3ce16239deb2b47b29e71ce30cffaf, type: 2}
       propertyPath: m_LocalPosition.y
@@ -29074,6 +29074,27 @@ Prefab:
     - target: {fileID: 143578, guid: cd3ce16239deb2b47b29e71ce30cffaf, type: 2}
       propertyPath: m_Name
       value: mushroom 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 21263136, guid: cd3ce16239deb2b47b29e71ce30cffaf, type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a7ea0e9953731114aa8788783d0aae92,
+        type: 3}
+    - target: {fileID: 429046, guid: cd3ce16239deb2b47b29e71ce30cffaf, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 480464, guid: cd3ce16239deb2b47b29e71ce30cffaf, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -4.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6140394, guid: cd3ce16239deb2b47b29e71ce30cffaf, type: 2}
+      propertyPath: m_Offset.x
+      value: -2.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11490900, guid: cd3ce16239deb2b47b29e71ce30cffaf, type: 2}
+      propertyPath: ShootCoolDown
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cd3ce16239deb2b47b29e71ce30cffaf, type: 2}
@@ -40597,7 +40618,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 445cac8352fc7a14cb15e38235592548, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fullSize: 0
 --- !u!1 &1114101831
 GameObject:
   m_ObjectHideFlags: 0

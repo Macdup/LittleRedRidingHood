@@ -26,9 +26,9 @@ public class Player : MonoBehaviour {
 	public ButtonScript BSFireA;
 	public ButtonScript BSFireB;   
 
-	public GameObject 	ShootPrefab;
-	public float 		ShootSpeed = 1000.0f;
-	public float 		ShootCoolDown = 0.3f;
+	public GameObject 	Weapon;
+	//public float 		WeaponDuration = 1000.0f;
+	public float 		WeaponCoolDown = 0.3f;
 
 	public float 		TouchDetectionRadius = 0.2f;
 
@@ -49,7 +49,7 @@ public class Player : MonoBehaviour {
 	private bool 		_firstJump =  false;
 	private bool 		_firstJumpEnd =  false;
 	private bool 		_secondJump =  false;
-	private bool 		_shoot = false;
+	private bool 		_weapon = false;
 	private LayerMask 	_wallsMask;
 	private float 		_idleTimer = 0.0f;
 	public bool 		_frontHitOn = false;
@@ -139,12 +139,14 @@ public class Player : MonoBehaviour {
 		else
 			move = Input.GetAxis ("Horizontal");
 
-		if (!_shoot && (BSFireA.CurrentState == ButtonScript.ButtonState.Down /*|| Input.GetAxis("Fire1")==1*/)) {
-			_shoot = true;
-			GameObject shotInstance = (GameObject)Instantiate (ShootPrefab);
+		if (!_weapon && (BSFireA.CurrentState == ButtonScript.ButtonState.Down || Input.GetAxis("Fire1")==1)) {
+			_weapon = true;
+			Weapon.SetActive (true);
+			Invoke("ResetWeapon", WeaponCoolDown);
+			/*GameObject shotInstance = (GameObject)Instantiate (ShootPrefab);
 			shotInstance.GetComponent<Shot> ().moveVector = m_FacingRight ? new Vector2 (-ShootSpeed, 0) : new Vector2 (ShootSpeed, 0);
 			shotInstance.transform.position = m_FacingRight ? new Vector3(this.transform.position.x-100, this.transform.position.y + 150, this.transform.position.z) : new Vector3(this.transform.position.x+100, this.transform.position.y + 150, this.transform.position.z);
-			Invoke("ResetShoot", ShootCoolDown);
+			*/
 		}
 
 		_moveDeb = Mathf.Abs(move);
@@ -200,9 +202,10 @@ public class Player : MonoBehaviour {
 		transform.localScale = lScale;
 	}
 
-	void ResetShoot()
+	void ResetWeapon()
 	{
-		_shoot = false;
+		Weapon.SetActive (false);
+		_weapon = false;
 	}
 
 	public void Hit (float iDamageValue){
