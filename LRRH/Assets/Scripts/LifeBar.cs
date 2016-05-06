@@ -14,7 +14,7 @@ public class LifeBar : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		fullSize = (int)this.GetComponent<RectTransform>().sizeDelta.x;
-        Debug.Log(fullSize); 
+        //Debug.Log(fullSize); 
 	}
 	
 	// Update is called once per frame
