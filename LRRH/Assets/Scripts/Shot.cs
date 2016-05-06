@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Shot : MonoBehaviour {
 
+	public GameObject Source;
 	public Vector3 moveVector;
 	public int hitDamage;
 
@@ -21,6 +22,8 @@ public class Shot : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
+		if (other.gameObject == Source)
+			return;
         if (this.enabled) {
             anim.SetTrigger(collideHash);
             GameObject collider = other.gameObject;
