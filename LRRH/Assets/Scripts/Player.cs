@@ -230,6 +230,13 @@ public class Player : MonoBehaviour {
 		if (otherEnemy != null) {
 			Hit (otherEnemy.DamagePerHit);
 		}
+
+        CoinScript otherCoin = other.gameObject.GetComponent<CoinScript>();
+        if (otherCoin != null)
+        {
+            otherCoin.CoinAnim.destroy();
+        }
+        
     }
 		
 }
