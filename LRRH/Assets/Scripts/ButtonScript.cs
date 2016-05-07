@@ -22,7 +22,7 @@ public class ButtonScript : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
 	public void OnPointerUp (PointerEventData eventData) {
 		CurrentState = ButtonState.Up;
-		this.GetComponent<Image> ().color = new Color (1.0f, 1.0f, 1.0f, 1.0f);
+		this.GetComponent<Image> ().color = new Color (1.0f, 1.0f, 1.0f, 0.4f);
 	}
 	
 	// Update is called once per frame

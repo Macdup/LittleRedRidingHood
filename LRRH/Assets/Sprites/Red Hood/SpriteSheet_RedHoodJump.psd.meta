@@ -43,7 +43,7 @@ TextureImporter:
   textureFormat: -1
   maxTextureSize: 2048
   textureSettings:
-    filterMode: -1
+    filterMode: 0
     aniso: 16
     mipBias: -1
     wrapMode: 1
@@ -75,15 +75,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 14, y: 46}
-        - {x: -6, y: 46}
-        - {x: -21, y: 36}
-        - {x: -21, y: 11}
-        - {x: -13, y: 0}
-        - {x: 18, y: 0}
-        - {x: 19, y: 3}
-        - {x: 19, y: 39}
-        - {x: 17, y: 42}
+      - - {x: 8, y: 46}
+        - {x: -7, y: 46}
+        - {x: -21, y: 32}
+        - {x: -21, y: 9}
+        - {x: -14, y: 0}
+        - {x: 9, y: 0}
+        - {x: 19, y: 9}
+        - {x: 19, y: 38}
+        - {x: 18, y: 43}
     - name: SpriteSheet_RedHoodJump_1
       rect:
         serializedVersion: 2
@@ -95,15 +95,14 @@ TextureImporter:
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 15, y: 39}
-        - {x: -7, y: 39}
-        - {x: -20, y: 36}
-        - {x: -20, y: 9}
-        - {x: -11, y: 0}
-        - {x: 10, y: 0}
-        - {x: 18, y: 6}
-        - {x: 21, y: 9}
-        - {x: 21, y: 33}
+      - - {x: -15, y: 39}
+        - {x: -20, y: 38}
+        - {x: -20, y: 8}
+        - {x: -13, y: 0}
+        - {x: 14, y: 0}
+        - {x: 21, y: 3}
+        - {x: 21, y: 36}
+        - {x: 19, y: 39}
     - name: SpriteSheet_RedHoodJump_2
       rect:
         serializedVersion: 2
@@ -115,15 +114,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 12, y: 52}
-        - {x: 2, y: 52}
-        - {x: -5, y: 50}
-        - {x: -17, y: 35}
-        - {x: -17, y: 13}
+      - - {x: 15, y: 52}
+        - {x: -6, y: 52}
+        - {x: -17, y: 32}
+        - {x: -17, y: 7}
         - {x: -12, y: 0}
-        - {x: 7, y: 0}
-        - {x: 19, y: 10}
-        - {x: 19, y: 46}
+        - {x: 9, y: 0}
+        - {x: 18, y: 13}
+        - {x: 19, y: 20}
+        - {x: 19, y: 50}
     - name: SpriteSheet_RedHoodJump_3
       rect:
         serializedVersion: 2
@@ -135,13 +134,13 @@ TextureImporter:
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 17, y: 52}
-        - {x: -3, y: 52}
+      - - {x: 16, y: 52}
+        - {x: -2, y: 52}
         - {x: -15, y: 46}
-        - {x: -15, y: 9}
-        - {x: -10, y: 0}
+        - {x: -15, y: 14}
+        - {x: -11, y: 0}
         - {x: 11, y: 0}
-        - {x: 20, y: 15}
+        - {x: 20, y: 14}
         - {x: 20, y: 41}
         - {x: 19, y: 50}
     - name: SpriteSheet_RedHoodJump_4
@@ -155,15 +154,14 @@ TextureImporter:
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -2, y: 47}
-        - {x: -11, y: 44}
-        - {x: -21, y: 39}
-        - {x: -21, y: 16}
-        - {x: -13, y: 0}
-        - {x: 16, y: 0}
-        - {x: 20, y: 10}
-        - {x: 20, y: 44}
-        - {x: 15, y: 47}
+      - - {x: -8, y: 47}
+        - {x: -21, y: 35}
+        - {x: -21, y: 23}
+        - {x: -18, y: 11}
+        - {x: -8, y: 0}
+        - {x: 19, y: 0}
+        - {x: 20, y: 6}
+        - {x: 20, y: 47}
     - name: SpriteSheet_RedHoodJump_5
       rect:
         serializedVersion: 2
@@ -175,13 +173,14 @@ TextureImporter:
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -12, y: 41}
-        - {x: -19, y: 39}
+      - - {x: -10, y: 41}
+        - {x: -19, y: 34}
         - {x: -19, y: 4}
-        - {x: -14, y: 0}
+        - {x: -9, y: 0}
         - {x: 16, y: 0}
-        - {x: 20, y: 5}
-        - {x: 20, y: 41}
+        - {x: 20, y: 2}
+        - {x: 20, y: 33}
+        - {x: 18, y: 41}
     - name: SpriteSheet_RedHoodJump_6
       rect:
         serializedVersion: 2
@@ -193,15 +192,16 @@ TextureImporter:
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -8, y: 47}
-        - {x: -21, y: 40}
-        - {x: -21, y: 15}
+      - - {x: 11, y: 47}
+        - {x: -8, y: 47}
+        - {x: -21, y: 37}
+        - {x: -21, y: 17}
         - {x: -19, y: 11}
-        - {x: 0, y: 0}
-        - {x: 16, y: 0}
-        - {x: 21, y: 8}
-        - {x: 21, y: 41}
-        - {x: 17, y: 47}
+        - {x: -1, y: 0}
+        - {x: 15, y: 0}
+        - {x: 18, y: 6}
+        - {x: 21, y: 16}
+        - {x: 21, y: 42}
     - name: SpriteSheet_RedHoodJump_7
       rect:
         serializedVersion: 2
@@ -213,12 +213,12 @@ TextureImporter:
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -18, y: 51}
-        - {x: -19, y: 49}
-        - {x: -19, y: 18}
-        - {x: -6, y: 0}
-        - {x: 19, y: 0}
-        - {x: 21, y: 3}
+      - - {x: -19, y: 51}
+        - {x: -19, y: 24}
+        - {x: -7, y: 0}
+        - {x: 9, y: 0}
+        - {x: 14, y: 4}
+        - {x: 21, y: 23}
         - {x: 21, y: 51}
     - name: SpriteSheet_RedHoodJump_8
       rect:
@@ -231,14 +231,12 @@ TextureImporter:
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 14, y: 52}
-        - {x: -19, y: 52}
-        - {x: -19, y: 12}
-        - {x: -7, y: 0}
-        - {x: 15, y: 0}
-        - {x: 17, y: 3}
-        - {x: 21, y: 22}
-        - {x: 21, y: 50}
+      - - {x: -19, y: 52}
+        - {x: -19, y: 21}
+        - {x: -4, y: 0}
+        - {x: 14, y: 0}
+        - {x: 21, y: 13}
+        - {x: 21, y: 52}
     - name: SpriteSheet_RedHoodJump_9
       rect:
         serializedVersion: 2
@@ -268,15 +266,13 @@ TextureImporter:
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -7, y: 41}
-        - {x: -14, y: 40}
-        - {x: -19, y: 26}
-        - {x: -19, y: 5}
-        - {x: -7, y: 0}
-        - {x: 12, y: 0}
-        - {x: 21, y: 10}
-        - {x: 21, y: 33}
-        - {x: 16, y: 41}
+      - - {x: -11, y: 0}
+        - {x: 8, y: 0}
+        - {x: 21, y: 5}
+        - {x: 21, y: 41}
+        - {x: -13, y: 41}
+        - {x: -19, y: 39}
+        - {x: -19, y: 8}
     - name: SpriteSheet_RedHoodJump_11
       rect:
         serializedVersion: 2
@@ -288,10 +284,11 @@ TextureImporter:
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -12, y: 39}
-        - {x: -18, y: 35}
+      - - {x: -9, y: 39}
+        - {x: -18, y: 30}
         - {x: -18, y: 0}
-        - {x: 21, y: 0}
+        - {x: 16, y: 0}
+        - {x: 21, y: 4}
         - {x: 21, y: 35}
         - {x: 11, y: 39}
     - name: SpriteSheet_RedHoodJump_12
@@ -305,15 +302,14 @@ TextureImporter:
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 21, y: 40}
-        - {x: 14, y: 45}
-        - {x: -3, y: 45}
-        - {x: -9, y: 44}
-        - {x: -17, y: 23}
-        - {x: -17, y: 8}
-        - {x: -13, y: 0}
-        - {x: 13, y: 0}
-        - {x: 21, y: 3}
+      - - {x: -3, y: 45}
+        - {x: -7, y: 43}
+        - {x: -17, y: 27}
+        - {x: -17, y: 9}
+        - {x: -15, y: 0}
+        - {x: 21, y: 0}
+        - {x: 21, y: 41}
+        - {x: 10, y: 45}
     - name: SpriteSheet_RedHoodJump_13
       rect:
         serializedVersion: 2
@@ -325,15 +321,14 @@ TextureImporter:
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -3, y: 49}
-        - {x: -7, y: 44}
-        - {x: -16, y: 22}
-        - {x: -16, y: 12}
+      - - {x: -6, y: 49}
+        - {x: -16, y: 26}
+        - {x: -16, y: 9}
         - {x: -8, y: 0}
-        - {x: 10, y: 0}
-        - {x: 20, y: 6}
-        - {x: 20, y: 46}
-        - {x: 2, y: 49}
+        - {x: 16, y: 0}
+        - {x: 20, y: 4}
+        - {x: 20, y: 44}
+        - {x: 17, y: 49}
     outline: []
   spritePackingTag: 
   userData: 
