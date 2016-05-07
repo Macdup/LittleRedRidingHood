@@ -85,7 +85,7 @@ public class Player : MonoBehaviour {
 
 	//private bool _wasJumpDown = false;
 
-	void Update() {
+	void FixedUpdate() {
 		bool isJumpDown = false;
 		bool isJumpUp = false;
 
@@ -129,7 +129,7 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-	void FixedUpdate () {
+	void Update () {
 		float move = 0.0f;
 
 		if (BSMoveLeft.CurrentState == ButtonScript.ButtonState.Down)

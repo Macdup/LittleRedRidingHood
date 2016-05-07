@@ -12,12 +12,12 @@ public class CameraScript : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void LateUpdate () {
 		if(ObjectToFollow != null){
 			Vector3 pos = this.transform.position;
-            pos.x = ObjectToFollow.transform.position.x + xOffset;
-			pos.y = ObjectToFollow.transform.position.y + yOffset;
-			this.transform.position = pos;
+            pos.x = ObjectToFollow.transform.position.x ;
+			pos.y = ObjectToFollow.transform.position.y ;
+			this.transform.position = Vector3.Lerp(this.transform.position, pos, 0.1f);
 		}
 
 	}
