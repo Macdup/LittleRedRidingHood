@@ -89,7 +89,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleIdentifier: com.Les3Connards.RedHood
+  bundleIdentifier: com.Les3Connards.RedHood_Mika
   bundleVersion: 1.0
   preloadedAssets: []
   metroEnableIndependentInputSource: 0
@@ -173,7 +173,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 80d863fb01e85ff44a9ac85500ad5125, type: 3}
+      m_Icon: {fileID: 2800000, guid: d10fc062c4ff67c4cb2987f743395f10, type: 3}
       m_Width: 128
       m_Height: 128
   m_BuildTargetBatching: []
