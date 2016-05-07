@@ -34,3 +34,5 @@ LRRH/Library/CurrentMaximizeLayout.dwlt
 *.cache
 LRRH/Library/shadercompiler-UnityShaderCompiler.exe3.log
 *.log
+*.dwlt
+LRRH/Library/LastSceneManagerSetup.txt
