@@ -28,3 +28,9 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+LRRH/Library/CurrentMaximizeLayout.dwlt
+*.dwlt
+LRRH/Library/CurrentMaximizeLayout.dwlt
+*.cache
+LRRH/Library/shadercompiler-UnityShaderCompiler.exe3.log
+*.log

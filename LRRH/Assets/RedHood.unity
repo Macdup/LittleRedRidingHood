@@ -2958,11 +2958,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 451048, guid: 458e54b50841a164ab7d6951424758f4, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 3872
+      value: 241
       objectReference: {fileID: 0}
     - target: {fileID: 451048, guid: 458e54b50841a164ab7d6951424758f4, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 1239.9
+      value: 1290.1
       objectReference: {fileID: 0}
     - target: {fileID: 451048, guid: 458e54b50841a164ab7d6951424758f4, type: 2}
       propertyPath: m_LocalPosition.z
@@ -31048,7 +31048,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 200
+  orthographic size: 120
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -31076,7 +31076,7 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 339, y: 1412}
+  m_AnchoredPosition: {x: 253.6, y: 1412.1}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &888436386
@@ -31092,6 +31092,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectToFollow: {fileID: 1863661017}
   yOffset: 50
+  xOffset: 50
 --- !u!1 &888609413
 GameObject:
   m_ObjectHideFlags: 0
