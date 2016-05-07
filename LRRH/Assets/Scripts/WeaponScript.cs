@@ -22,5 +22,11 @@ public class WeaponScript : MonoBehaviour {
 		if (otherEnemy != null) {
 			otherEnemy.Hit (DamagaValue);
 		}
+
+        BushScript otherBushScript = other.gameObject.GetComponent<BushScript>();
+        if (otherBushScript != null)
+        {
+            otherBushScript.BushAnim.explode();
+        }
 	}
 }
