@@ -9,17 +9,18 @@ using System.Linq;
 [ExecuteInEditMode]
 public class TileManager : MonoBehaviour {
 
-	//public TextAsset Map;
+	//public member
 	public Texture2D Map;
-	public Texture2D GroundTileset;
-	//_public GameObject TileBlock;
-	public double TileSize = 30;
+	public float TileSize = 30;
 	public bool DoGenerate = false;
-
-
-
+	public bool DoClean = false;
 	public GameObject[] TilesPrefab;
-	private List<GameObject> _generatedTiles = new List<GameObject>();	
+
+	// private member
+
+
+	// variable
+	public Vector2 _leftTopPixel;
 
 	// Use this for initialization
 	void Start () {
@@ -28,27 +29,33 @@ public class TileManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (DoGenerate) {
-			//string spritePath = AssetDatabase.GetAssetPath(GroundTileset);
-			//TilesPrefab = AssetDatabase.LoadAllAssetsAtPath (spritePath).OfType<Sprite>().ToArray();
 			if(TilesPrefab.Length >0)
 				LoadMap (Map);
 			DoGenerate = false;
 		}
+		if (DoClean) {
+			CleanTransform (transform);
+			DoClean = false;
+		}
 	}
 
+	void CleanTransform(Transform iTransform) {
+		for(int i=0 ; i<iTransform.childCount ; ++i) {
+			CleanTransform (iTransform.GetChild(i));
+			DestroyImmediate (iTransform.GetChild(i).gameObject);
+			--i;
+		}
+	}
 
 
 	void LoadMap(Texture2D iMap)
 	{
-		// clean
-		foreach (GameObject g in _generatedTiles) {
-			DestroyImmediate (g);
-		}
-		_generatedTiles.Clear();
+		// clean 
+		CleanTransform (transform);
+		_leftTopPixel = new Vector2 (1, 1);
+		this.transform.position = new Vector3 (0,0, this.transform.position.z);
 
-		//Texture2D tex = new Texture2D(0, 0);
-		//tex.LoadImage(iMap.bytes);
-
+		// compute each pixel
 		for (int i = 0; i < iMap.width; i++)
 		{
 			for (int j = 0; j < iMap.height; j++)
@@ -149,19 +156,21 @@ public class TileManager : MonoBehaviour {
 
 					GameObject tile = (GameObject)Instantiate (TilesPrefab[tileIndex], new Vector3 ((float)(i * TileSize), (float)(j * TileSize), this.transform.position.z), new Quaternion ());
 					tile.name = "Tile " + i + " " + j;
-					//tile.transform.position = new Vector3 ((float)(i * TileSize), (float)(j * TileSize), this.transform.position.z);
 					tile.transform.parent = this.transform;
 					tile.layer = LayerMask.NameToLayer("Walls");
 
-					SpriteRenderer sr = tile.AddComponent<SpriteRenderer> ();
 
-					//BoxCollider2D bc =tile.AddComponent<BoxCollider2D> ();
-
-					_generatedTiles.Add(tile);
-
+					// compute left top pixel
+					if (i <= _leftTopPixel.x) {
+						_leftTopPixel.x = i;
+						if(j > _leftTopPixel.y)
+							_leftTopPixel.y = j;
+					}
 				}
 			}
 		} 
+
+		this.transform.position = new Vector3 (-_leftTopPixel.x*TileSize, (-_leftTopPixel.y -1)*TileSize, this.transform.position.z);
 	}
 }
 
