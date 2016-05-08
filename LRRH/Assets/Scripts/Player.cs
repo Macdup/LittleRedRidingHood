@@ -18,7 +18,6 @@ public class Player : MonoBehaviour {
 	public float MoveSpeed = 800.0f;
 	public float JumpSpeed = 1000.0f;
 	public float MinJumpSpeed = 200.0f;
-	public float JumpDelay = 0.8f;
 	public float Health = 100.0f;
 
 	public ButtonScript BSMoveLeft;
@@ -71,10 +70,6 @@ public class Player : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
-		// FOR DEBUG
-		//Time.timeScale = 0.3f;
-
 		_anim = GetComponentInChildren<Animator>();
 		m_RigidBody2D = GetComponent<Rigidbody2D> ();
 		_wallsMask = LayerMask.GetMask("Walls");
@@ -115,15 +110,12 @@ public class Player : MonoBehaviour {
 			if (!_firstJump && m_BottomTouched) {
 				_firstJump = true;
 				_firstJumpEnd = false;
-
-				//m_RigidBody2D.velocity = new Vector2 (m_RigidBody2D.velocity.x, JumpSpeed);
-				StartCoroutine (Jump (JumpSpeed));
+				m_RigidBody2D.velocity = new Vector2 (m_RigidBody2D.velocity.x, JumpSpeed);
 			}
 			else if(_firstJumpEnd && !_secondJump) {
 				_secondJump = true;
 				// second jump
-				//m_RigidBody2D.velocity = new Vector2 (m_RigidBody2D.velocity.x, JumpSpeed);
-				StartCoroutine (Jump (JumpSpeed));
+				m_RigidBody2D.velocity = new Vector2 (m_RigidBody2D.velocity.x, JumpSpeed);
 			}
 
 		}
@@ -133,9 +125,7 @@ public class Player : MonoBehaviour {
 			_firstJumpEnd = true;
 
 			if(m_RigidBody2D.velocity.y > MinJumpSpeed)
-				StartCoroutine (Jump (MinJumpSpeed));
-				//m_RigidBody2D.velocity = new Vector2 (m_RigidBody2D.velocity.x, MinJumpSpeed);
-
+				m_RigidBody2D.velocity = new Vector2 (m_RigidBody2D.velocity.x, MinJumpSpeed);
 		}
 	}
 
@@ -171,9 +161,7 @@ public class Player : MonoBehaviour {
 		}
 
 		//Animation part
-		_anim.SetFloat("velocityY", m_RigidBody2D.velocity.y);
-		if(m_RigidBody2D.velocity.y < 0)
-			_anim.SetBool ("jump", false);
+		_anim.SetFloat("velocityY", m_RigidBody2D.velocity.y);		
 		if(move != 0)
 			_anim.SetBool(runHash, true);
 		else
@@ -205,12 +193,6 @@ public class Player : MonoBehaviour {
 			Flip ();				
 		else if (m_RigidBody2D.velocity.x  < 0 && !m_FacingRight)
 			Flip ();
-	}
-
-	private IEnumerator Jump(float iJumpSpeed) {
-		_anim.SetBool ("jump", true);
-		yield return new WaitForSeconds(JumpDelay);
-		m_RigidBody2D.velocity = new Vector2 (m_RigidBody2D.velocity.x, iJumpSpeed);
 	}
 
 	void Flip() {
