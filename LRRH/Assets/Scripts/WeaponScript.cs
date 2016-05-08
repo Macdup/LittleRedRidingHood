@@ -26,7 +26,7 @@ public class WeaponScript : MonoBehaviour {
         BushScript otherBushScript = other.gameObject.GetComponent<BushScript>();
         if (otherBushScript != null)
         {
-            otherBushScript.BushAnim.explode();
+            otherBushScript.hit();
         }
 	}
 }

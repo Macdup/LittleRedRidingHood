@@ -16,8 +16,8 @@ TagManager:
   - Player
   - Walls
   - PlayerWeapon
-  - 
-  - 
+  - Coins
+  - NotWithPlayer
   - 
   - 
   - 
