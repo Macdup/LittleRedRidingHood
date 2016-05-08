@@ -6,8 +6,8 @@ public class BushAnim : MonoBehaviour {
     // public member
     // protected member
     // private member
-    private Animator _anim;
-    private BushScript _BushScript;
+    private Animator m_anim;
+    private BushScript m_BushScript;
     // variable
     private int _explodeHash = Animator.StringToHash("explode");
    
@@ -15,8 +15,8 @@ public class BushAnim : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        _anim = this.GetComponentInChildren<Animator>();
-        _BushScript = this.GetComponentInParent<BushScript>();
+        m_anim = this.GetComponentInChildren<Animator>();
+        m_BushScript = this.GetComponentInParent<BushScript>();
 	}
 	
 	// Update is called once per frame
@@ -25,12 +25,11 @@ public class BushAnim : MonoBehaviour {
 	}
 
     public void explode() {
-        _anim.SetTrigger(_explodeHash);
+        m_anim.SetTrigger(_explodeHash);
     }
 
     void destroy()
     {
-        _BushScript.drop();
         GameObject.Destroy(transform.parent.gameObject);
     }
 }

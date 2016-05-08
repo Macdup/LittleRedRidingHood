@@ -4,7 +4,6 @@ public enum BushState { stat, explode};
 public class BushScript : MonoBehaviour {
 
     // public member
-    public GameObject CoinPrefab;
 
     [HideInInspector]
     public BushState BushState;
@@ -15,8 +14,8 @@ public class BushScript : MonoBehaviour {
     //protected bool m_Dead = false;
 
     // private member
-    //private float m_DeathDuration = 1.0f;
-    //private SpriteRenderer m_SpriteRenderer;
+    private BoxCollider2D m_BoxCollider2D;
+    private Dropable m_Dropable;
 
     // variable
     //private float _deathElapse = 0.0f;
@@ -25,6 +24,8 @@ public class BushScript : MonoBehaviour {
 	void Start () {
         BushState = BushState.stat;
         BushAnim = this.GetComponentInChildren<BushAnim>();
+        m_BoxCollider2D = GetComponent<BoxCollider2D>();
+        m_Dropable = GetComponent<Dropable>();
 	}
 	
 	// Update is called once per frame
@@ -32,9 +33,10 @@ public class BushScript : MonoBehaviour {
 	
 	}
 
-    public void drop(){
-        GameObject coinInstance = (GameObject)Instantiate(CoinPrefab);
-        coinInstance.transform.position = this.transform.position;
+    public void hit() {
+        m_BoxCollider2D.enabled = false;
+        BushAnim.explode();
+        m_Dropable.drop();
     }
 
 
