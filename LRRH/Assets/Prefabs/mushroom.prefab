@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 429046}
   - 61: {fileID: 6140394}
   - 114: {fileID: 11490900}
+  - 114: {fileID: 11411702}
   m_Layer: 0
   m_Name: mushroom
   m_TagString: Untagged
@@ -42,8 +43,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 143578}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 607, y: 1298, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalPosition: {x: 3620, y: -60, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 480464}
   m_Father: {fileID: 0}
@@ -55,7 +56,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 163876}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -4.2, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 429046}
@@ -69,9 +70,9 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 16}
+  m_Offset: {x: -2.2, y: 16}
   serializedVersion: 2
   m_Size: {x: 24, y: 32}
 --- !u!95 &9513816
@@ -91,6 +92,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &11411702
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 143578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70902724a34e3164d9c7504b5dcf00aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CoinPrefab: {fileID: 164246, guid: dff4b7e0e27d55949bc38451ff3a0c9b, type: 2}
 --- !u!114 &11473970
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -113,11 +126,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28863dc4a067a8d4aaee28da092efffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  life: 100
+  Life: 100
+  DamagePerHit: 10
   ShootPrefab: {fileID: 174666, guid: 90b6d05f710ec70409bdbcd7a3aeb4ed, type: 2}
-  ShootSpeed: 150
-  ShootCoolDown: 3
+  ShootSpeed: 300
+  ShootCoolDown: 1
 --- !u!212 &21263136
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -144,7 +157,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300228, guid: ba76e1896fb8ce44d826c1209fa2e737, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a7ea0e9953731114aa8788783d0aae92, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

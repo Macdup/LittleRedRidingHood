@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 408314}
   - 114: {fileID: 11443176}
   - 61: {fileID: 6138222}
+  - 114: {fileID: 11479286}
   m_Layer: 0
   m_Name: bush
   m_TagString: Untagged
@@ -42,7 +43,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100374}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 592.6, y: 4.7, z: 0}
+  m_LocalPosition: {x: 624.3, y: 4.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 432786}
@@ -102,9 +103,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbc68ae30a6985c4c99315e1a3db2d01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CoinPrefab: {fileID: 164246, guid: dff4b7e0e27d55949bc38451ff3a0c9b, type: 2}
   BushState: 0
   BushAnim: {fileID: 0}
+--- !u!114 &11479286
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70902724a34e3164d9c7504b5dcf00aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CoinPrefab: {fileID: 164246, guid: dff4b7e0e27d55949bc38451ff3a0c9b, type: 2}
 --- !u!114 &11495206
 MonoBehaviour:
   m_ObjectHideFlags: 1

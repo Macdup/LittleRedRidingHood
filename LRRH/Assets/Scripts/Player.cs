@@ -244,7 +244,8 @@ public class Player : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D other) {
-		Enemy otherEnemy = other.gameObject.GetComponent<Enemy> ();
+
+        Enemy otherEnemy = other.gameObject.GetComponent<Enemy> ();
 		if (otherEnemy != null) {
 			Hit (otherEnemy.DamagePerHit);
 		}

@@ -15,6 +15,7 @@ namespace AssemblyCSharp
 		// private member
 		private float 			m_DeathDuration = 1.0f;
 		private SpriteRenderer 	m_SpriteRenderer;
+        private Dropable        m_Dropable;
 
 		// variable
 		private float _deathElapse = 0.0f;
@@ -25,7 +26,7 @@ namespace AssemblyCSharp
 			if (m_SpriteRenderer == null) {
 				m_SpriteRenderer = this.GetComponentInChildren<SpriteRenderer> ();
 			}
-
+            m_Dropable = GetComponent<Dropable>();
 		}
 
 		virtual public void Update() {
@@ -58,6 +59,9 @@ namespace AssemblyCSharp
 			foreach (Collider2D c in colliders) {
 				c.enabled = false;
 			}
+
+            if(m_Dropable != null)
+                m_Dropable.drop();
 		}
 
 	}
