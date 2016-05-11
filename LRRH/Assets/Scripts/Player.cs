@@ -29,7 +29,7 @@ public class Player : MonoBehaviour {
 
 	public GameObject 	Weapon;
 	//public float 		WeaponDuration = 1000.0f;
-	public float 		WeaponCoolDown = 0.3f;
+	public float 		WeaponCoolDown = 0.1f;
 
 	public float 		TouchDetectionRadius = 0.2f;
 
@@ -47,6 +47,8 @@ public class Player : MonoBehaviour {
 	private BoxCollider2D 		m_RightBox;
 
 	// variable
+	private bool 		_wasJumpDown = false;
+	private bool 		_wasJumpUp = false;
 	private bool 		_firstJump =  false;
 	private bool 		_firstJumpEnd =  false;
 	private bool 		_secondJump =  false;
@@ -102,13 +104,15 @@ public class Player : MonoBehaviour {
             SetIdle(true);
         }
 
-		isJumpDown = Input.GetButtonDown ("Jump") || (BSJump.CurrentState == ButtonScript.ButtonState.Down);
-		isJumpUp = Input.GetButtonUp ("Jump") || (BSJump.CurrentState == ButtonScript.ButtonState.Up);
+		isJumpDown = Input.GetButtonDown ("Jump") || (BSJump.CurrentState == ButtonScript.ButtonState.Down && !_wasJumpDown);
+		isJumpUp = Input.GetButtonUp ("Jump") || (BSJump.CurrentState == ButtonScript.ButtonState.Up && !_wasJumpUp);
 
 
 
 		if (isJumpDown) {
 			_capJump = false;
+			_wasJumpDown = true;
+			_wasJumpUp = false;
 			if (!_firstJump && m_BottomTouched) {
 				_firstJump = true;
 				_firstJumpEnd = false;
@@ -122,21 +126,21 @@ public class Player : MonoBehaviour {
 				//m_RigidBody2D.velocity = new Vector2 (m_RigidBody2D.velocity.x, JumpSpeed);
 				StartCoroutine (Jump (JumpSpeed));
 			}
-
 		}
-
 		else if(isJumpUp) {
+			_wasJumpDown = false;
+			_wasJumpUp = true;
 			_firstJump = false;
 			_firstJumpEnd = true;
 			_capJump = true;
 			if(m_RigidBody2D.velocity.y > MinJumpSpeed)
 				m_RigidBody2D.velocity = new Vector2 (m_RigidBody2D.velocity.x, MinJumpSpeed);
 				//StartCoroutine (Jump (MinJumpSpeed));
-
 		}
 	}
 
 	void FixedUpdate () {
+
 		float move = 0.0f;
 
 		if (BSMoveLeft.CurrentState == ButtonScript.ButtonState.Down)
@@ -148,8 +152,10 @@ public class Player : MonoBehaviour {
 
 		if (!_weapon && (BSFireA.CurrentState == ButtonScript.ButtonState.Down || Input.GetAxis("Fire1")==1)) {
 			_weapon = true;
-			Weapon.SetActive (true);
+			//Weapon.SetActive (true);
+			_anim.SetBool("fireA", true);
 			Invoke("ResetWeapon", WeaponCoolDown);
+
 			/*GameObject shotInstance = (GameObject)Instantiate (ShootPrefab);
 			shotInstance.GetComponent<Shot> ().moveVector = m_FacingRight ? new Vector2 (-ShootSpeed, 0) : new Vector2 (ShootSpeed, 0);
 			shotInstance.transform.position = m_FacingRight ? new Vector3(this.transform.position.x-100, this.transform.position.y + 150, this.transform.position.z) : new Vector3(this.transform.position.x+100, this.transform.position.y + 150, this.transform.position.z);
@@ -222,8 +228,9 @@ public class Player : MonoBehaviour {
 
 	void ResetWeapon()
 	{
-		Weapon.SetActive (false);
+		//Weapon.SetActive (false);
 		_weapon = false;
+		_anim.SetBool ("fireA", false);
 	}
 
 	public void Hit (float iDamageValue){
