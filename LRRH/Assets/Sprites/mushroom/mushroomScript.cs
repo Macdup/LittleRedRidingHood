@@ -24,11 +24,13 @@ public class mushroomScript : Enemy {
     }
 
     public void shot() {
-        GameObject shotInstance = (GameObject)Instantiate(ShootPrefab);
-		shotInstance.GetComponent<Shot> ().Source = this.gameObject;
-        shotInstance.GetComponent<Shot>().moveVector = new Vector2(ShootSpeed * transform.localScale.x * -1, 0);
-        shotInstance.transform.position = new Vector3(this.transform.position.x + (transform.localScale.x * (-20)), this.transform.position.y + 10, this.transform.position.z);
-        Invoke("startShot", ShootCoolDown);
+		if (!m_Dead) {
+			GameObject shotInstance = (GameObject)Instantiate (ShootPrefab);
+			shotInstance.GetComponent<Shot> ().Source = this.gameObject;
+			shotInstance.GetComponent<Shot> ().moveVector = new Vector2 (ShootSpeed * transform.localScale.x * -1, 0);
+			shotInstance.transform.position = new Vector3 (this.transform.position.x + (transform.localScale.x * (-20)), this.transform.position.y + 10, this.transform.position.z);
+			Invoke ("startShot", ShootCoolDown);
+		}
     }
 
 }
