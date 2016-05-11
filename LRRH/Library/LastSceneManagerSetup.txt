@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/RedHood_Eisk.unity
+- path: Assets/RedHood.unity
   isLoaded: 1
   isActive: 1
