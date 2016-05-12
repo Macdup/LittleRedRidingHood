@@ -70,10 +70,13 @@ public class Player : MonoBehaviour {
 	int groundedHash = Animator.StringToHash("grounded");
 	int idleHash = Animator.StringToHash("idle");
 
+	Animator _AnimatorSwordCollideR;
+
 
 	// Use this for initialization
 	void Start () {
 		_anim = GetComponentInChildren<Animator>();
+		_AnimatorSwordCollideR = transform.GetChild(1).GetComponent<Animator>();
 		m_RigidBody2D = GetComponent<Rigidbody2D> ();
 		_wallsMask = LayerMask.GetMask("Walls");
 
@@ -154,6 +157,7 @@ public class Player : MonoBehaviour {
 			_weapon = true;
 			//Weapon.SetActive (true);
 			_anim.SetBool("fireA", true);
+			_AnimatorSwordCollideR.SetBool("fireA", true);
 			Invoke("ResetWeapon", WeaponCoolDown);
 
 			/*GameObject shotInstance = (GameObject)Instantiate (ShootPrefab);
@@ -231,6 +235,7 @@ public class Player : MonoBehaviour {
 		//Weapon.SetActive (false);
 		_weapon = false;
 		_anim.SetBool ("fireA", false);
+		_AnimatorSwordCollideR.SetBool("fireA", false);
 	}
 
 	public void Hit (float iDamageValue){

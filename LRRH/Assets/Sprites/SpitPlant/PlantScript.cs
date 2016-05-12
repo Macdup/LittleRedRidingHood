@@ -36,7 +36,7 @@ public class PlantScript : Enemy {
 		}
 			
 		float distancePlayer = Vector3.Distance(_Player.transform.position,transform.position);
-		Debug.Log(distancePlayer);
+
 		if(_loaded == true && distancePlayer <= _detectionDistance){
 			startShot();
 			_loaded = false;

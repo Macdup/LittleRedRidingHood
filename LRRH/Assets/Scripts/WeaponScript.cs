@@ -18,6 +18,7 @@ public class WeaponScript : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
+		Debug.Log(other.name);
 		Enemy otherEnemy = other.gameObject.GetComponent<Enemy> ();
 		if (otherEnemy != null) {
 			otherEnemy.Hit (DamagaValue);
