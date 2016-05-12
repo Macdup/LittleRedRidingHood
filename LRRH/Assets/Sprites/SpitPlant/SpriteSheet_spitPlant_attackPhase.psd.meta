@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 0b584c80b77385b449ded798f6523307
-timeCreated: 1462817841
+timeCreated: 1463052710
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -10,6 +10,12 @@ TextureImporter:
     21300006: SpriteSheet_spitPlant_3
     21300008: SpriteSheet_spitPlant_4
     21300010: SpriteSheet_spitPlant_5
+    21300012: SpriteSheet_spitPlant_attackPhase_0
+    21300014: SpriteSheet_spitPlant_attackPhase_1
+    21300016: SpriteSheet_spitPlant_attackPhase_2
+    21300018: SpriteSheet_spitPlant_attackPhase_3
+    21300020: SpriteSheet_spitPlant_attackPhase_4
+    21300022: SpriteSheet_spitPlant_attackPhase_5
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -56,149 +62,154 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: SpriteSheet_spitPlant_0
+    - name: SpriteSheet_spitPlant_attackPhase_0
       rect:
         serializedVersion: 2
         x: 0
         y: 39
         width: 40
         height: 39
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 18, y: 21}
-        - {x: 20, y: 23}
-        - {x: 20, y: 27}
-        - {x: 13, y: 39}
-        - {x: -5, y: 39}
-        - {x: -18, y: 29}
-        - {x: -18, y: 14}
-        - {x: -4, y: 0}
-        - {x: 9, y: 0}
-        - {x: 14, y: 1}
-        - {x: 20, y: 12}
-        - {x: 20, y: 21}
-        - {x: 17, y: 21}
-    - name: SpriteSheet_spitPlant_1
+      - - {x: 18, y: 1.5}
+        - {x: 20, y: 3.5}
+        - {x: 19, y: 6.5}
+        - {x: 18, y: 10.5}
+        - {x: 9, y: 19.5}
+        - {x: -5, y: 19.5}
+        - {x: -15, y: 6.5}
+        - {x: -18, y: 1.5}
+        - {x: -18, y: -4.5}
+        - {x: -6, y: -19.5}
+        - {x: 8, y: -19.5}
+        - {x: 19, y: -13.5}
+        - {x: 20, y: -8.5}
+        - {x: 20, y: 1.5}
+        - {x: 17, y: 1.5}
+    - name: SpriteSheet_spitPlant_attackPhase_1
       rect:
         serializedVersion: 2
         x: 40
         y: 39
         width: 40
         height: 39
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 20, y: 21}
-        - {x: 20, y: 27}
-        - {x: 12, y: 39}
-        - {x: -5, y: 39}
-        - {x: -17, y: 22}
-        - {x: -17, y: 13}
-        - {x: -5, y: 0}
-        - {x: 7, y: 0}
-        - {x: 20, y: 5}
-        - {x: 20, y: 21}
-        - {x: 17, y: 21}
-    - name: SpriteSheet_spitPlant_2
+      - - {x: 18, y: 1.5}
+        - {x: 20, y: 3.5}
+        - {x: 19, y: 6.5}
+        - {x: 18, y: 10.5}
+        - {x: 9, y: 19.5}
+        - {x: -7, y: 19.5}
+        - {x: -17, y: 2.5}
+        - {x: -17, y: -5.5}
+        - {x: -5, y: -19.5}
+        - {x: 7, y: -19.5}
+        - {x: 20, y: -14.5}
+        - {x: 20, y: 1.5}
+        - {x: 17, y: 1.5}
+    - name: SpriteSheet_spitPlant_attackPhase_2
       rect:
         serializedVersion: 2
         x: 80
         y: 39
         width: 40
         height: 39
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 18, y: 21}
-        - {x: 20, y: 23}
-        - {x: 20, y: 28}
-        - {x: 9, y: 39}
-        - {x: -5, y: 39}
-        - {x: -16, y: 22}
-        - {x: -16, y: 13}
-        - {x: -7, y: 2}
-        - {x: -4, y: 0}
-        - {x: 11, y: 0}
-        - {x: 20, y: 11}
-        - {x: 20, y: 21}
-        - {x: 17, y: 21}
-    - name: SpriteSheet_spitPlant_3
+      - - {x: 17, y: 1.5}
+        - {x: 18, y: 1.5}
+        - {x: 20, y: 3.5}
+        - {x: 19, y: 6.5}
+        - {x: 18, y: 10.5}
+        - {x: 9, y: 19.5}
+        - {x: -5, y: 19.5}
+        - {x: -16, y: 5.5}
+        - {x: -16, y: -9.5}
+        - {x: -3, y: -19.5}
+        - {x: 12, y: -19.5}
+        - {x: 14, y: -18.5}
+        - {x: 20, y: -9.5}
+        - {x: 20, y: 1.5}
+    - name: SpriteSheet_spitPlant_attackPhase_3
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 40
         height: 39
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 18, y: 21}
-        - {x: 20, y: 23}
-        - {x: 20, y: 27}
-        - {x: 10, y: 39}
-        - {x: -5, y: 39}
-        - {x: -20, y: 29}
-        - {x: -20, y: 15}
-        - {x: -10, y: 0}
-        - {x: 11, y: 0}
-        - {x: 14, y: 1}
-        - {x: 20, y: 12}
-        - {x: 20, y: 21}
-        - {x: 17, y: 21}
-    - name: SpriteSheet_spitPlant_4
+      - - {x: 18, y: 1.5}
+        - {x: 20, y: 3.5}
+        - {x: 20, y: 7.5}
+        - {x: 10, y: 19.5}
+        - {x: -5, y: 19.5}
+        - {x: -20, y: 9.5}
+        - {x: -20, y: -4.5}
+        - {x: -10, y: -19.5}
+        - {x: 11, y: -19.5}
+        - {x: 14, y: -18.5}
+        - {x: 20, y: -7.5}
+        - {x: 20, y: 1.5}
+        - {x: 17, y: 1.5}
+    - name: SpriteSheet_spitPlant_attackPhase_4
       rect:
         serializedVersion: 2
         x: 40
         y: 0
         width: 40
         height: 39
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 18, y: 21}
-        - {x: 20, y: 23}
-        - {x: 20, y: 27}
-        - {x: 10, y: 39}
-        - {x: -5, y: 39}
-        - {x: -20, y: 29}
-        - {x: -20, y: 15}
-        - {x: -10, y: 0}
-        - {x: 11, y: 0}
-        - {x: 14, y: 1}
-        - {x: 20, y: 12}
-        - {x: 20, y: 21}
-        - {x: 17, y: 21}
-    - name: SpriteSheet_spitPlant_5
+      - - {x: 18, y: 1.5}
+        - {x: 20, y: 3.5}
+        - {x: 20, y: 7.5}
+        - {x: 10, y: 19.5}
+        - {x: -5, y: 19.5}
+        - {x: -20, y: 9.5}
+        - {x: -20, y: -4.5}
+        - {x: -10, y: -19.5}
+        - {x: 11, y: -19.5}
+        - {x: 14, y: -18.5}
+        - {x: 20, y: -7.5}
+        - {x: 20, y: 1.5}
+        - {x: 17, y: 1.5}
+    - name: SpriteSheet_spitPlant_attackPhase_5
       rect:
         serializedVersion: 2
         x: 80
         y: 0
         width: 40
         height: 39
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 18, y: 21}
-        - {x: 20, y: 23}
-        - {x: 19, y: 26}
-        - {x: 18, y: 30}
-        - {x: 9, y: 39}
-        - {x: -8, y: 39}
-        - {x: -20, y: 25}
-        - {x: -20, y: 11}
-        - {x: -5, y: 0}
-        - {x: 10, y: 0}
-        - {x: 14, y: 1}
-        - {x: 20, y: 10}
-        - {x: 20, y: 21}
-        - {x: 17, y: 21}
+      - - {x: 18, y: 1.5}
+        - {x: 20, y: 3.5}
+        - {x: 19, y: 6.5}
+        - {x: 18, y: 10.5}
+        - {x: 9, y: 19.5}
+        - {x: -7, y: 19.5}
+        - {x: -20, y: 3.5}
+        - {x: -20, y: -6.5}
+        - {x: -5, y: -19.5}
+        - {x: 8, y: -19.5}
+        - {x: 13, y: -17.5}
+        - {x: 20, y: -7.5}
+        - {x: 20, y: 1.5}
+        - {x: 17, y: 1.5}
     outline: []
   spritePackingTag: 
   userData: 
