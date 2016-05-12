@@ -17,7 +17,7 @@ public class CameraScript : MonoBehaviour {
 			Vector3 pos = this.transform.position;
             pos.x = ObjectToFollow.transform.position.x + (xOffset * ObjectToFollow.transform.localScale.x);
 			pos.y = ObjectToFollow.transform.position.y + yOffset;
-            this.transform.position = Vector3.Slerp(this.transform.position,pos,0.02f);
+            this.transform.position = Vector3.Slerp(this.transform.position,pos,0.03f);
 		}
 
 	}
