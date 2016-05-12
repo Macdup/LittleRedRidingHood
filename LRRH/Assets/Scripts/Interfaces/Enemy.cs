@@ -10,15 +10,14 @@ namespace AssemblyCSharp
 		public float DamagePerHit = 10.0f;
 
 		// protected member
-		protected bool m_Dead = false;
+		protected bool 		m_Dead = false;
+		protected Animator 	m_Animator;
 
 		// private member
-		private float 			m_DeathDuration = 1.0f;
 		private SpriteRenderer 	m_SpriteRenderer;
         private Dropable        m_Dropable;
 
 		// variable
-		private float _deathElapse = 0.0f;
 
 
 		virtual public void Start() {
@@ -27,17 +26,21 @@ namespace AssemblyCSharp
 				m_SpriteRenderer = this.GetComponentInChildren<SpriteRenderer> ();
 			}
             m_Dropable = GetComponent<Dropable>();
+
+			m_Animator = GetComponentInChildren<Animator>();
+			if (m_Animator == null) {
+				m_Animator = this.GetComponentInChildren<Animator> ();
+			}
 		}
 
 		virtual public void Update() {
 			if (m_Dead) {
-				if (_deathElapse <= m_DeathDuration) {
-					_deathElapse += Time.deltaTime;
-					Color c = m_SpriteRenderer.color;
-					c.a = 1.0f - (_deathElapse / m_DeathDuration);
-					m_SpriteRenderer.color = c;
-				} else {
-					DestroyImmediate (this);
+				if (m_Animator) {
+					m_Animator.SetBool ("dead", true);
+					AnimatorStateInfo asi = m_Animator.GetCurrentAnimatorStateInfo (0);
+					if (!m_Animator.IsInTransition (0) && asi.IsName ("die_exit")) {
+						DestroyImmediate (this.gameObject);
+					}
 				}
 			}
 		}
