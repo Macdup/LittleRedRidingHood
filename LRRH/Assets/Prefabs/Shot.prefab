@@ -9,7 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 498550}
   - 50: {fileID: 5067016}
-  - 114: {fileID: 11457582}
+  - 114: {fileID: 11459156}
   m_Layer: 0
   m_Name: Shot
   m_TagString: Untagged
@@ -89,9 +89,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -10, y: 8}
   serializedVersion: 2
-  m_Size: {x: 24.333334, y: 18.333334}
+  m_Size: {x: 24, y: 15}
 --- !u!95 &9589372
 Animator:
   serializedVersion: 3
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ca0770949f37ce4983fe315c2d2a4fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &11457582
+--- !u!114 &11459156
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -131,9 +131,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85213e7ece02f5748ba9e4225a39a5e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MoveVector: {x: 0, y: 0, z: 0}
+  HitDamage: 0
   Source: {fileID: 0}
-  moveVector: {x: -250, y: 0, z: 0}
-  hitDamage: 20
 --- !u!212 &21249192
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -37,15 +37,15 @@ namespace AssemblyCSharp
 			if (m_Dead) {
 				if (m_Animator) {
 					m_Animator.SetBool ("dead", true);
-					AnimatorStateInfo asi = m_Animator.GetCurrentAnimatorStateInfo (0);
-					if (!m_Animator.IsInTransition (0) && asi.IsName ("die_exit")) {
-						DestroyImmediate (this.gameObject);
-					}
 				}
 			}
 		}
 
 		virtual public void Hit(float iDamageValue) {
+            if (m_Animator)
+            {
+                m_Animator.SetTrigger("hit");
+            }
 			Life -= iDamageValue;
 			if(Life <= 0)
 				Death();

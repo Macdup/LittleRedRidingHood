@@ -48,16 +48,25 @@ public class PlantScript : Enemy {
 
 	void startShot() {
 		if (!m_Dead) {
-		m_Animator.SetTrigger(shotHash);
+		    m_Animator.SetTrigger(shotHash);
 		}
 	}
 
 	public void shot() {
 		if (!m_Dead) {
 			GameObject shotInstance = (GameObject)Instantiate (ShootPrefab);
-			shotInstance.GetComponent<Shot> ().Source = this.gameObject;
-			shotInstance.GetComponent<Shot> ().moveVector = new Vector2 (ShootSpeed * transform.localScale.x * -1, 0);
-			shotInstance.transform.position = new Vector3 (this.transform.position.x + (transform.localScale.x * (-20)), this.transform.position.y, this.transform.position.z);
+            Shot Shot = shotInstance.GetComponent<Shot>();
+            Shot.Source = this.gameObject;
+            shotInstance.transform.position = new Vector3(this.transform.position.x + (transform.localScale.x * (-20)), this.transform.position.y, this.transform.position.z);
+
+            Quaternion rotation = Quaternion.LookRotation
+            (_Player.transform.position - shotInstance.transform.position, shotInstance.transform.TransformDirection(Vector3.up));
+            shotInstance.transform.rotation = new Quaternion(0, 0, rotation.z, rotation.w);
+
+            Vector3 moveVector = _Player.transform.position - transform.position;
+            Shot.MoveVector = moveVector.normalized * ShootSpeed;
+
+
 		}
 	}
 
