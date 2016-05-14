@@ -11,6 +11,7 @@ GameObject:
   - 114: {fileID: 11480066}
   - 61: {fileID: 6194690}
   - 114: {fileID: 11403490}
+  - 50: {fileID: 5021752}
   m_Layer: 0
   m_Name: boar
   m_TagString: Untagged
@@ -28,6 +29,7 @@ GameObject:
   - 4: {fileID: 457096}
   - 212: {fileID: 21217754}
   - 95: {fileID: 9597114}
+  - 114: {fileID: 11477204}
   m_Layer: 0
   m_Name: boarSprite
   m_TagString: Untagged
@@ -116,6 +118,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 458450}
   m_RootOrder: 1
+--- !u!50 &5021752
+Rigidbody2D:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 114252}
+  m_UseAutoMass: 1
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 6
 --- !u!61 &6194690
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -159,6 +178,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CoinPrefab: {fileID: 164246, guid: dff4b7e0e27d55949bc38451ff3a0c9b, type: 2}
+--- !u!114 &11477204
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 134152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ca0770949f37ce4983fe315c2d2a4fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11480066
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -170,9 +200,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0f53a3087cd661449228327d42a849b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Life: 100
-  DamagePerHit: 10
-  speed: 150
+  Life: 15
+  DamagePerHit: 20
+  HitCoolDown: 0.5
+  IsBumpable: 1
+  DoesBumpPlayer: 1
+  BumpForce: 40
+  speed: 120
   pointA: {fileID: 191816}
   pointB: {fileID: 151682}
 --- !u!212 &21217754

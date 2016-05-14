@@ -20,6 +20,7 @@ public class Player : MonoBehaviour {
 	public float MinJumpSpeed = 200.0f;
 	public float JumpDelay = 0.19f;
 	public float Health = 100.0f;
+	public float HitCoolDown = 0.5f;
 
 	public ButtonScript BSMoveLeft;
 	public ButtonScript BSMoveRight;
@@ -37,14 +38,16 @@ public class Player : MonoBehaviour {
 
 	// private member
 	private bool 				m_FacingRight = false;
-	private bool 				m_BottomTouched =  false;
+	public bool 				m_BottomTouched =  false;
 	private bool 				m_FrontTouched =  false;
 	private Rigidbody2D 		m_RigidBody2D;
-	private BoxCollider2D 		m_BottoBox;
+	private BoxCollider2D 		m_BottomBox;
 	private CircleCollider2D 	m_BottomLeft;
 	private CircleCollider2D 	m_BottomRight;
-	private BoxCollider2D 		m_LeftBox;
+	//private BoxCollider2D 		m_LeftBox;
 	private BoxCollider2D 		m_RightBox;
+	private bool 				m_FiringA = false;
+	private bool 				m_BeingHit = false;
 
 	// variable
 	private bool 		_wasJumpDown = false;
@@ -52,11 +55,8 @@ public class Player : MonoBehaviour {
 	private bool 		_firstJump =  false;
 	private bool 		_firstJumpEnd =  false;
 	private bool 		_secondJump =  false;
-	private bool 		_weapon = false;
 	private LayerMask 	_wallsMask;
 	private float 		_idleTimer = 0.0f;
-	//private bool 		_frontHitOn = false;
-	private float 		_moveDeb;
 	public	bool 		_capJump = false;
 
 
@@ -64,10 +64,8 @@ public class Player : MonoBehaviour {
 	// should be in some PlayerAnim script !!!
 	Animator _anim;
 	int runHash = Animator.StringToHash("run");
-	int jumpHash = Animator.StringToHash("jump");
 	int hitHash = Animator.StringToHash("hit");
 	int deathHash = Animator.StringToHash("death");
-	int groundedHash = Animator.StringToHash("grounded");
 	int idleHash = Animator.StringToHash("idle");
 
 	Animator _AnimatorSwordCollideR;
@@ -80,10 +78,10 @@ public class Player : MonoBehaviour {
 		m_RigidBody2D = GetComponent<Rigidbody2D> ();
 		_wallsMask = LayerMask.GetMask("Walls");
 
-		m_BottoBox = GetComponents<BoxCollider2D> () [1];
+		m_BottomBox = GetComponents<BoxCollider2D> () [1];
 		m_BottomLeft = GetComponents<CircleCollider2D> () [0];
 		m_BottomRight = GetComponents<CircleCollider2D> () [1];
-		m_LeftBox = GetComponents<BoxCollider2D> () [2];
+		//m_LeftBox = GetComponents<BoxCollider2D> () [2];
 		m_RightBox = GetComponents<BoxCollider2D> () [3];
 	}
 
@@ -153,23 +151,22 @@ public class Player : MonoBehaviour {
 		else
 			move = Input.GetAxis ("Horizontal");
 
-		if (!_weapon && (BSFireA.CurrentState == ButtonScript.ButtonState.Down || Input.GetAxis("Fire1")==1)) {
-			_weapon = true;
-			//Weapon.SetActive (true);
+		if (!m_FiringA && (BSFireA.CurrentState == ButtonScript.ButtonState.Down || Input.GetAxis("Fire1")==1)) {
+			m_FiringA = true;
+
 			_anim.SetBool("fireA", true);
 			_AnimatorSwordCollideR.SetBool("fireA", true);
 			Invoke("ResetWeapon", WeaponCoolDown);
-
-			/*GameObject shotInstance = (GameObject)Instantiate (ShootPrefab);
-			shotInstance.GetComponent<Shot> ().moveVector = m_FacingRight ? new Vector2 (-ShootSpeed, 0) : new Vector2 (ShootSpeed, 0);
-			shotInstance.transform.position = m_FacingRight ? new Vector3(this.transform.position.x-100, this.transform.position.y + 150, this.transform.position.z) : new Vector3(this.transform.position.x+100, this.transform.position.y + 150, this.transform.position.z);
-			*/
 		}
 
-		_moveDeb = Mathf.Abs(move);
+		if (m_FiringA) {
+			m_RigidBody2D.velocity = new Vector2 (m_RigidBody2D.velocity.x, 0);	
+			move = 0;
+		}
+			
 
 		// Evalute states
-		m_BottomTouched = m_BottoBox.IsTouchingLayers (_wallsMask) || m_BottomLeft.IsTouchingLayers (_wallsMask) || m_BottomRight.IsTouchingLayers (_wallsMask);
+		m_BottomTouched = m_BottomBox.IsTouchingLayers (_wallsMask) || m_BottomLeft.IsTouchingLayers (_wallsMask) || m_BottomRight.IsTouchingLayers (_wallsMask);
 		m_FrontTouched = /*_left_box.IsTouchingLayers (wallsMask) ||*/ m_RightBox.IsTouchingLayers (_wallsMask) || m_BottomRight.IsTouchingLayers (_wallsMask);
 
 		if(m_BottomTouched) {
@@ -232,21 +229,30 @@ public class Player : MonoBehaviour {
 
 	void ResetWeapon()
 	{
-		//Weapon.SetActive (false);
-		_weapon = false;
+		m_FiringA = false;
 		_anim.SetBool ("fireA", false);
 		_AnimatorSwordCollideR.SetBool("fireA", false);
 	}
 
 	public void Hit (float iDamageValue){
-		Health -= iDamageValue;
-		PlayerHit _playerHitEvent = new PlayerHit(Health);
-		_anim.SetTrigger(hitHash);
-		Events.instance.Raise(_playerHitEvent);
-		if(Health <= 0){
-			_anim.SetTrigger(deathHash);
-			this.enabled = false;
+		if (!m_BeingHit) {
+			m_BeingHit = true;
+			Health -= iDamageValue;
+			PlayerHit _playerHitEvent = new PlayerHit (Health);
+			_anim.SetTrigger (hitHash);
+			Events.instance.Raise (_playerHitEvent);
+			if (Health <= 0) {
+				_anim.SetTrigger (deathHash);
+				this.enabled = false;
+			}
+			Invoke ("ResetBeingHit", HitCoolDown);
 		}
+	}
+
+	public void Bump(Vector3 iSourcePosition, float iBumpForce) {
+		Vector2 bumpDir = this.transform.position.x>iSourcePosition.x? new Vector2(iBumpForce,iBumpForce) : new Vector2(-iBumpForce,iBumpForce);
+
+		this.m_RigidBody2D.velocity += bumpDir;
 	}
 
     public void SetIdle(bool isIdle) {
@@ -256,11 +262,13 @@ public class Player : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D other) {
-
-        Enemy otherEnemy = other.gameObject.GetComponent<Enemy> ();
-		if (otherEnemy != null) {
-			Hit (otherEnemy.DamagePerHit);
-		}
+//        Enemy otherEnemy = other.gameObject.GetComponent<Enemy> ();
+//		if (otherEnemy != null) {
+//			Hit (otherEnemy.DamagePerHit);
+//
+//			//Bump player
+//			Vector3 bumpDirection = this.transform.position - otherEnemy.transform.position;
+//		}
 
         CoinScript otherCoin = other.gameObject.GetComponent<CoinScript>();
         if (otherCoin != null)
@@ -269,5 +277,10 @@ public class Player : MonoBehaviour {
         }
         
     }
+
+
+	void ResetBeingHit() {
+		m_BeingHit = false;
+	}
 		
 }

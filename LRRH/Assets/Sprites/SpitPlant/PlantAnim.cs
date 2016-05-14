@@ -12,10 +12,9 @@ public class PlantAnim : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
 	}
 
-	public void shot(){
+	public void blop(){
 		PlantScript.shot();
 	}
 }

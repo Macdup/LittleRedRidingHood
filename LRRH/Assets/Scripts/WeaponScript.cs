@@ -4,7 +4,8 @@ using AssemblyCSharp;
 
 public class WeaponScript : MonoBehaviour {
 
-	public float DamagaValue = 100;
+	public float DamagaValue = 100.0f;
+	public float BumpForce = 10.0f;
 
 
 	// Use this for initialization
@@ -18,10 +19,14 @@ public class WeaponScript : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
-		Debug.Log(other.name);
-		Enemy otherEnemy = other.gameObject.GetComponent<Enemy> ();
-		if (otherEnemy != null) {
-			otherEnemy.Hit (DamagaValue);
+		//Debug.Log(other.name);
+		Enemy enemy = other.gameObject.GetComponent<Enemy> ();
+		if (enemy != null) {
+			enemy.Hit (DamagaValue);
+
+			if (enemy.IsBumpable) {
+				enemy.Bump (this.transform.position, BumpForce);
+			}
 		}
 
         BushScript otherBushScript = other.gameObject.GetComponent<BushScript>();

@@ -8,9 +8,14 @@ namespace AssemblyCSharp
 		// public member
 		public float Life = 100.0f;
 		public float DamagePerHit = 10.0f;
+		public float HitCoolDown = 0.5f;
+		public bool  IsBumpable = false;
+		public bool  DoesBumpPlayer = false;
+		public float BumpForce = 0.0f;
 
 		// protected member
 		protected bool 		m_Dead = false;
+		protected bool 		m_BeingHit = false;
 		protected Animator 	m_Animator;
 
 		// private member
@@ -37,18 +42,47 @@ namespace AssemblyCSharp
 			if (m_Dead) {
 				if (m_Animator) {
 					m_Animator.SetBool ("dead", true);
-					AnimatorStateInfo asi = m_Animator.GetCurrentAnimatorStateInfo (0);
-					if (!m_Animator.IsInTransition (0) && asi.IsName ("die_exit")) {
-						DestroyImmediate (this.gameObject);
-					}
+				}
+			}
+		}
+
+		virtual public void OnTriggerEnter2D(Collider2D other) {
+			Player player = other.gameObject.GetComponent<Player> ();
+			if (player != null) {
+				player.Hit(DamagePerHit);
+
+				//Bump player
+				if (DoesBumpPlayer) {
+					player.Bump(this.transform.position, BumpForce);
 				}
 			}
 		}
 
 		virtual public void Hit(float iDamageValue) {
-			Life -= iDamageValue;
-			if(Life <= 0)
-				Death();
+			if(!m_BeingHit) {
+				m_BeingHit = true;
+	            if (m_Animator)
+	            {
+	                m_Animator.SetTrigger("hit");
+	            }
+				Life -= iDamageValue;
+				if (Life <= 0)
+					Death ();
+				else {
+					Invoke ("ResetHitCoolDown", HitCoolDown);
+				}
+			}
+		}
+
+		virtual public void Bump(Vector3 iSourcePosition, float iBumpForce) {
+			if (IsBumpable) {
+				Rigidbody2D rb = this.GetComponent<Rigidbody2D> ();
+				if (rb == null)
+					return;
+				
+				Vector2 bumpDir = this.transform.position.x>iSourcePosition.x? new Vector2(iBumpForce,iBumpForce) : new Vector2(-iBumpForce,iBumpForce);
+				rb.velocity += bumpDir;
+			}
 		}
 
 		virtual public void Death() {
@@ -65,6 +99,11 @@ namespace AssemblyCSharp
 
             if(m_Dropable != null)
                 m_Dropable.drop();
+		}
+
+
+		virtual public void ResetHitCoolDown() {
+			m_BeingHit = false;	
 		}
 
 	}
