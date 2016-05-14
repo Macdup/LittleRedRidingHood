@@ -29,6 +29,7 @@ GameObject:
   - 212: {fileID: 21263136}
   - 95: {fileID: 9513816}
   - 114: {fileID: 11473970}
+  - 114: {fileID: 11467246}
   m_Layer: 0
   m_Name: mushroomSprite
   m_TagString: Untagged
@@ -44,7 +45,7 @@ Transform:
   m_GameObject: {fileID: 143578}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3620, y: -60, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children:
   - {fileID: 480464}
   m_Father: {fileID: 0}
@@ -104,6 +105,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CoinPrefab: {fileID: 164246, guid: dff4b7e0e27d55949bc38451ff3a0c9b, type: 2}
+--- !u!114 &11467246
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ca0770949f37ce4983fe315c2d2a4fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11473970
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -126,8 +138,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28863dc4a067a8d4aaee28da092efffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Life: 100
-  DamagePerHit: 10
+  Life: 8
+  DamagePerHit: 8
   ShootPrefab: {fileID: 174666, guid: 90b6d05f710ec70409bdbcd7a3aeb4ed, type: 2}
   ShootSpeed: 300
   ShootCoolDown: 1

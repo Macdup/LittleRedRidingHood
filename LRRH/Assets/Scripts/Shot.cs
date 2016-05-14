@@ -3,36 +3,59 @@ using System.Collections;
 
 public class Shot : MonoBehaviour {
 
-	public GameObject Source;
-	public Vector3 moveVector;
-	public int hitDamage;
+    // public member
+	public Vector3 MoveVector;
+	public int HitDamage;
+    [HideInInspector]
+    public GameObject Source;
 
-	Animator anim;
-	int collideHash = Animator.StringToHash("collide");
+    // protected member
+    //protected bool m_Dead = false;
+
+    // private member
+    private Animator m_Anim;
+    private int m_collideHash = Animator.StringToHash("collide");
+
+    // variable
 
 	// Use this for initialization
 	void Start () {
-		anim = gameObject.GetComponentInChildren<Animator>();
+        m_Anim = gameObject.GetComponentInChildren<Animator>();
+        flip();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (this.enabled == true)
-		transform.Translate(moveVector * Time.deltaTime);
+        move();
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
-		if (other.gameObject == Source)
+        if (other.gameObject == Source)
 			return;
         if (this.enabled) {
-            anim.SetTrigger(collideHash);
+            m_Anim.SetTrigger(m_collideHash);
             GameObject collider = other.gameObject;
             if (collider.GetComponentInParent<Player>() != null && other is BoxCollider2D == true)
             {
-                collider.GetComponentInParent<Player>().Hit(hitDamage);
+                collider.GetComponentInParent<Player>().Hit(HitDamage);
                 this.enabled = false;
             };
         }
 	}
+
+    virtual public void move() {
+            if (this.enabled == true)
+                transform.Translate(MoveVector * Time.deltaTime,Space.World);
+		}
+
+    void flip() {
+        if (MoveVector.x < 0)
+        {
+            transform.localScale = new Vector3(1,1,1);
+        }
+        else {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
+    }
 
 }

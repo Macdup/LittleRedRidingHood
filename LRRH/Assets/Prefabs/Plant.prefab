@@ -10,7 +10,8 @@ GameObject:
   - 4: {fileID: 428492}
   - 212: {fileID: 21201526}
   - 95: {fileID: 9545018}
-  - 114: {fileID: 11480606}
+  - 114: {fileID: 11439494}
+  - 114: {fileID: 11424048}
   m_Layer: 0
   m_Name: PlantSprite
   m_TagString: Untagged
@@ -43,8 +44,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 175830}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.5, y: 38.8, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalPosition: {x: 650, y: 80, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 428492}
   m_Father: {fileID: 0}
@@ -70,7 +71,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_Offset: {x: -1, y: 0}
   serializedVersion: 2
@@ -92,6 +93,28 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &11424048
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 151148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6a6cb97509cc5e4a94b7d32994a5f30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11439494
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 151148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ca0770949f37ce4983fe315c2d2a4fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11472934
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -103,7 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58505c47a6da36d4ca80062e0896da42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Life: 100
+  Life: 10
   DamagePerHit: 10
   ShootPrefab: {fileID: 174666, guid: 90b6d05f710ec70409bdbcd7a3aeb4ed, type: 2}
   ShootSpeed: 100
@@ -120,17 +143,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CoinPrefab: {fileID: 164246, guid: dff4b7e0e27d55949bc38451ff3a0c9b, type: 2}
---- !u!114 &11480606
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 151148}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6a6cb97509cc5e4a94b7d32994a5f30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &21201526
 SpriteRenderer:
   m_ObjectHideFlags: 1
