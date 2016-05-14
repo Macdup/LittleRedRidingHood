@@ -16,6 +16,10 @@ public class LifeBar : MonoBehaviour {
 		fullSize = (int)this.GetComponent<RectTransform>().sizeDelta.x;
         //Debug.Log(fullSize); 
 	}
+
+	void OnDestroy() {
+		Events.instance.RemoveListener<PlayerHit> (onPlayerHit);
+	}
 	
 	// Update is called once per frame
 	void Update () {

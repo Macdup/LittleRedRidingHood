@@ -11,7 +11,6 @@ GameObject:
   - 212: {fileID: 21226482}
   - 95: {fileID: 9523970}
   - 114: {fileID: 11468680}
-  - 61: {fileID: 6131596}
   m_Layer: 8
   m_Name: PlayerSprite
   m_TagString: Untagged
@@ -30,12 +29,12 @@ GameObject:
   - 50: {fileID: 5055670}
   - 114: {fileID: 11494494}
   - 114: {fileID: 11406904}
-  - 61: {fileID: 6124054}
-  - 58: {fileID: 5816406}
-  - 58: {fileID: 5836664}
-  - 61: {fileID: 6189758}
-  - 61: {fileID: 6137858}
-  - 61: {fileID: 6174732}
+  - 61: {fileID: 6149166}
+  - 58: {fileID: 5873984}
+  - 58: {fileID: 5881892}
+  - 61: {fileID: 6125146}
+  - 61: {fileID: 6176306}
+  - 61: {fileID: 6149818}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -93,7 +92,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 117764}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 400, y: 0, z: 0}
+  m_LocalPosition: {x: 997.2, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 404742}
@@ -108,7 +107,7 @@ Rigidbody2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 117764}
   m_UseAutoMass: 1
-  m_Mass: 3850.0796
+  m_Mass: 1418.531
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -134,7 +133,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!58 &5816406
+--- !u!58 &5873984
 CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -145,10 +144,10 @@ CircleCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: -12.5, y: 5}
+  m_Offset: {x: -10.5, y: 4}
   serializedVersion: 2
-  m_Radius: 5
---- !u!58 &5836664
+  m_Radius: 4
+--- !u!58 &5881892
 CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -159,10 +158,10 @@ CircleCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: 12.5, y: 5}
+  m_Offset: {x: 8.5, y: 4}
   serializedVersion: 2
-  m_Radius: 5
---- !u!61 &6124054
+  m_Radius: 4
+--- !u!61 &6125146
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -173,24 +172,10 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 27.5}
+  m_Offset: {x: -1, y: 2}
   serializedVersion: 2
-  m_Size: {x: 25, y: 43}
---- !u!61 &6131596
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 113580}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 26}
-  serializedVersion: 2
-  m_Size: {x: 29, y: 52}
---- !u!61 &6137858
+  m_Size: {x: 19, y: 4}
+--- !u!61 &6149166
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -201,9 +186,23 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: -12.5, y: 27.5}
+  m_Offset: {x: -1, y: 27}
   serializedVersion: 2
-  m_Size: {x: 10, y: 43}
+  m_Size: {x: 19, y: 46}
+--- !u!61 &6149818
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 117764}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 10.5, y: 27}
+  serializedVersion: 2
+  m_Size: {x: 4, y: 46}
 --- !u!61 &6162026
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -218,7 +217,7 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
---- !u!61 &6174732
+--- !u!61 &6176306
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -229,23 +228,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: 12.5, y: 27.5}
+  m_Offset: {x: -12.5, y: 27}
   serializedVersion: 2
-  m_Size: {x: 10, y: 43}
---- !u!61 &6189758
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 117764}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 4.5}
-  serializedVersion: 2
-  m_Size: {x: 25, y: 10}
+  m_Size: {x: 4, y: 46}
 --- !u!95 &9512784
 Animator:
   serializedVersion: 3
@@ -286,12 +271,16 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 117764}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c881d45a389011e4aa55e20673598ac9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   GenerateCollider: 0
+  PlayerHeight: 50
+  PlayerWidth: 27
+  PlayerOffset: {x: -1, y: 0}
+  CircleRadius: 4
 --- !u!114 &11468680
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -315,6 +304,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DamagaValue: 5
+  BumpForce: 10
 --- !u!114 &11494494
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -331,6 +321,7 @@ MonoBehaviour:
   MinJumpSpeed: 400
   JumpDelay: 0.19
   Health: 100
+  HitCoolDown: 0.5
   BSMoveLeft: {fileID: 0}
   BSMoveRight: {fileID: 0}
   BSJump: {fileID: 0}
@@ -339,6 +330,7 @@ MonoBehaviour:
   Weapon: {fileID: 0}
   WeaponCoolDown: 0.1
   TouchDetectionRadius: 0.2
+  m_BottomTouched: 0
   _capJump: 0
 --- !u!212 &21226482
 SpriteRenderer:

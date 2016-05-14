@@ -24,14 +24,13 @@ public class boar : Enemy {
         B = pointB.transform.position;
         target = A;
         transform.localScale = (new Vector3(1, 1, 1));
-
 		base.Start();
     }
 
     // Update is called once per frame
 	public override void Update()
     {
-		if (!m_Dead) {
+		if (!m_Dead && !m_BeingHit) {
 			
 			transform.position = Vector3.MoveTowards (transform.position, target, speed * Time.deltaTime);
 
