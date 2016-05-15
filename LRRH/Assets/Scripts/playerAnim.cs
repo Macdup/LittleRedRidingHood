@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class playerAnim : MonoBehaviour {
+public class PlayerAnim : MonoBehaviour {
 
     private Player playerScript; 
 

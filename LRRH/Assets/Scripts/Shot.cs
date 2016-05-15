@@ -30,7 +30,7 @@ public class Shot : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
-        if (other.gameObject == Source)
+		if (Source == null || other.gameObject == Source || other.transform.IsChildOf(Source.transform))
 			return;
         if (this.enabled) {
             m_Anim.SetTrigger(m_collideHash);

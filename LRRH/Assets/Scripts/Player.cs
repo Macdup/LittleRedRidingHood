@@ -4,13 +4,6 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using AssemblyCSharp;
 
-// should have its own script or be in GameEvent.cs !
-public class PlayerHit : GameEvent{
-	public float Health;
-	public PlayerHit(float iHealth){
-		Health = iHealth;
-	}
-}
 
 public class Player : MonoBehaviour {
 
@@ -273,6 +266,9 @@ public class Player : MonoBehaviour {
         CoinScript otherCoin = other.gameObject.GetComponent<CoinScript>();
         if (otherCoin != null)
         {
+			PlayerLoot lootEvent = new PlayerLoot (otherCoin.gameObject);
+			Events.instance.Raise (lootEvent);
+
             otherCoin.CoinAnim.destroy();
         }
         
