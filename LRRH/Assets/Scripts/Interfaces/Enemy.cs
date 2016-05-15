@@ -43,6 +43,9 @@ namespace AssemblyCSharp
 				if (m_Animator) {
 					m_Animator.SetBool ("dead", true);
 				}
+				Rigidbody2D rb = this.GetComponent<Rigidbody2D> ();
+				if (rb != null)
+					rb.velocity = Vector2.zero;
 			}
 		}
 

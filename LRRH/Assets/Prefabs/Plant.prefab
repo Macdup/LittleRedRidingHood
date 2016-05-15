@@ -1,5 +1,21 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &121866
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 464948}
+  - 61: {fileID: 6105534}
+  m_Layer: 0
+  m_Name: PlantZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &151148
 GameObject:
   m_ObjectHideFlags: 0
@@ -44,10 +60,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 175830}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 650, y: 80, z: 0}
+  m_LocalPosition: {x: 2664, y: 41, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 428492}
+  - {fileID: 464948}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &428492
@@ -62,6 +79,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 424618}
   m_RootOrder: 0
+--- !u!4 &464948
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 121866}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 424618}
+  m_RootOrder: 1
+--- !u!61 &6105534
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 121866}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: -95, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 200, y: 200}
 --- !u!61 &6193226
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -128,6 +171,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Life: 10
   DamagePerHit: 10
+  HitCoolDown: 0.5
+  IsBumpable: 0
+  DoesBumpPlayer: 0
+  BumpForce: 0
   ShootPrefab: {fileID: 174666, guid: 90b6d05f710ec70409bdbcd7a3aeb4ed, type: 2}
   ShootSpeed: 100
   ShootCoolDown: 3

@@ -13,7 +13,7 @@ GameObject:
   - 114: {fileID: 11403490}
   - 50: {fileID: 5021752}
   m_Layer: 0
-  m_Name: boar
+  m_Name: Boar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ GameObject:
   - 95: {fileID: 9597114}
   - 114: {fileID: 11477204}
   m_Layer: 0
-  m_Name: boarSprite
+  m_Name: BoarSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -206,9 +206,20 @@ MonoBehaviour:
   IsBumpable: 1
   DoesBumpPlayer: 1
   BumpForce: 40
+  m_Dead: 0
+  m_BeingHit: 0
+  m_Animator: {fileID: 0}
+  m_SpriteRenderer: {fileID: 0}
+  m_Dropable: {fileID: 0}
+  _anim: {fileID: 0}
+  shotHash: -1425569605
   speed: 120
   pointA: {fileID: 191816}
   pointB: {fileID: 151682}
+  A: {x: 0, y: 0, z: 0}
+  B: {x: 0, y: 0, z: 0}
+  target: {x: 0, y: 0, z: 0}
+  isFacingRight: 0
 --- !u!212 &21217754
 SpriteRenderer:
   m_ObjectHideFlags: 1
