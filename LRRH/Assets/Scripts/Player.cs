@@ -144,6 +144,16 @@ public class Player : MonoBehaviour {
 		else
 			move = Input.GetAxis ("Horizontal");
 
+		// Evalute states
+		m_BottomTouched = m_BottomBox.IsTouchingLayers (_wallsMask) || m_BottomLeft.IsTouchingLayers (_wallsMask) || m_BottomRight.IsTouchingLayers (_wallsMask);
+		m_FrontTouched = /*_left_box.IsTouchingLayers (wallsMask) ||*/ m_RightBox.IsTouchingLayers (_wallsMask) || m_BottomRight.IsTouchingLayers (_wallsMask);
+
+		if(m_BottomTouched) {
+			_firstJump = false;
+			_secondJump = false;
+		}
+
+
 		if (!m_FiringA && (BSFireA.CurrentState == ButtonScript.ButtonState.Down || Input.GetAxis("Fire1")==1)) {
 			m_FiringA = true;
 
@@ -153,19 +163,11 @@ public class Player : MonoBehaviour {
 		}
 
 		if (m_FiringA) {
-			m_RigidBody2D.velocity = new Vector2 (m_RigidBody2D.velocity.x, 0);	
+			if(m_BottomTouched)
+				m_RigidBody2D.velocity = Vector2.zero;
 			move = 0;
 		}
-			
 
-		// Evalute states
-		m_BottomTouched = m_BottomBox.IsTouchingLayers (_wallsMask) || m_BottomLeft.IsTouchingLayers (_wallsMask) || m_BottomRight.IsTouchingLayers (_wallsMask);
-		m_FrontTouched = /*_left_box.IsTouchingLayers (wallsMask) ||*/ m_RightBox.IsTouchingLayers (_wallsMask) || m_BottomRight.IsTouchingLayers (_wallsMask);
-
-		if(m_BottomTouched) {
-			_firstJump = false;
-			_secondJump = false;
-		}
 
 		//Animation part
 		_anim.SetFloat("velocityY", m_RigidBody2D.velocity.y);

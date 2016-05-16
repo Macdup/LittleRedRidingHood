@@ -16,7 +16,7 @@ public class CoinScript : MonoBehaviour {
     {
         CoinAnim = this.GetComponentInChildren<CoinAnim>();
         Rigidbody2D = GetComponent<Rigidbody2D>();
-        Rigidbody2D.AddForce(new Vector2(100,350),ForceMode2D.Impulse);
+		Rigidbody2D.AddForce(new Vector2(Random.Range(-150,150),Random.Range(50,350)),ForceMode2D.Impulse);
     }
 
     // Update is called once per frame
