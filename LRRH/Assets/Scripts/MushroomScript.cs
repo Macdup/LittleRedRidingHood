@@ -5,8 +5,8 @@ using AssemblyCSharp;
 public class MushroomScript : Enemy {
 
     public GameObject ShootPrefab;
-    public float ShootSpeed = 10.0f;
-    public float ShootCoolDown = 30f;
+    public float ShootSpeed = 100.0f;
+	public float ShootCoolDown = 3.0f;
 
     Animator _anim;
     int shotHash = Animator.StringToHash("shot");

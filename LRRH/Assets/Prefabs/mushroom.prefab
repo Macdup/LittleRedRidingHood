@@ -117,15 +117,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28863dc4a067a8d4aaee28da092efffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Life: 100
+  Life: 5
   DamagePerHit: 10
   HitCoolDown: 0.5
   IsBumpable: 0
   DoesBumpPlayer: 0
   BumpForce: 0
-  ShootPrefab: {fileID: 0}
-  ShootSpeed: 10
-  ShootCoolDown: 30
+  ShootPrefab: {fileID: 174666, guid: 90b6d05f710ec70409bdbcd7a3aeb4ed, type: 2}
+  ShootSpeed: 100
+  ShootCoolDown: 3
 --- !u!114 &11467246
 MonoBehaviour:
   m_ObjectHideFlags: 1
