@@ -36,8 +36,6 @@ public class PolygonColliderGenerator : MonoBehaviour {
 
 		PolygonCollider2D collider = iLevel.AddComponent<PolygonCollider2D> ();
 
-		string spriteName = iLevel.GetComponent<SpriteRenderer> ().sprite.name;
-
 		//Load Xml
 		if(textXML != null)
 		{

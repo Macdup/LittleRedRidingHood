@@ -30,17 +30,20 @@ public class Shot : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
-        if (other.gameObject == Source)
+		if (Source == null || other.gameObject == Source)
 			return;
-        if (this.enabled) {
-            m_Anim.SetTrigger(m_collideHash);
-            GameObject collider = other.gameObject;
-            if (collider.GetComponentInParent<Player>() != null && other is BoxCollider2D == true)
-            {
-                collider.GetComponentInParent<Player>().Hit(HitDamage);
-                this.enabled = false;
-            };
-        }
+		
+		if (other.gameObject.layer == LayerMask.NameToLayer ("Player")
+		   || other.gameObject.layer == LayerMask.NameToLayer ("Walls")) {
+			if (this.enabled) {
+				m_Anim.SetTrigger (m_collideHash);
+				GameObject collider = other.gameObject;
+				/*if (collider.GetComponentInParent<Player> () != null && other is BoxCollider2D == true) {
+					collider.GetComponentInParent<Player> ().Hit (HitDamage);*/
+					this.enabled = false;
+				/*}*/
+			}
+		}
 	}
 
     virtual public void move() {

@@ -6,6 +6,25 @@ public class GameEvent
 {
 }
 
+public class PlayerHit : GameEvent{
+	public float Health;
+	public PlayerHit(float iHealth){
+		Health = iHealth;
+	}
+}
+
+public class PlayerLoot : GameEvent{
+	public GameObject Loot;
+	public PlayerLoot(GameObject iLoot){
+		Loot = iLoot;
+	}
+}
+
+
+
+
+
+
 public class Events
 {
 	static Events instanceInternal = null;
