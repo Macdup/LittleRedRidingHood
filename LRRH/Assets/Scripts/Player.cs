@@ -18,8 +18,8 @@ public class Player : MonoBehaviour {
 	public ButtonScript BSMoveLeft;
 	public ButtonScript BSMoveRight;
 	public ButtonScript BSJump;
-	public ButtonScript BSFireA;
-	public ButtonScript BSFireB;   
+	public ButtonScript BSAttack;
+	public ButtonScript BSDefend;   
 
 	public GameObject 	Weapon;
 	//public float 		WeaponDuration = 1000.0f;
@@ -39,8 +39,12 @@ public class Player : MonoBehaviour {
 	private CircleCollider2D 	m_BottomRight;
 	//private BoxCollider2D 		m_LeftBox;
 	private BoxCollider2D 		m_RightBox;
-	private bool 				m_FiringA = false;
+	private bool 				m_Attacking = false;
 	private bool 				m_BeingHit = false;
+    private float               m_DefenseStat = 5.0f;
+    private bool                m_Defending;
+    
+
 
 	// variable
 	private bool 		_wasJumpDown = false;
@@ -60,6 +64,8 @@ public class Player : MonoBehaviour {
 	int hitHash = Animator.StringToHash("hit");
 	int deathHash = Animator.StringToHash("death");
 	int idleHash = Animator.StringToHash("idle");
+    int _DefendHash = Animator.StringToHash("defend");
+    
 
 	Animator _AnimatorSwordCollideR;
 
@@ -83,8 +89,6 @@ public class Player : MonoBehaviour {
 	//private bool _wasJumpDown = false;
 
 	void Update() {
-		bool isJumpDown = false;
-		bool isJumpUp = false;
 
         //Idle timer
         _idleTimer += Time.deltaTime;
@@ -97,6 +101,10 @@ public class Player : MonoBehaviour {
         if (_idleTimer >= 2) {
             SetIdle(true);
         }
+
+        // Gestion du jump
+        bool isJumpDown = false;
+        bool isJumpUp = false;
 
 		isJumpDown = Input.GetButtonDown ("Jump") || (BSJump.CurrentState == ButtonScript.ButtonState.Down && !_wasJumpDown);
 		isJumpUp = Input.GetButtonUp ("Jump") || (BSJump.CurrentState == ButtonScript.ButtonState.Up && !_wasJumpUp);
@@ -131,6 +139,16 @@ public class Player : MonoBehaviour {
 				m_RigidBody2D.velocity = new Vector2 (m_RigidBody2D.velocity.x, MinJumpSpeed);
 				//StartCoroutine (Jump (MinJumpSpeed));
 		}
+
+        //Gestion de la défense
+        bool isDefendDown = Input.GetButtonDown("Defend") || (BSDefend.CurrentState == ButtonScript.ButtonState.Down);
+
+        if (isDefendDown)
+        {
+            m_Defending = true;
+            _anim.SetBool("Defend", true);
+        }
+
 	}
 
 	void FixedUpdate () {
@@ -154,15 +172,16 @@ public class Player : MonoBehaviour {
 		}
 
 
-		if (!m_FiringA && (BSFireA.CurrentState == ButtonScript.ButtonState.Down || Input.GetAxis("Fire1")==1)) {
-			m_FiringA = true;
+        if (!m_Attacking && (BSAttack.CurrentState == ButtonScript.ButtonState.Down || Input.GetAxis("Attack") == 1))
+        {
+			m_Attacking = true;
 
-			_anim.SetBool("fireA", true);
-			_AnimatorSwordCollideR.SetBool("fireA", true);
+            _anim.SetBool("Attack", true);
+            _AnimatorSwordCollideR.SetBool("Attack", true);
 			Invoke("ResetWeapon", WeaponCoolDown);
 		}
 
-		if (m_FiringA) {
+		if (m_Attacking) {
 			if(m_BottomTouched)
 				m_RigidBody2D.velocity = Vector2.zero;
 			move = 0;
@@ -224,12 +243,16 @@ public class Player : MonoBehaviour {
 
 	void ResetWeapon()
 	{
-		m_FiringA = false;
-		_anim.SetBool ("fireA", false);
-		_AnimatorSwordCollideR.SetBool("fireA", false);
+		m_Attacking = false;
+        _anim.SetBool("Attack", false);
+        _AnimatorSwordCollideR.SetBool("Attack", false);
 	}
 
 	public void Hit (float iDamageValue){
+        
+        if (m_Defending)
+            iDamageValue -= m_DefenseStat;
+
 		if (!m_BeingHit) {
 			m_BeingHit = true;
 			Health -= iDamageValue;
