@@ -40,7 +40,7 @@ public class Shot : MonoBehaviour {
 				m_Anim.SetTrigger (m_collideHash);
 			}
             Player player = other.gameObject.GetComponent<Player> ();
-            Debug.Log(player);
+            //Debug.Log(player);
             if (player != null)
             {
                 player.Hit(HitDamage);
