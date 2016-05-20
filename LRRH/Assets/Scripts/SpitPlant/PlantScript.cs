@@ -59,6 +59,7 @@ public class PlantScript : Enemy {
 			GameObject shotInstance = (GameObject)Instantiate (ShootPrefab);
             Shot Shot = shotInstance.GetComponent<Shot>();
             Shot.Source = this.gameObject;
+            Shot.HitDamage = DamagePerHit;
             shotInstance.transform.position = new Vector3(this.transform.position.x + (transform.localScale.x * (-20)), this.transform.position.y, this.transform.position.z);
 
             Quaternion rotation = Quaternion.LookRotation

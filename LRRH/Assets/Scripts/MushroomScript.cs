@@ -25,8 +25,10 @@ public class MushroomScript : Enemy {
 
     public void shot() {
 		if (!m_Dead) {
-			GameObject shotInstance = (GameObject)Instantiate (ShootPrefab);
-			shotInstance.GetComponent<Shot> ().Source = this.gameObject;
+            GameObject shotInstance = (GameObject)Instantiate(ShootPrefab);
+			Shot shot = shotInstance.GetComponent<Shot> ();
+            shot.Source = this.gameObject;
+            shot.HitDamage = DamagePerHit;
 			shotInstance.GetComponent<Shot> ().MoveVector = new Vector2 (ShootSpeed * transform.localScale.x * -1, 0);
 			shotInstance.transform.position = new Vector3 (this.transform.position.x + (transform.localScale.x * (-20)), this.transform.position.y + 10, this.transform.position.z);
 			Invoke ("startShot", ShootCoolDown);
