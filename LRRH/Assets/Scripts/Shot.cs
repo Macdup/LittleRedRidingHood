@@ -5,7 +5,7 @@ public class Shot : MonoBehaviour {
 
     // public member
 	public Vector3 MoveVector;
-	public int HitDamage;
+	public float HitDamage;
     [HideInInspector]
     public GameObject Source;
 
@@ -35,14 +35,16 @@ public class Shot : MonoBehaviour {
 		
 		if (other.gameObject.layer == LayerMask.NameToLayer ("Player")
 		   || other.gameObject.layer == LayerMask.NameToLayer ("Walls")) {
-			if (this.enabled) {
+			
+            if (this.enabled) {
 				m_Anim.SetTrigger (m_collideHash);
-				GameObject collider = other.gameObject;
-				/*if (collider.GetComponentInParent<Player> () != null && other is BoxCollider2D == true) {
-					collider.GetComponentInParent<Player> ().Hit (HitDamage);*/
-					this.enabled = false;
-				/*}*/
 			}
+            Player player = other.gameObject.GetComponent<Player> ();
+            Debug.Log(player);
+            if (player != null)
+            {
+                player.Hit(HitDamage);
+            }
 		}
 	}
 
