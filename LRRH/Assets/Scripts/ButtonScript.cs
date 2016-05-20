@@ -17,12 +17,12 @@ public class ButtonScript : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
 	public void OnPointerDown (PointerEventData eventData) {
 		CurrentState = ButtonState.Down;
-		this.GetComponent<Image> ().color = new Color (0.78f, 0.39f, 0.24f, 1.0f);
+        this.GetComponent<Image>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
 	}
 
 	public void OnPointerUp (PointerEventData eventData) {
 		CurrentState = ButtonState.Up;
-		this.GetComponent<Image> ().color = new Color (1.0f, 1.0f, 1.0f, 0.4f);
+		this.GetComponent<Image> ().color = new Color (1.0f, 1.0f, 1.0f, 0.1f);
 	}
 	
 	// Update is called once per frame
