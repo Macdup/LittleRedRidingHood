@@ -5,24 +5,29 @@ using UnityEngine.UI;
 public class HUDScript : MonoBehaviour {
 
 	public RectTransform LifeBar;
+    public RectTransform StaminaBar;
 	public Text ScoreText;
 
 	private int m_LifeBarSize;
+    private int m_StaminaBarSize;
 	private int m_Score;
 
 
 	void Start () {
 		m_LifeBarSize = (int)LifeBar.sizeDelta.x;
+        m_StaminaBarSize = (int)StaminaBar.sizeDelta.x;
 		m_Score = 0;
 	}
 
 	public void OnEnable () {
 		Events.instance.AddListener<PlayerHit>(onPlayerHit);
 		Events.instance.AddListener<PlayerLoot>(onPlayerLoot);
+        Events.instance.AddListener<PlayerDefend>(onPlayerDefend);
 	}
 	void OnDestroy() {
 		Events.instance.RemoveListener<PlayerHit> (onPlayerHit);
 		Events.instance.RemoveListener<PlayerLoot>(onPlayerLoot);
+        Events.instance.RemoveListener<PlayerDefend>(onPlayerDefend);
 	}
 
 
@@ -41,4 +46,11 @@ public class HUDScript : MonoBehaviour {
 		++m_Score;
 		ScoreText.text = m_Score.ToString();
 	}
+
+    void onPlayerDefend(PlayerDefend e)
+    {
+        Vector2 actualSize = StaminaBar.sizeDelta;
+        actualSize.x = e.Stamina * m_StaminaBarSize / 100;
+        StaminaBar.sizeDelta = actualSize;
+    }
 }
