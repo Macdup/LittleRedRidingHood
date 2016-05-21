@@ -41,8 +41,13 @@ public class Player : MonoBehaviour {
 	private BoxCollider2D 		m_RightBox;
 	private bool 				m_Attacking = false;
 	private bool 				m_BeingHit = false;
-    private float               m_DefenseStat = 5.0f;
+    private float               m_DefenseStat = 10.0f;
     private bool                m_Defending;
+    private float               m_Stamina = 100.0f;
+    private float               m_StaminaMax = 100.0f;
+    private float               m_StaminaMin = 0.0f;
+    private float               m_StaminaConsommation = 30.0f;
+    private float               m_StaminaRegeneration = 30.0f;
     
 
 
@@ -142,11 +147,38 @@ public class Player : MonoBehaviour {
 
         //Gestion de la défense
         bool isDefendDown = Input.GetButtonDown("Defend") || (BSDefend.CurrentState == ButtonScript.ButtonState.Down);
+        bool isDefendUp = Input.GetButtonUp("Defend") || (BSDefend.CurrentState == ButtonScript.ButtonState.Up);
 
-        if (isDefendDown)
+        if (isDefendDown && m_Stamina>0)
         {
             m_Defending = true;
             _anim.SetBool("Defend", true);
+        }
+
+        if (isDefendUp)
+        {
+            m_Defending = false;
+            _anim.SetBool("Defend", false);
+        }
+
+        if (m_Defending)
+        {
+            if (m_Stamina < m_StaminaMin) {
+                m_Defending = false;
+                _anim.SetBool("Defend", false);
+                return;
+            }
+            m_Stamina -= m_StaminaConsommation * Time.deltaTime;
+            PlayerDefend DefendEvent = new PlayerDefend(m_Stamina);
+            Events.instance.Raise(DefendEvent);
+        }
+        else if( m_Stamina < m_StaminaMax)
+        {
+            m_Stamina += m_StaminaRegeneration * Time.deltaTime;
+            if (m_Stamina > m_StaminaMax)
+                m_Stamina = m_StaminaMax;
+            PlayerDefend DefendEvent = new PlayerDefend(m_Stamina);
+            Events.instance.Raise(DefendEvent);
         }
 
 	}
@@ -249,10 +281,10 @@ public class Player : MonoBehaviour {
 	}
 
 	public void Hit (float iDamageValue){
-        
+        Debug.Log("before : " + iDamageValue);
         if (m_Defending)
             iDamageValue -= m_DefenseStat;
-
+        Debug.Log("after : " + iDamageValue);
 		if (!m_BeingHit) {
 			m_BeingHit = true;
 			Health -= iDamageValue;

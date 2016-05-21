@@ -20,6 +20,15 @@ public class PlayerLoot : GameEvent{
 	}
 }
 
+public class PlayerDefend : GameEvent
+{
+    public float Stamina;
+    public PlayerDefend(float iStamina)
+    {
+        Stamina = iStamina;
+    }
+}
+
 
 
 
