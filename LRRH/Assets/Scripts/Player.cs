@@ -23,7 +23,8 @@ public class Player : MonoBehaviour {
 
 	public GameObject 	Weapon;
 	//public float 		WeaponDuration = 1000.0f;
-	public float 		WeaponCoolDown = 0.1f;
+	//public float 		WeaponCoolDown = 0.1f;
+	public float		AttackCoolDown = 0.15f;
 
 	public float 		TouchDetectionRadius = 0.2f;
 
@@ -39,7 +40,8 @@ public class Player : MonoBehaviour {
 	private CircleCollider2D 	m_BottomRight;
 	//private BoxCollider2D 		m_LeftBox;
 	private BoxCollider2D 		m_RightBox;
-	private bool 				m_Attacking = false;
+	//private bool 				m_Attacking = false;
+	private int 				m_AttackCount = 0;
 	private bool 				m_BeingHit = false;
     private float               m_DefenseStat = 10.0f;
     private bool                m_Defending;
@@ -59,7 +61,9 @@ public class Player : MonoBehaviour {
 	private bool 		_secondJump =  false;
 	private LayerMask 	_wallsMask;
 	private float 		_idleTimer = 0.0f;
-	public	bool 		_capJump = false;
+	private	bool 		_capJump = false;
+	private float 		_deltaFromLastAttack = 0.0f;
+	private bool 		_attackWasUp = true;
 
 
 
@@ -72,13 +76,13 @@ public class Player : MonoBehaviour {
     int _DefendHash = Animator.StringToHash("defend");
     
 
-	Animator _AnimatorSwordCollideR;
+	//Animator _AnimatorSwordCollideR;
 
 
 	// Use this for initialization
 	void Start () {
 		_anim = GetComponentInChildren<Animator>();
-		_AnimatorSwordCollideR = transform.GetChild(1).GetComponent<Animator>();
+		//_AnimatorSwordCollideR = transform.GetChild(0).GetChild(0).GetComponent<Animator>();
 		m_RigidBody2D = GetComponent<Rigidbody2D> ();
 		_wallsMask = LayerMask.GetMask("Walls");
 
@@ -203,17 +207,37 @@ public class Player : MonoBehaviour {
 			_secondJump = false;
 		}
 
+		if (m_AttackCount > 0)
+			_deltaFromLastAttack += Time.fixedDeltaTime;
 
-        if (!m_Attacking && (BSAttack.CurrentState == ButtonScript.ButtonState.Down || Input.GetAxis("Attack") == 1))
+		if(BSAttack.CurrentState != ButtonScript.ButtonState.Down && Input.GetAxis("Attack") != 1)
+			_attackWasUp = true;
+		else if(_attackWasUp && m_AttackCount <3)
         {
-			m_Attacking = true;
+			_attackWasUp = false;
+			++m_AttackCount;
+			_deltaFromLastAttack = 0;
 
-            _anim.SetBool("Attack", true);
-            _AnimatorSwordCollideR.SetBool("Attack", true);
-			Invoke("ResetWeapon", WeaponCoolDown);
+			if (m_AttackCount == 1) {
+				_anim.SetBool ("Attack", true);
+				Invoke("ResetAttack", 0.75f);
+				Invoke("ResetAttackAnim", 0.15f);
+			} else if (m_AttackCount == 2) {
+				_anim.SetBool ("Attack", true);
+				_anim.SetBool ("AttackDouble", true);
+				Invoke("ResetAttackDouble", 0.75f);
+				Invoke("ResetAttackDoubleAnim", 0.15f);
+			} else if (m_AttackCount == 3) {
+				_anim.SetBool ("Attack", true);
+				_anim.SetBool ("AttackDouble", true);
+				_anim.SetBool ("AttackTripple", true);
+				Invoke("ResetAttackTripple", 0.2f);
+				Invoke("ResetAttackTrippleAnim", 0.20f);
+			}
+			//Invoke("ResetAttackCount", 1.0f);
 		}
 
-		if (m_Attacking) {
+		if (m_AttackCount>0) {
 			if(m_BottomTouched)
 				m_RigidBody2D.velocity = Vector2.zero;
 			move = 0;
@@ -273,11 +297,32 @@ public class Player : MonoBehaviour {
 		transform.localScale = lScale;
 	}
 
-	void ResetWeapon()
-	{
-		m_Attacking = false;
-        _anim.SetBool("Attack", false);
-        _AnimatorSwordCollideR.SetBool("Attack", false);
+	void ResetAttack() {
+		if (m_AttackCount != 1)
+			return;
+		m_AttackCount=0;
+	}
+	void ResetAttackAnim() {
+		_anim.SetBool ("Attack", false);
+	}
+	void ResetAttackDouble() {
+		if (m_AttackCount != 2)
+			return;		
+		m_AttackCount=0;
+	}
+	void ResetAttackDoubleAnim() {
+		_anim.SetBool ("Attack", false);
+		_anim.SetBool ("AttackDouble", false);
+	}
+	void ResetAttackTripple() {
+		if (m_AttackCount != 3)
+			return;
+		m_AttackCount=0;
+	}
+	void ResetAttackTrippleAnim() {
+		_anim.SetBool ("Attack", false);
+		_anim.SetBool ("AttackDouble", false);
+		_anim.SetBool ("AttackTripple", false);
 	}
 
 	public void Hit (float iDamageValue){
