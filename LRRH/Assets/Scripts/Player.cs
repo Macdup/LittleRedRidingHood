@@ -21,9 +21,7 @@ public class Player : MonoBehaviour {
 	public ButtonScript BSAttack;
 	public ButtonScript BSDefend;   
 
-	public GameObject 	Weapon;
-	//public float 		WeaponDuration = 1000.0f;
-	//public float 		WeaponCoolDown = 0.1f;
+	public WeaponScript Weapon;
 	public float		AttackCoolDown = 0.15f;
 
 	public float 		TouchDetectionRadius = 0.2f;
@@ -41,6 +39,8 @@ public class Player : MonoBehaviour {
 	//private BoxCollider2D 		m_LeftBox;
 	private BoxCollider2D 		m_RightBox;
 	//private bool 				m_Attacking = false;
+    private bool                m_ComboPossibility = false;
+    private bool                m_ComboValidated = false;
 	private int 				m_AttackCount = 0;
 	private bool 				m_BeingHit = false;
     private float               m_DefenseStat = 10.0f;
@@ -48,8 +48,8 @@ public class Player : MonoBehaviour {
     private float               m_Stamina = 100.0f;
     private float               m_StaminaMax = 100.0f;
     private float               m_StaminaMin = 0.0f;
-    private float               m_StaminaConsommation = 30.0f;
-    private float               m_StaminaRegeneration = 30.0f;
+    private float               m_StaminaConsommation = 10.0f;
+    private float               m_StaminaRegeneration = 10.0f;
     
 
 
@@ -82,6 +82,7 @@ public class Player : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		_anim = GetComponentInChildren<Animator>();
+        Weapon = GetComponentInChildren<WeaponScript>();
 		//_AnimatorSwordCollideR = transform.GetChild(0).GetChild(0).GetComponent<Animator>();
 		m_RigidBody2D = GetComponent<Rigidbody2D> ();
 		_wallsMask = LayerMask.GetMask("Walls");
@@ -98,7 +99,6 @@ public class Player : MonoBehaviour {
 	//private bool _wasJumpDown = false;
 
 	void Update() {
-
         //Idle timer
         _idleTimer += Time.deltaTime;
 
@@ -185,6 +185,51 @@ public class Player : MonoBehaviour {
             Events.instance.Raise(DefendEvent);
         }
 
+        float TestStamina = m_Stamina - Weapon.StaminaConsomation;
+
+        if (BSAttack.CurrentState != ButtonScript.ButtonState.Down && Input.GetAxis("Attack") != 1)
+        {
+            _attackWasUp = true;
+        }
+        else if (_attackWasUp && m_AttackCount < 3 && TestStamina > m_StaminaMin && (m_AttackCount == 0 || m_ComboPossibility == true))
+        {
+            SetIdle(false);
+            _attackWasUp = false;
+            ++m_AttackCount;
+            _deltaFromLastAttack = 0;
+
+            if (m_AttackCount == 1)
+            {
+                _anim.SetBool("Attack", true);
+                //Invoke("ResetAttack", 0.75f);
+                //Invoke("ResetAttackAnim", 0.15f);
+                m_Stamina -= Weapon.StaminaConsomation;
+                PlayerDefend DefendEvent = new PlayerDefend(m_Stamina);
+                Events.instance.Raise(DefendEvent);
+            }
+            else if (m_AttackCount == 2)
+            {
+                m_ComboValidated = true;
+                m_ComboPossibility = false;
+                //_anim.SetBool ("Attack", true);
+                //_anim.SetBool ("AttackDouble", true);
+                //Invoke("ResetAttackDouble", 0.75f);
+                //Invoke("ResetAttackDoubleAnim", 0.15f);
+            }
+            else if (m_AttackCount == 3)
+            {
+                m_ComboValidated = true;
+                m_ComboPossibility = false;
+                //_anim.SetBool ("Attack", true);
+                //_anim.SetBool ("AttackDouble", true);
+                //_anim.SetBool ("AttackTripple", true);
+                //Invoke("ResetAttackTripple", 0.2f);
+                //Invoke("ResetAttackTrippleAnim", 0.20f);
+            }
+            //Invoke("ResetAttackCount", 1.0f);
+
+        }
+
 	}
 
 	void FixedUpdate () {
@@ -210,32 +255,7 @@ public class Player : MonoBehaviour {
 		if (m_AttackCount > 0)
 			_deltaFromLastAttack += Time.fixedDeltaTime;
 
-		if(BSAttack.CurrentState != ButtonScript.ButtonState.Down && Input.GetAxis("Attack") != 1)
-			_attackWasUp = true;
-		else if(_attackWasUp && m_AttackCount <3)
-        {
-			_attackWasUp = false;
-			++m_AttackCount;
-			_deltaFromLastAttack = 0;
-
-			if (m_AttackCount == 1) {
-				_anim.SetBool ("Attack", true);
-				Invoke("ResetAttack", 0.75f);
-				Invoke("ResetAttackAnim", 0.15f);
-			} else if (m_AttackCount == 2) {
-				_anim.SetBool ("Attack", true);
-				_anim.SetBool ("AttackDouble", true);
-				Invoke("ResetAttackDouble", 0.75f);
-				Invoke("ResetAttackDoubleAnim", 0.15f);
-			} else if (m_AttackCount == 3) {
-				_anim.SetBool ("Attack", true);
-				_anim.SetBool ("AttackDouble", true);
-				_anim.SetBool ("AttackTripple", true);
-				Invoke("ResetAttackTripple", 0.2f);
-				Invoke("ResetAttackTrippleAnim", 0.20f);
-			}
-			//Invoke("ResetAttackCount", 1.0f);
-		}
+     
 
 		if (m_AttackCount>0) {
 			if(m_BottomTouched)
@@ -326,10 +346,8 @@ public class Player : MonoBehaviour {
 	}
 
 	public void Hit (float iDamageValue){
-        Debug.Log("before : " + iDamageValue);
         if (m_Defending)
             iDamageValue -= m_DefenseStat;
-        Debug.Log("after : " + iDamageValue);
 		if (!m_BeingHit) {
 			m_BeingHit = true;
 			Health -= iDamageValue;
@@ -380,5 +398,32 @@ public class Player : MonoBehaviour {
 	void ResetBeingHit() {
 		m_BeingHit = false;
 	}
+
+     public void SetComboPossibility() {
+         m_ComboPossibility = true;
+    }
+
+     public void ComboCheck()
+     {
+         if (m_ComboValidated)
+         {
+             _anim.SetBool("ComboValidated", true);
+         }
+         else {
+             m_ComboValidated = false;
+             _anim.SetBool("ComboValidated", false);
+             ResetAttackTrippleAnim();
+             m_AttackCount = 0;
+         }
+     }
+     public void ResetComboValidated()
+     {
+         m_ComboValidated = false;
+         _anim.SetBool("ComboValidated", false);
+         m_Stamina -= Weapon.StaminaConsomation;
+         PlayerDefend DefendEvent = new PlayerDefend(m_Stamina);
+         Events.instance.Raise(DefendEvent);
+    }
+
 		
 }
