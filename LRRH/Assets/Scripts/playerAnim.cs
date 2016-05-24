@@ -22,4 +22,17 @@ public class PlayerAnim : MonoBehaviour {
     public void idleEnd() {
         playerScript.SetIdle(false);
     }
+
+    public void SetComboPossibility() {
+        playerScript.SetComboPossibility();
+    }
+
+    public void ResetComboValidated() {
+        playerScript.ResetComboValidated();
+    }
+
+    public void ComboCheck()
+    {
+        playerScript.ComboCheck();
+    }
 }

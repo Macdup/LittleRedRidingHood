@@ -6,6 +6,7 @@ public class WeaponScript : MonoBehaviour {
 
 	public float DamagaValue = 100.0f;
 	public float BumpForce = 10.0f;
+    public float StaminaConsomation = 10.0f;
 
 
 	// Use this for initialization
