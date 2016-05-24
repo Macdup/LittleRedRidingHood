@@ -7,6 +7,7 @@ public class CoinScript : MonoBehaviour {
     // public member
     [HideInInspector]
     public CoinAnim CoinAnim;
+    public GameObject LootText;
 
     //private member
     private Rigidbody2D Rigidbody2D;
@@ -23,6 +24,10 @@ public class CoinScript : MonoBehaviour {
     void Update()
     {
 
+    }
+
+    public void PopLootText(Vector3 lootPos) {
+        GameObject instance = (GameObject)Instantiate(LootText, lootPos, transform.rotation);
     }
 
 
