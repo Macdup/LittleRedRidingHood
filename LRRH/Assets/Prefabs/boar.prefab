@@ -12,7 +12,7 @@ GameObject:
   - 61: {fileID: 6194690}
   - 114: {fileID: 11403490}
   - 50: {fileID: 5021752}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: boar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
