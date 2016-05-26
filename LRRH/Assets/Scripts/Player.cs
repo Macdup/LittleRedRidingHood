@@ -388,7 +388,9 @@ public class Player : MonoBehaviour {
         {
 			PlayerLoot lootEvent = new PlayerLoot (otherCoin.gameObject);
 			Events.instance.Raise (lootEvent);
-
+            Vector3 lootPosition = transform.position;
+            lootPosition.y += 50f;
+            otherCoin.PopLootText(lootPosition);
             otherCoin.CoinAnim.destroy();
         }
         

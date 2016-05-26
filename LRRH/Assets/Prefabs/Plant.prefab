@@ -46,7 +46,7 @@ GameObject:
   - 61: {fileID: 6193226}
   - 114: {fileID: 11479608}
   - 114: {fileID: 11472934}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Plant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,6 +190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CoinPrefab: {fileID: 164246, guid: dff4b7e0e27d55949bc38451ff3a0c9b, type: 2}
+  IsMultiDrop: 0
 --- !u!212 &21201526
 SpriteRenderer:
   m_ObjectHideFlags: 1
