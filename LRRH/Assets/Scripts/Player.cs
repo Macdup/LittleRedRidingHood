@@ -42,7 +42,7 @@ public class Player : MonoBehaviour {
 	private CircleCollider2D 	m_BottomRight;
 	//private BoxCollider2D 		m_LeftBox;
 	private BoxCollider2D 		m_RightBox;
-	//private bool 				m_Attacking = false;
+	private bool 				m_Attacking = false;
     private bool                m_ComboPossibility = false;
     private bool                m_ComboValidated = false;
 	private int 				m_AttackCount = 0;
@@ -103,10 +103,11 @@ public class Player : MonoBehaviour {
 	//private bool _wasJumpDown = false;
 
 	void Update() {
+        //Time.timeScale = 0.1f;
         //Idle timer
         _idleTimer += Time.deltaTime;
 
-        if (m_RigidBody2D.velocity.x != 0 || m_RigidBody2D.velocity.y != 0 || m_BeingHit || m_BeingGroggy)
+        if (m_RigidBody2D.velocity.x != 0 || m_RigidBody2D.velocity.y != 0 || m_BeingHit || m_BeingGroggy || m_Attacking)
         {
             SetIdle(false);
         }
@@ -124,7 +125,8 @@ public class Player : MonoBehaviour {
 
 
 
-		if (isJumpDown && !m_BeingGroggy && !m_BeingHit) {
+        if (isJumpDown && !m_BeingGroggy && !m_BeingHit && !m_Attacking)
+        {
 			_capJump = false;
 			_wasJumpDown = true;
 			_wasJumpUp = false;
@@ -156,7 +158,7 @@ public class Player : MonoBehaviour {
         //Gestion de la défense
         bool isDefendDown = Input.GetButton("Defend") || (BSDefend.CurrentState == ButtonScript.ButtonState.Down);
         bool isDefendUp = Input.GetButtonUp("Defend") || (BSDefend.CurrentState == ButtonScript.ButtonState.Up);
-        if (isDefendDown && m_Stamina>0 && !m_BeingGroggy && !m_BeingHit)
+        if (isDefendDown && m_Stamina > 0 && !m_BeingGroggy && !m_BeingHit && !m_Attacking)
         {
             m_Defending = true;
             _anim.SetBool("Defend", true);
@@ -187,13 +189,14 @@ public class Player : MonoBehaviour {
             Events.instance.Raise(DefendEvent);
         }
 
+        //Gestion de l'attaque
         float TestStamina = m_Stamina - Weapon.StaminaConsomation;
 
         if (BSAttack.CurrentState != ButtonScript.ButtonState.Down && Input.GetAxis("Attack") != 1)
         {
             _attackWasUp = true;
         }
-        else if (_attackWasUp && m_AttackCount < 3 && TestStamina > m_StaminaMin && (m_AttackCount == 0 || m_ComboPossibility == true))
+        else if (_attackWasUp && m_AttackCount < 3 && TestStamina > m_StaminaMin && (m_AttackCount == 0 || m_ComboPossibility == true) && !m_Defending && !m_BeingHit)
         {
             SetIdle(false);
             _attackWasUp = false;
@@ -203,8 +206,7 @@ public class Player : MonoBehaviour {
             if (m_AttackCount == 1)
             {
                 _anim.SetBool("Attack", true);
-                //Invoke("ResetAttack", 0.75f);
-                //Invoke("ResetAttackAnim", 0.15f);
+                m_Attacking = true;
                 m_Stamina -= Weapon.StaminaConsomation;
                 PlayerDefend DefendEvent = new PlayerDefend(m_Stamina);
                 Events.instance.Raise(DefendEvent);
@@ -213,22 +215,12 @@ public class Player : MonoBehaviour {
             {
                 m_ComboValidated = true;
                 m_ComboPossibility = false;
-                //_anim.SetBool ("Attack", true);
-                //_anim.SetBool ("AttackDouble", true);
-                //Invoke("ResetAttackDouble", 0.75f);
-                //Invoke("ResetAttackDoubleAnim", 0.15f);
             }
             else if (m_AttackCount == 3)
             {
                 m_ComboValidated = true;
                 m_ComboPossibility = false;
-                //_anim.SetBool ("Attack", true);
-                //_anim.SetBool ("AttackDouble", true);
-                //_anim.SetBool ("AttackTripple", true);
-                //Invoke("ResetAttackTripple", 0.2f);
-                //Invoke("ResetAttackTrippleAnim", 0.20f);
-            }
-            //Invoke("ResetAttackCount", 1.0f);
+            };
 
         }
 
@@ -342,32 +334,12 @@ public class Player : MonoBehaviour {
 		transform.localScale = lScale;
 	}
 
-	void ResetAttack() {
-		if (m_AttackCount != 1)
-			return;
-		m_AttackCount=0;
-	}
-	void ResetAttackAnim() {
-		_anim.SetBool ("Attack", false);
-	}
-	void ResetAttackDouble() {
-		if (m_AttackCount != 2)
-			return;		
-		m_AttackCount=0;
-	}
-	void ResetAttackDoubleAnim() {
-		_anim.SetBool ("Attack", false);
-		_anim.SetBool ("AttackDouble", false);
-	}
-	void ResetAttackTripple() {
-		if (m_AttackCount != 3)
-			return;
-		m_AttackCount=0;
-	}
+
 	void ResetAttackTrippleAnim() {
 		_anim.SetBool ("Attack", false);
 		_anim.SetBool ("AttackDouble", false);
 		_anim.SetBool ("AttackTripple", false);
+        m_Attacking = false;
 	}
 
 	public void Hit (float iDamageValue, float iStaminaLossPerHit){
@@ -396,6 +368,8 @@ public class Player : MonoBehaviour {
                 PlayerHit _playerHitEvent = new PlayerHit(Health);
                 _anim.SetTrigger(hitHash);
                 Events.instance.Raise(_playerHitEvent);
+                ResetAttackTrippleAnim();
+                m_AttackCount = 0;
                 if (Health <= 0)
                 {
                     _anim.SetTrigger(deathHash);
@@ -458,6 +432,7 @@ public class Player : MonoBehaviour {
 
      public void ComboCheck()
      {
+         Debug.Log("test");
          if (m_ComboValidated)
          {
              _anim.SetBool("ComboValidated", true);
