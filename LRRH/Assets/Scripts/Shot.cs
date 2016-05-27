@@ -6,6 +6,7 @@ public class Shot : MonoBehaviour {
     // public member
 	public Vector3 MoveVector;
 	public float HitDamage;
+    public float iStaminaLossPerHit;
     [HideInInspector]
     public GameObject Source;
 
@@ -42,7 +43,7 @@ public class Shot : MonoBehaviour {
             Player player = other.gameObject.GetComponent<Player> ();
             if (player != null)
             {
-                player.Hit(HitDamage);
+                player.Hit(HitDamage,iStaminaLossPerHit);
             }
 		}
 	}
