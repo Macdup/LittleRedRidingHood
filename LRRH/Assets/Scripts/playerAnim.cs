@@ -35,4 +35,8 @@ public class PlayerAnim : MonoBehaviour {
     {
         playerScript.ComboCheck();
     }
+
+    public void ResetBeingHit() {
+        playerScript.ResetBeingHit();
+    }
 }

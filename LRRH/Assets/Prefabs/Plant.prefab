@@ -175,6 +175,7 @@ MonoBehaviour:
   IsBumpable: 0
   DoesBumpPlayer: 0
   BumpForce: 0
+  staminaLossPerHit: 10
   ShootPrefab: {fileID: 174666, guid: 90b6d05f710ec70409bdbcd7a3aeb4ed, type: 2}
   ShootSpeed: 100
   ShootCoolDown: 3

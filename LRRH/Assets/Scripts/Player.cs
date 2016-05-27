@@ -26,6 +26,10 @@ public class Player : MonoBehaviour {
 
 	public float 		TouchDetectionRadius = 0.2f;
 
+    public float DefenseStat = 10.0f;
+    public float StaminaConsommation = 10.0f;
+    public float StaminaRegeneration = 10.0f;
+
 
 
 	// private member
@@ -43,13 +47,12 @@ public class Player : MonoBehaviour {
     private bool                m_ComboValidated = false;
 	private int 				m_AttackCount = 0;
 	private bool 				m_BeingHit = false;
-    private float               m_DefenseStat = 10.0f;
     private bool                m_Defending;
     private float               m_Stamina = 100.0f;
     private float               m_StaminaMax = 100.0f;
     private float               m_StaminaMin = 0.0f;
-    private float               m_StaminaConsommation = 10.0f;
-    private float               m_StaminaRegeneration = 10.0f;
+    private bool                m_BeingGroggy = false;
+    
     
 
 
@@ -74,6 +77,7 @@ public class Player : MonoBehaviour {
 	int deathHash = Animator.StringToHash("death");
 	int idleHash = Animator.StringToHash("idle");
     int _DefendHash = Animator.StringToHash("defend");
+    int _GroggyHash = Animator.StringToHash("isGroggy");
     
 
 	//Animator _AnimatorSwordCollideR;
@@ -102,7 +106,7 @@ public class Player : MonoBehaviour {
         //Idle timer
         _idleTimer += Time.deltaTime;
 
-        if (m_RigidBody2D.velocity.x != 0 || m_RigidBody2D.velocity.y != 0)
+        if (m_RigidBody2D.velocity.x != 0 || m_RigidBody2D.velocity.y != 0 || m_BeingHit || m_BeingGroggy)
         {
             SetIdle(false);
         }
@@ -120,7 +124,7 @@ public class Player : MonoBehaviour {
 
 
 
-		if (isJumpDown) {
+		if (isJumpDown && !m_BeingGroggy && !m_BeingHit) {
 			_capJump = false;
 			_wasJumpDown = true;
 			_wasJumpUp = false;
@@ -150,10 +154,9 @@ public class Player : MonoBehaviour {
 		}
 
         //Gestion de la défense
-        bool isDefendDown = Input.GetButtonDown("Defend") || (BSDefend.CurrentState == ButtonScript.ButtonState.Down);
+        bool isDefendDown = Input.GetButton("Defend") || (BSDefend.CurrentState == ButtonScript.ButtonState.Down);
         bool isDefendUp = Input.GetButtonUp("Defend") || (BSDefend.CurrentState == ButtonScript.ButtonState.Up);
-
-        if (isDefendDown && m_Stamina>0)
+        if (isDefendDown && m_Stamina>0 && !m_BeingGroggy && !m_BeingHit)
         {
             m_Defending = true;
             _anim.SetBool("Defend", true);
@@ -168,17 +171,16 @@ public class Player : MonoBehaviour {
         if (m_Defending)
         {
             if (m_Stamina < m_StaminaMin) {
-                m_Defending = false;
-                _anim.SetBool("Defend", false);
+                m_Stamina = 0;
                 return;
             }
-            m_Stamina -= m_StaminaConsommation * Time.deltaTime;
+            m_Stamina -= StaminaConsommation * Time.deltaTime;
             PlayerDefend DefendEvent = new PlayerDefend(m_Stamina);
             Events.instance.Raise(DefendEvent);
         }
         else if( m_Stamina < m_StaminaMax)
         {
-            m_Stamina += m_StaminaRegeneration * Time.deltaTime;
+            m_Stamina += StaminaRegeneration * Time.deltaTime;
             if (m_Stamina > m_StaminaMax)
                 m_Stamina = m_StaminaMax;
             PlayerDefend DefendEvent = new PlayerDefend(m_Stamina);
@@ -236,11 +238,11 @@ public class Player : MonoBehaviour {
 
 		float move = 0.0f;
 
-		if (BSMoveLeft.CurrentState == ButtonScript.ButtonState.Down)
+		if (BSMoveLeft.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit)
 			move = -1.0f;
-		else if (BSMoveRight.CurrentState == ButtonScript.ButtonState.Down)
+        else if (BSMoveRight.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit)
 			move = 1.0f;
-		else
+        else if (!m_BeingGroggy && !m_BeingHit)
 			move = Input.GetAxis ("Horizontal");
 
 		// Evalute states
@@ -284,13 +286,36 @@ public class Player : MonoBehaviour {
 
 		// classic move
 		if (Mathf.Abs (move) > 0) {
-			if (!m_FrontTouched) {
-				m_RigidBody2D.velocity = new Vector2 (move * MoveSpeed, m_RigidBody2D.velocity.y);
-			} else if (m_FacingRight && move > 0) {
-				m_RigidBody2D.velocity = new Vector2 (move * MoveSpeed, m_RigidBody2D.velocity.y);
-			} else if (!m_FacingRight && move < 0) {
-				m_RigidBody2D.velocity = new Vector2 (move * MoveSpeed, m_RigidBody2D.velocity.y);
-			}
+            if (m_Defending)
+            {
+                if (!m_FrontTouched)
+                {
+                    m_RigidBody2D.velocity = new Vector2(move * MoveSpeed/2, m_RigidBody2D.velocity.y);
+                }
+                else if (m_FacingRight && move > 0)
+                {
+                    m_RigidBody2D.velocity = new Vector2(move * MoveSpeed/2, m_RigidBody2D.velocity.y);
+                }
+                else if (!m_FacingRight && move < 0)
+                {
+                    m_RigidBody2D.velocity = new Vector2(move * MoveSpeed/2, m_RigidBody2D.velocity.y);
+                }
+            }
+            else {
+                if (!m_FrontTouched)
+                {
+                    m_RigidBody2D.velocity = new Vector2(move * MoveSpeed, m_RigidBody2D.velocity.y);
+                }
+                else if (m_FacingRight && move > 0)
+                {
+                    m_RigidBody2D.velocity = new Vector2(move * MoveSpeed, m_RigidBody2D.velocity.y);
+                }
+                else if (!m_FacingRight && move < 0)
+                {
+                    m_RigidBody2D.velocity = new Vector2(move * MoveSpeed, m_RigidBody2D.velocity.y);
+                }
+            }
+			
 		}
 
 		if(m_RigidBody2D.velocity.x > 0.1  && m_FacingRight)
@@ -345,20 +370,40 @@ public class Player : MonoBehaviour {
 		_anim.SetBool ("AttackTripple", false);
 	}
 
-	public void Hit (float iDamageValue){
-        if (m_Defending)
-            iDamageValue -= m_DefenseStat;
-		if (!m_BeingHit) {
+	public void Hit (float iDamageValue, float iStaminaLossPerHit){
+        
+        
+        if (!m_BeingHit) {
 			m_BeingHit = true;
-			Health -= iDamageValue;
-			PlayerHit _playerHitEvent = new PlayerHit (Health);
-			_anim.SetTrigger (hitHash);
-			Events.instance.Raise (_playerHitEvent);
-			if (Health <= 0) {
-				_anim.SetTrigger (deathHash);
-				this.enabled = false;
-			}
-			Invoke ("ResetBeingHit", HitCoolDown);
+
+            if (m_Defending)
+            {
+                iDamageValue -= DefenseStat;
+                m_Stamina -= iStaminaLossPerHit;
+                if (m_Stamina < 0)
+                {
+                    m_Stamina = 0;
+                    m_BeingGroggy = true;
+                    _anim.SetBool(_GroggyHash, true);
+                    m_Defending = false;
+                    _anim.SetBool("Defend", false);
+                    Invoke("ResetGroggy", 2.0f);
+                }
+                Health -= iDamageValue;
+            }
+            else {
+                Health -= iDamageValue;
+                PlayerHit _playerHitEvent = new PlayerHit(Health);
+                _anim.SetTrigger(hitHash);
+                Events.instance.Raise(_playerHitEvent);
+                if (Health <= 0)
+                {
+                    _anim.SetTrigger(deathHash);
+                    this.enabled = false;
+                }
+            }
+            Invoke("ResetBeingHit", HitCoolDown);
+
 		}
 	}
 
@@ -397,9 +442,15 @@ public class Player : MonoBehaviour {
     }
 
 
-	void ResetBeingHit() {
+	public void ResetBeingHit() {
 		m_BeingHit = false;
 	}
+
+    public void ResetGroggy()
+    {
+        _anim.SetBool(_GroggyHash,false);
+        m_BeingGroggy = false;
+    }
 
      public void SetComboPossibility() {
          m_ComboPossibility = true;
