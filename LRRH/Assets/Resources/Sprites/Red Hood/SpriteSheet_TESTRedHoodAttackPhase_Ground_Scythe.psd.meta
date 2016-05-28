@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: fb17646770764684188f06b2453cd60c
-timeCreated: 1462996202
+timeCreated: 1464460936
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -67,23 +67,23 @@ TextureImporter:
         y: 77
         width: 86
         height: 77
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 78, y: 27}
-        - {x: 71, y: 32}
-        - {x: 61, y: 47}
-        - {x: 56, y: 47}
-        - {x: 48, y: 46}
-        - {x: 43, y: 38}
-        - {x: 21, y: 12}
-        - {x: 21, y: 8}
-        - {x: 25, y: 1}
-        - {x: 33, y: 0}
-        - {x: 83, y: 0}
-        - {x: 86, y: 6}
-        - {x: 86, y: 18}
+      - - {x: 35, y: 27}
+        - {x: 28, y: 32}
+        - {x: 18, y: 47}
+        - {x: 13, y: 47}
+        - {x: 5, y: 46}
+        - {x: 0, y: 38}
+        - {x: -22, y: 12}
+        - {x: -22, y: 8}
+        - {x: -18, y: 1}
+        - {x: -10, y: 0}
+        - {x: 40, y: 0}
+        - {x: 43, y: 6}
+        - {x: 43, y: 18}
     - name: SpriteSheet_TESTRedHoodAttackPhase_Ground_Scythe_1
       rect:
         serializedVersion: 2

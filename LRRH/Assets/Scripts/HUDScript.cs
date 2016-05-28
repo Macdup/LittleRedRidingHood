@@ -6,16 +6,19 @@ public class HUDScript : MonoBehaviour {
 
 	public RectTransform LifeBar;
     public RectTransform StaminaBar;
+    public RectTransform ManaBar;
 	public Text ScoreText;
 
 	private int m_LifeBarSize;
     private int m_StaminaBarSize;
+    private int m_ManaBarSize;
 	private int m_Score;
 
 
 	void Start () {
 		m_LifeBarSize = (int)LifeBar.sizeDelta.x;
         m_StaminaBarSize = (int)StaminaBar.sizeDelta.x;
+        m_ManaBarSize = (int)ManaBar.sizeDelta.x;
 		m_Score = 0;
 	}
 
@@ -23,11 +26,13 @@ public class HUDScript : MonoBehaviour {
 		Events.instance.AddListener<PlayerHit>(onPlayerHit);
 		Events.instance.AddListener<PlayerLoot>(onPlayerLoot);
         Events.instance.AddListener<PlayerDefend>(onPlayerDefend);
+        Events.instance.AddListener<PlayerSpell>(onPlayerSpell);
 	}
 	void OnDestroy() {
 		Events.instance.RemoveListener<PlayerHit> (onPlayerHit);
 		Events.instance.RemoveListener<PlayerLoot>(onPlayerLoot);
         Events.instance.RemoveListener<PlayerDefend>(onPlayerDefend);
+        Events.instance.RemoveListener<PlayerSpell>(onPlayerSpell);
 	}
 
 
@@ -53,4 +58,12 @@ public class HUDScript : MonoBehaviour {
         actualSize.x = e.Stamina * m_StaminaBarSize / 100;
         StaminaBar.sizeDelta = actualSize;
     }
+    void onPlayerSpell(PlayerSpell e)
+    {
+        Vector2 actualSize = ManaBar.sizeDelta;
+        actualSize.x = e.Mana * m_ManaBarSize / 100;
+        ManaBar.sizeDelta = actualSize;
+    }
+
+
 }
