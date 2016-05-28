@@ -12,6 +12,7 @@ namespace AssemblyCSharp
 		public bool  IsBumpable = false;
 		public bool  DoesBumpPlayer = false;
 		public float BumpForce = 0.0f;
+        public float staminaLossPerHit;
 
 		// protected member
 		protected bool 		m_Dead = false;
@@ -52,7 +53,7 @@ namespace AssemblyCSharp
 		virtual public void OnTriggerEnter2D(Collider2D other) {
 			Player player = other.gameObject.GetComponent<Player> ();
 			if (player != null) {
-				player.Hit(DamagePerHit);
+				player.Hit(DamagePerHit,staminaLossPerHit);
 
 				//Bump player
 				if (DoesBumpPlayer) {
