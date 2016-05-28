@@ -29,6 +29,15 @@ public class PlayerDefend : GameEvent
     }
 }
 
+public class PlayerSpell : GameEvent
+{
+    public float Mana;
+    public PlayerSpell(float iMana)
+    {
+        Mana = iMana;
+    }
+}
+
 
 
 
