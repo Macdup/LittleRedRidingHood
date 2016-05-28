@@ -45,6 +45,7 @@ public class Shot : MonoBehaviour {
             {
                 player.Hit(HitDamage,iStaminaLossPerHit);
             }
+            this.enabled = false;
 		}
 	}
 
