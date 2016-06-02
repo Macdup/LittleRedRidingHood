@@ -14,6 +14,8 @@ public class Player : MonoBehaviour {
 	public float JumpDelay = 0.19f;
 	public float Health = 100.0f;
 	public float HitCoolDown = 0.5f;
+	public bool  HasJetPack = false;
+	public float JetPackSpeed = 80.0f;
 
 	public ButtonScript BSMoveLeft;
 	public ButtonScript BSMoveRight;
@@ -62,6 +64,8 @@ public class Player : MonoBehaviour {
 	private bool 		_firstJump =  false;
 	private bool 		_firstJumpEnd =  false;
 	private bool 		_secondJump =  false;
+	private bool 		_secondJumpEnd =  false;
+	private bool 		_thirdJump =  false;
 	private LayerMask 	_wallsMask;
 	private float 		_idleTimer = 0.0f;
 	private	bool 		_capJump = false;
@@ -136,12 +140,14 @@ public class Player : MonoBehaviour {
 
 				//m_RigidBody2D.velocity = new Vector2 (m_RigidBody2D.velocity.x, JumpSpeed);
 				StartCoroutine (Jump (JumpSpeed));
-			}
-			else if(_firstJumpEnd && !_secondJump) {
+			} else if (_firstJumpEnd && !_secondJump) {
 				_secondJump = true;
+				_secondJumpEnd = false;
 				// second jump
 				//m_RigidBody2D.velocity = new Vector2 (m_RigidBody2D.velocity.x, JumpSpeed);
 				StartCoroutine (Jump (JumpSpeed));
+			} else if (HasJetPack && _secondJumpEnd) {
+				_thirdJump = true;
 			}
 		}
 		else if(isJumpUp) {
@@ -149,7 +155,10 @@ public class Player : MonoBehaviour {
 			_wasJumpUp = true;
 			_firstJump = false;
 			_firstJumpEnd = true;
+			_secondJumpEnd = true;
 			_capJump = true;
+			_thirdJump = false;
+
 			if(m_RigidBody2D.velocity.y > MinJumpSpeed)
 				m_RigidBody2D.velocity = new Vector2 (m_RigidBody2D.velocity.x, MinJumpSpeed);
 				//StartCoroutine (Jump (MinJumpSpeed));
@@ -241,9 +250,12 @@ public class Player : MonoBehaviour {
 		m_BottomTouched = m_BottomBox.IsTouchingLayers (_wallsMask) || m_BottomLeft.IsTouchingLayers (_wallsMask) || m_BottomRight.IsTouchingLayers (_wallsMask);
 		m_FrontTouched = /*_left_box.IsTouchingLayers (wallsMask) ||*/ m_RightBox.IsTouchingLayers (_wallsMask) || m_BottomRight.IsTouchingLayers (_wallsMask);
 
-		if(m_BottomTouched) {
+		if (m_BottomTouched) {
 			_firstJump = false;
 			_secondJump = false;
+		} else if (_thirdJump) {
+			// Jetpack
+			m_RigidBody2D.velocity = new Vector2 (m_RigidBody2D.velocity.x, JetPackSpeed);
 		}
 
 		if (m_AttackCount > 0)
