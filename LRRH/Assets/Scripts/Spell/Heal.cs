@@ -4,7 +4,7 @@ using System.Collections;
 public class Heal : Spell
 {
     // public member
-    public float HealAmount = 10.0f;
+    public float HealAmount = 100.0f;
 
     int _HealHash = Animator.StringToHash("Heal");
 
@@ -27,4 +27,16 @@ public class Heal : Spell
     public void resetMagic() {
         Player.UsingMagic = false;
     }
+
+    public override void SpellFX()
+    {
+        Vector3 abovePlayer = Player.transform.position;
+        abovePlayer.y += 50;
+        GameObject instanceFX = (GameObject) Instantiate(Fx, transform.position, Quaternion.identity);
+        GameObject instanceText = (GameObject)Instantiate(StatFeedback, abovePlayer, Quaternion.identity);
+        instanceText.GetComponentInChildren<TextMesh>().color = Color.cyan;
+        instanceText.GetComponentInChildren<TextMesh>().text = HealAmount.ToString();
+    }
+    
+
 }
