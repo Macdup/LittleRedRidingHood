@@ -39,7 +39,8 @@ public class Player : MonoBehaviour {
     public float Health = 100.0f;
     public float HealthMax = 100.0f;
     public float HealthMin = 0.0f;
-    
+
+    public GameObject CounterFeedback;
 
 
 
@@ -63,6 +64,7 @@ public class Player : MonoBehaviour {
     private float               m_StaminaMax = 100.0f;
     private float               m_StaminaMin = 0.0f;
     private bool                m_BeingGroggy = false;
+    private GameObject          m_counterSense;
     
     
     
@@ -108,6 +110,7 @@ public class Player : MonoBehaviour {
 		m_BottomRight = GetComponents<CircleCollider2D> () [1];
 		//m_LeftBox = GetComponents<BoxCollider2D> () [2];
 		m_RightBox = GetComponents<BoxCollider2D> () [3];
+
 	}
 
 
@@ -245,18 +248,18 @@ public class Player : MonoBehaviour {
             UsingMagic = true;
             CurrentSpell.launchSort();
         }
-
+        Debug.Log(UsingMagic);
 	}
 
 	void FixedUpdate () {
 
 		float move = 0.0f;
 
-		if (BSMoveLeft.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit)
+		if (BSMoveLeft.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic)
 			move = -1.0f;
-        else if (BSMoveRight.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit)
+        else if (BSMoveRight.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic)
 			move = 1.0f;
-        else if (!m_BeingGroggy && !m_BeingHit)
+        else if (!m_BeingGroggy && !m_BeingHit && !UsingMagic)
 			move = Input.GetAxis ("Horizontal");
 
 		// Evalute states

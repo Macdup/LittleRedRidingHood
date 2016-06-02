@@ -3,11 +3,13 @@ using System.Collections;
 
 public class PlayerAnim : MonoBehaviour {
 
-    private Player playerScript; 
+    private Player playerScript;
+    private Spell spellScript; 
 
 	// Use this for initialization
 	void Start () {
         playerScript = GetComponentInParent<Player>();
+        spellScript = playerScript.CurrentSpell;
 	}
 	
 	// Update is called once per frame
@@ -44,4 +46,9 @@ public class PlayerAnim : MonoBehaviour {
     {
         playerScript.UsingMagic = false;
     }
+    public void SpellFX()
+    {
+        spellScript.SpellFX();
+    }
+
 }
