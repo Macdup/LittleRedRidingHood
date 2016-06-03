@@ -5,7 +5,8 @@ public class Spell : MonoBehaviour {
 
     // public member
     public float ManaCost = 10.0f;
-
+    public GameObject Fx;
+    public GameObject StatFeedback;
 
     [HideInInspector]
     public Player Player;
@@ -27,4 +28,10 @@ public class Spell : MonoBehaviour {
     {
 
     }
+
+    public virtual void SpellFX()
+    {
+        
+    }
+
 }
