@@ -17,9 +17,11 @@ public class Player : MonoBehaviour {
 	public float JetPackSpeed = 80.0f;
 	public float JetPackDuration = 3.0f;
 	public float JetPackMaxCoolDown = 6.0f;
+    public ParticleSystem JetPackParticule;
 
 
-	public ButtonScript BSMoveLeft;
+
+    public ButtonScript BSMoveLeft;
 	public ButtonScript BSMoveRight;
 	public ButtonScript BSJump;
 	public ButtonScript BSAttack;
@@ -288,16 +290,20 @@ public class Player : MonoBehaviour {
 				PlayerJetpackValueChanged playerJetpackValEvent = new PlayerJetpackValueChanged(m_JetPackValue, JetPackDuration);
 				Events.instance.Raise(playerJetpackValEvent);
 			}
-		} else if (_thirdJump && m_JetPackValue < JetPackDuration) {
+
+            JetPackParticule.Stop();
+        } else if (_thirdJump && m_JetPackValue < JetPackDuration) {
 			// Jetpack
 			m_JetPackValue += Time.fixedDeltaTime;
 			m_RigidBody2D.velocity = new Vector2 (m_RigidBody2D.velocity.x, JetPackSpeed / Mathf.Min (Mathf.Max (m_JetPackValue, 0.2f), 1.0f));
+            JetPackParticule.Play();
 
-			PlayerJetpackValueChanged playerJetpackValEvent = new PlayerJetpackValueChanged(m_JetPackValue, JetPackDuration);
+            PlayerJetpackValueChanged playerJetpackValEvent = new PlayerJetpackValueChanged(m_JetPackValue, JetPackDuration);
 			Events.instance.Raise(playerJetpackValEvent);
 		} else {
 			_thirdJump = false;
-		}
+            JetPackParticule.Stop();
+        }
 
 		if (m_AttackCount > 0)
 			_deltaFromLastAttack += Time.fixedDeltaTime;
