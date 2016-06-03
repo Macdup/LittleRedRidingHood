@@ -15,6 +15,9 @@ public class Player : MonoBehaviour {
 	public float HitCoolDown = 0.5f;
 	public bool  HasJetPack = false;
 	public float JetPackSpeed = 80.0f;
+	public float JetPackDuration = 3.0f;
+	public float JetPackMaxCoolDown = 6.0f;
+
 
 	public ButtonScript BSMoveLeft;
 	public ButtonScript BSMoveRight;
@@ -67,7 +70,7 @@ public class Player : MonoBehaviour {
     private float               m_StaminaMin = 0.0f;
     private bool                m_BeingGroggy = false;
     private GameObject          m_counterSense;
-    
+	public float 				m_JetPackValue = 0.0f;
     
     
 
@@ -278,9 +281,22 @@ public class Player : MonoBehaviour {
 		if (m_BottomTouched) {
 			_firstJump = false;
 			_secondJump = false;
-		} else if (_thirdJump) {
+
+			if (m_JetPackValue > 0) {
+				m_JetPackValue -= Time.fixedDeltaTime * (JetPackDuration / JetPackMaxCoolDown);
+				m_JetPackValue = Mathf.Max (m_JetPackValue, 0.0f);		
+				PlayerJetpackValueChanged playerJetpackValEvent = new PlayerJetpackValueChanged(m_JetPackValue, JetPackDuration);
+				Events.instance.Raise(playerJetpackValEvent);
+			}
+		} else if (_thirdJump && m_JetPackValue < JetPackDuration) {
 			// Jetpack
-			m_RigidBody2D.velocity = new Vector2 (m_RigidBody2D.velocity.x, JetPackSpeed);
+			m_JetPackValue += Time.fixedDeltaTime;
+			m_RigidBody2D.velocity = new Vector2 (m_RigidBody2D.velocity.x, JetPackSpeed / Mathf.Min (Mathf.Max (m_JetPackValue, 0.2f), 1.0f));
+
+			PlayerJetpackValueChanged playerJetpackValEvent = new PlayerJetpackValueChanged(m_JetPackValue, JetPackDuration);
+			Events.instance.Raise(playerJetpackValEvent);
+		} else {
+			_thirdJump = false;
 		}
 
 		if (m_AttackCount > 0)

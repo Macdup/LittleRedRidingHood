@@ -8,6 +8,7 @@ public class HUDScript : MonoBehaviour {
     public RectTransform StaminaBar;
     public RectTransform ManaBar;
 	public Text ScoreText;
+	public Image JetpackGague;
 
 	private int m_LifeBarSize;
     private int m_StaminaBarSize;
@@ -27,12 +28,14 @@ public class HUDScript : MonoBehaviour {
 		Events.instance.AddListener<PlayerLoot>(onPlayerLoot);
         Events.instance.AddListener<PlayerDefend>(onPlayerDefend);
         Events.instance.AddListener<PlayerSpell>(onPlayerSpell);
+		Events.instance.AddListener<PlayerJetpackValueChanged>(onPlayerJetpackValueChanged);
 	}
 	void OnDestroy() {
 		Events.instance.RemoveListener<PlayerHit> (onPlayerHit);
 		Events.instance.RemoveListener<PlayerLoot>(onPlayerLoot);
         Events.instance.RemoveListener<PlayerDefend>(onPlayerDefend);
         Events.instance.RemoveListener<PlayerSpell>(onPlayerSpell);
+		Events.instance.RemoveListener<PlayerJetpackValueChanged>(onPlayerJetpackValueChanged);
 	}
 
 
@@ -65,5 +68,9 @@ public class HUDScript : MonoBehaviour {
         ManaBar.sizeDelta = actualSize;
     }
 
+	void onPlayerJetpackValueChanged(PlayerJetpackValueChanged e)
+	{
+		JetpackGague.fillAmount = (e.JetpackDuration - e.JetpackValue) / e.JetpackDuration;
+	}
 
 }
