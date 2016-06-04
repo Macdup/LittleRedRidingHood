@@ -38,6 +38,16 @@ public class PlayerSpell : GameEvent
     }
 }
 
+public class PlayerJetpackValueChanged : GameEvent
+{
+	public float JetpackValue;
+	public float JetpackDuration;
+	public PlayerJetpackValueChanged(float iJetpackValue, float iJetpackDuration)
+	{
+		JetpackValue = iJetpackValue;
+		JetpackDuration = iJetpackDuration;
+	}
+}
 
 
 
