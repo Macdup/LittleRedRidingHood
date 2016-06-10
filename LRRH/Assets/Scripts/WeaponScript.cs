@@ -4,16 +4,18 @@ using AssemblyCSharp;
 
 public class WeaponScript : MonoBehaviour {
 
-	public float DamagaValue = 100.0f;
-	public float BumpForce = 10.0f;
+	public float DamageValue = 5.0f;
+    public float LongAttackDamageValue = 15.0f;
+    public float BumpForce = 10.0f;
     public float StaminaConsomation = 10.0f;
     public GameObject HitPrefab;
 
+    private Player m_Player;
 
 	// Use this for initialization
 	void Start () {
-	
-	}
+        m_Player = GetComponentInParent<Player>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -29,7 +31,11 @@ public class WeaponScript : MonoBehaviour {
 
             Vector2 dir = other.bounds.center - transform.position;
             RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, 200f, LayerMask.GetMask("Enemy"));
-            enemy.Hit(DamagaValue);
+
+            if(m_Player.IsAttackLongCasted())
+                enemy.Hit(LongAttackDamageValue);
+            else
+                enemy.Hit(DamageValue);
 
             Instantiate(HitPrefab, hit.point, Quaternion.identity);
 
