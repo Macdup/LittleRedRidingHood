@@ -292,8 +292,8 @@ MonoBehaviour:
   HitCoolDown: 0.5
   IsBumpable: 1
   DoesBumpPlayer: 1
-  BumpForce: 40
-  staminaLossPerHit: 15
+  BumpForce: 300
+  staminaLossPerHit: 100
   speed: 120
   pointA: {fileID: 191816}
   pointB: {fileID: 151682}
