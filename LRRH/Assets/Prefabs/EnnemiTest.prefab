@@ -9,9 +9,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 478204}
   - 61: {fileID: 6175414}
-  - 114: {fileID: 11414680}
   - 95: {fileID: 9550464}
   - 50: {fileID: 5000722}
+  - 114: {fileID: 11478722}
   m_Layer: 10
   m_Name: WeaponSprite
   m_TagString: Untagged
@@ -34,6 +34,7 @@ GameObject:
   - 61: {fileID: 6114636}
   - 61: {fileID: 6121668}
   - 61: {fileID: 6154352}
+  - 114: {fileID: 11477948}
   m_Layer: 8
   m_Name: EnnemiTest
   m_TagString: Untagged
@@ -51,7 +52,7 @@ GameObject:
   - 4: {fileID: 467222}
   - 212: {fileID: 21247854}
   - 95: {fileID: 9558048}
-  - 114: {fileID: 11467188}
+  - 114: {fileID: 11450974}
   m_Layer: 8
   m_Name: EnnemiSprite
   m_TagString: Untagged
@@ -292,22 +293,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &11414680
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 108096}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0593be7f3bf70d94c9a76381ae129f49, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DamagaValue: 5
-  BumpForce: 30
-  StaminaConsomation: 10
-  HitPrefab: {fileID: 159408, guid: 7efb58498bd0f9b4cbb2cf68a6d3aebe, type: 2}
---- !u!114 &11467188
+--- !u!114 &11450974
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -315,9 +301,48 @@ MonoBehaviour:
   m_GameObject: {fileID: 162020}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9ed5ce13dc7bcd4fa8648ed4a41814a, type: 3}
+  m_Script: {fileID: 11500000, guid: 6d03e75454dfae34c9ca3511ffdf1fd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11477948
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 150616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9daaef7c8ead08b439a8248bf13a7833, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Life: 100
+  DamagePerHit: 10
+  HitCoolDown: 0.5
+  IsBumpable: 0
+  DoesBumpPlayer: 0
+  BumpForce: 0
+  staminaLossPerHit: 0
+  Player: {fileID: 0}
+  LineOfSight: 400
+  UsingMagic: 0
+  m_BottomTouched: 0
+  m_JetPackValue: 0
+--- !u!114 &11478722
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 108096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63eb4316737018848babbc1447842235, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DamageValue: 5
+  LongAttackDamageValue: 15
+  BumpForce: 10
+  StaminaConsomation: 10
+  HitPrefab: {fileID: 0}
 --- !u!212 &21247854
 SpriteRenderer:
   m_ObjectHideFlags: 1
