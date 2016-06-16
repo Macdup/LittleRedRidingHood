@@ -77,7 +77,7 @@ public class Player : MonoBehaviour {
 	private bool                m_ComboPossibility = false;
 	private bool                m_ComboValidated = false;
 	private int 				m_AttackCount = 0;
-	private bool 				m_BeingHit = false;
+	public bool 				m_BeingHit = false;
 	private bool                m_Defending;
 	private float               m_Stamina = 100.0f;
 	private float               m_StaminaMax = 100.0f;
@@ -308,7 +308,6 @@ public class Player : MonoBehaviour {
 			UsingMagic = true;
 			CurrentSpell.launchSort();
 		}
-		Debug.Log(UsingMagic);
 
         //Gestion du switch d'arme
         if(BSWeaponSword.CurrentState == ButtonScript.ButtonState.Down)
