@@ -9,7 +9,7 @@ public class PlayerAnim : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         playerScript = GetComponentInParent<Player>();
-        spellScript = playerScript.CurrentSpell;
+        //spellScript = playerScript.CurrentSpell;
 	}
 	
 	// Update is called once per frame

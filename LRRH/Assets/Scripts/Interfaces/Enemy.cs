@@ -16,7 +16,7 @@ namespace AssemblyCSharp
 
 		// protected member
 		protected bool 		m_Dead = false;
-		protected bool 		m_BeingHit = false;
+		public bool 		m_BeingHit = false;
 		protected Animator 	m_Animator;
 
 		// private member

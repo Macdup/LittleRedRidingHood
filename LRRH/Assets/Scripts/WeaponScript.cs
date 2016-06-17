@@ -27,12 +27,12 @@ public class WeaponScript : MonoBehaviour {
 
 		Enemy enemy = other.gameObject.GetComponent<Enemy> ();
 		
-        if (enemy != null) {
+        if (enemy != null && enemy.m_BeingHit == false) {
 
             Vector2 dir = other.bounds.center - transform.position;
             RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, 200f, LayerMask.GetMask("Enemy"));
 
-            if(m_Player.IsAttackLongCasted())
+            if (m_Player.IsAttackLongCasted())
                 enemy.Hit(LongAttackDamageValue);
             else
                 enemy.Hit(DamageValue);
