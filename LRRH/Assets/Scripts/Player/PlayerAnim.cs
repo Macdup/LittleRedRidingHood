@@ -50,5 +50,8 @@ public class PlayerAnim : MonoBehaviour {
     {
         spellScript.SpellFX();
     }
-
+    public void FireStick()
+    {
+        playerScript.FireStick();
+    }
 }
