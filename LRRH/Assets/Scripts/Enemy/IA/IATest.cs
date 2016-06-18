@@ -31,6 +31,7 @@ public class IATest : Enemy
     public float m_JetPackValue = 0.0f;
     private bool m_AttackLongCasting = false;
     private bool m_AttackLongCasted = false;
+    public bool m_Countered = false;
 
     //variable
     private bool isAttacking;
@@ -48,6 +49,8 @@ public class IATest : Enemy
     private bool _attackWasUp = true;
     private bool _bumped = false;
     private float _attackHoldTime = 0.0f;
+    private float _counterTimer = 0.0f;
+    private float _counterTimerMax = 2.0f;
 
     private bool hasDetected;
     private float AttackLength = 60.0f;
@@ -64,6 +67,7 @@ public class IATest : Enemy
     int _attackLongHash = Animator.StringToHash("AttackLong");
     int _attackLongCastedHash = Animator.StringToHash("AttackLongCasted");
     int _attackLongReleasedHash = Animator.StringToHash("AttackLongReleased");
+    int _counteredHash = Animator.StringToHash("Countered");
 
 	// Use this for initialization
 	void Start () {
@@ -98,14 +102,22 @@ public class IATest : Enemy
             m_Attacking = false;
         }
 
-
         m_BottomTouched = m_BottomBox.IsTouchingLayers(_wallsMask) || m_BottomLeft.IsTouchingLayers(_wallsMask) || m_BottomRight.IsTouchingLayers(_wallsMask);
+
+        if (m_Countered) {
+            _counterTimer += 1 * Time.deltaTime;
+            if (_counterTimer > _counterTimerMax) {
+                _counterTimer = 0;
+                m_Countered = false;
+                _anim.SetBool(_counteredHash, false);
+            }
+        }
         
 	}
 
     void FixedUpdate()
     {
-        if (hasDetected == true && m_Attacking == false)
+        if (hasDetected == true && m_Attacking == false && m_Countered == false)
         {
             moveToward(Player.transform.position);
         }
@@ -184,5 +196,10 @@ public class IATest : Enemy
         Vector3 lScale = transform.localScale;
         lScale.x *= -1;
         transform.localScale = lScale;
+    }
+
+    public void startCounter() {
+        m_Countered = true;
+        _anim.SetBool(_counteredHash, true);
     }
 }

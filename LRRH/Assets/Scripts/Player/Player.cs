@@ -90,6 +90,8 @@ public class Player : MonoBehaviour {
 	private bool                m_BeingGroggy = false;
 	private GameObject          m_CounterSense;
     private bool                m_Counter = false;
+    private float               m_CounterTimerMax = 0.2f;
+    private float               m_CounterTimer = 0.0f;
 	public float 				m_JetPackValue = 0.0f;
 	private bool                m_AttackLongCasting = false;
 	private bool                m_AttackLongCasted = false;
@@ -111,6 +113,7 @@ public class Player : MonoBehaviour {
 	private bool 		_attackWasUp = true;
 	private bool        _bumped = false;
 	private float       _attackHoldTime = 0.0f;
+    public bool        _isInCounterTime = false;
 
 
 
@@ -225,6 +228,7 @@ public class Player : MonoBehaviour {
 		//Gestion de la défense
 		bool isDefendDown = Input.GetButton("Defend") || (BSDefend.CurrentState == ButtonScript.ButtonState.Down);
 		bool isDefendUp = Input.GetButtonUp("Defend") || (BSDefend.CurrentState == ButtonScript.ButtonState.Up);
+        
 		if (isDefendDown && m_Stamina > 0 && !m_BeingGroggy && !m_BeingHit && !m_Attacking)
 		{
 			m_Defending = true;
@@ -235,6 +239,8 @@ public class Player : MonoBehaviour {
 		{
 			m_Defending = false;
 			_anim.SetBool("Defend", false);
+            m_CounterTimer = 0;
+            _isInCounterTime = false;
 		}
 
 		if (m_Defending)
@@ -255,6 +261,22 @@ public class Player : MonoBehaviour {
 			PlayerDefend DefendEvent = new PlayerDefend(m_Stamina);
 			Events.instance.Raise(DefendEvent);
 		}
+
+        //Gestion du contre
+        bool isCounterWasUp = Input.GetButtonDown("Defend");
+
+        if (isCounterWasUp)
+            _isInCounterTime = true;
+
+        if (_isInCounterTime) {
+            //Time.timeScale = 0.1f;
+            m_CounterTimer += 1 * Time.deltaTime;
+            if (m_CounterTimer > m_CounterTimerMax) {
+                m_CounterTimer = 0;
+                _isInCounterTime = false;
+            }
+                
+        }
 
 		//Gestion de l'attaque
 		float TestStamina = m_Stamina - Weapon.StaminaConsomation;
@@ -565,7 +587,6 @@ public class Player : MonoBehaviour {
 
 	 public void ComboCheck()
 	 {
-		 Debug.Log("test");
 		 if (m_ComboValidated)
 		 {
 			 _anim.SetBool("ComboValidated", true);

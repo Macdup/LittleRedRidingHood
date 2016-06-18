@@ -53,13 +53,6 @@ public class IAAnim : MonoBehaviour
         spellScript.SpellFX();
     }
 
-    public void setCounterPossibilityOn() {
-        counterPossibility = true;
-    }
-    public void setCounterPossibilityOff()
-    {
-        counterPossibility = false;
-    }
 
 
 }
