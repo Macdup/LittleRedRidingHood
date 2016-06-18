@@ -19,12 +19,14 @@ namespace AssemblyCSharp
 		public bool 		m_BeingHit = false;
 		protected Animator 	m_Animator;
 
+
 		// private member
 		private SpriteRenderer 	m_SpriteRenderer;
         private Dropable        m_Dropable;
+        public Player          m_Player;
 
 		// variable
-
+        public bool _isInCounterTime = false;
 
 		virtual public void Start() {
 			m_SpriteRenderer = this.GetComponent<SpriteRenderer> ();
@@ -37,6 +39,7 @@ namespace AssemblyCSharp
 			if (m_Animator == null) {
 				m_Animator = this.GetComponentInChildren<Animator> ();
 			}
+            m_Player = GameObject.Find("Player").GetComponent<Player>();
 		}
 
 		virtual public void Update() {
