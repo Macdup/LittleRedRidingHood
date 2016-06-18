@@ -10,7 +10,7 @@ public class Player : MonoBehaviour {
     public enum WeaponType
     {
         Sword,
-        Bow
+        Stick
     }
 
     // public member
@@ -38,11 +38,16 @@ public class Player : MonoBehaviour {
 	public ButtonScript BSDefend;
 	public ButtonScript BSMagic;
     public ButtonScript BSWeaponSword;
-    public ButtonScript BSWeaponBow;
+    public ButtonScript BSWeaponStick;
+    
 
     public WeaponScript Weapon;
 	public float		AttackCoolDown = 0.15f;
     public float        SlowFactorWhileAttack = 0.5f;
+
+    public GameObject   MagicShotPrefab;
+    public float        MagicShotSpeed;
+    public Vector2      MagicShotPositionOffsetFromPlayer = new Vector2(0, 0);
 
     public float 		TouchDetectionRadius = 0.2f;
 
@@ -134,7 +139,23 @@ public class Player : MonoBehaviour {
 		m_BottomRight = GetComponents<CircleCollider2D> () [1];
 		m_RightBox = GetComponents<BoxCollider2D> () [3];
 
-        SwitchWeaponTo(CurrentWeapon);
+        // Init weapon
+        if (CurrentWeapon == WeaponType.Stick)
+        {
+            CurrentWeapon = WeaponType.Stick;
+            BSWeaponSword.gameObject.SetActive(false);
+            BSWeaponStick.gameObject.SetActive(true);
+            _anim.SetBool("Sword", false);
+            _anim.SetBool("Stick", true);
+        }
+        else if (CurrentWeapon == WeaponType.Sword)
+        {
+            CurrentWeapon = WeaponType.Sword;
+            BSWeaponStick.gameObject.SetActive(false);
+            BSWeaponSword.gameObject.SetActive(true);
+            _anim.SetBool("Stick", false);
+            _anim.SetBool("Sword", true);
+        }
 
         Weapon = GetComponentInChildren<WeaponScript>();
     }
@@ -313,9 +334,9 @@ public class Player : MonoBehaviour {
         //Gestion du switch d'arme
         if(BSWeaponSword.CurrentState == ButtonScript.ButtonState.Down)
         {
-            SwitchWeaponTo(WeaponType.Bow);
+            SwitchWeaponTo(WeaponType.Stick);
         }
-        if(BSWeaponBow.CurrentState == ButtonScript.ButtonState.Down)
+        else if(BSWeaponStick.CurrentState == ButtonScript.ButtonState.Down)
         {
             SwitchWeaponTo(WeaponType.Sword);
         }
@@ -577,25 +598,42 @@ public class Player : MonoBehaviour {
 
     public void SwitchWeaponTo(WeaponType iWeapon)
     {
-        if (iWeapon == WeaponType.Bow)
+        if (iWeapon == WeaponType.Stick && CurrentWeapon!=WeaponType.Stick)
         {
-            CurrentWeapon = WeaponType.Bow;
+            CurrentWeapon = WeaponType.Stick;
+            BSWeaponSword.CurrentState = ButtonScript.ButtonState.Up;
             BSWeaponSword.gameObject.SetActive(false);
-            BSWeaponBow.gameObject.SetActive(true);
+            BSWeaponStick.gameObject.SetActive(true);
             _anim.SetBool("Sword", false);
-            _anim.SetBool("Bow", true);
+            _anim.SetBool("Stick", true);
         }
-        else if (iWeapon == WeaponType.Sword)
+        else if (iWeapon == WeaponType.Sword && CurrentWeapon != WeaponType.Sword)
         {
             CurrentWeapon = WeaponType.Sword;
-            BSWeaponBow.gameObject.SetActive(false);
+            BSWeaponStick.CurrentState = ButtonScript.ButtonState.Up;
+            BSWeaponStick.gameObject.SetActive(false);
             BSWeaponSword.gameObject.SetActive(true);
-            _anim.SetBool("Bow", false);
+            _anim.SetBool("Stick", false);
             _anim.SetBool("Sword", true);
         }
     }
 
+
     public void setCounter(){
         m_Counter = true;
+    }
+    
+
+    public void FireStick()
+    {
+        GameObject shotInstance = (GameObject)Instantiate(MagicShotPrefab);
+        MagicShot shot = shotInstance.GetComponent<MagicShot>();
+        shot.Source = this.gameObject;
+        shotInstance.transform.position = new Vector3(this.transform.position.x + MagicShotPositionOffsetFromPlayer.x, this.transform.position.y + MagicShotPositionOffsetFromPlayer.y, this.transform.position.z);
+
+        if(m_FacingRight)
+            shot.MoveVector = new Vector3(-MagicShotSpeed, 0, 0);
+        else
+            shot.MoveVector = new Vector3(MagicShotSpeed, 0, 0);
     }
 }

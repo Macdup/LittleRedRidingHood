@@ -27,7 +27,6 @@ GameObject:
   - 114: {fileID: 11480066}
   - 61: {fileID: 6194690}
   - 114: {fileID: 11403490}
-  - 50: {fileID: 5021752}
   m_Layer: 14
   m_Name: boar
   m_TagString: Untagged
@@ -204,23 +203,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 458450}
   m_RootOrder: 1
---- !u!50 &5021752
-Rigidbody2D:
-  serializedVersion: 2
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 114252}
-  m_UseAutoMass: 1
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_IsKinematic: 0
-  m_Interpolate: 1
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 6
 --- !u!61 &6194690
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -294,6 +276,7 @@ MonoBehaviour:
   DoesBumpPlayer: 1
   BumpForce: 300
   staminaLossPerHit: 100
+  m_BeingHit: 0
   speed: 120
   pointA: {fileID: 191816}
   pointB: {fileID: 151682}

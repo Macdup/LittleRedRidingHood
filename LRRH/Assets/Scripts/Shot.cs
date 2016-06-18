@@ -14,23 +14,23 @@ public class Shot : MonoBehaviour {
     //protected bool m_Dead = false;
 
     // private member
-    private Animator m_Anim;
-    private int m_collideHash = Animator.StringToHash("collide");
+    protected Animator m_Anim;
+    protected int m_collideHash = Animator.StringToHash("collide");
 
     // variable
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    virtual public void Start () {
         m_Anim = gameObject.GetComponentInChildren<Animator>();
         flip();
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    virtual public void Update () {
         move();
 	}
 
-	void OnTriggerEnter2D(Collider2D other) {
+	virtual public void OnTriggerEnter2D(Collider2D other) {
 		if (Source == null || other.gameObject == Source)
 			return;
 		
@@ -54,7 +54,7 @@ public class Shot : MonoBehaviour {
                 transform.Translate(MoveVector * Time.deltaTime,Space.World);
 		}
 
-    void flip() {
+    virtual public void flip() {
         if (MoveVector.x < 0)
         {
             transform.localScale = new Vector3(1,1,1);
