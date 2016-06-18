@@ -3,6 +3,7 @@ using System.Collections;
 
 public class IAAnim : MonoBehaviour
 {
+    public bool counterPossibility = false;
 
     private IATest iaScript;
     private Spell spellScript; 
@@ -51,5 +52,14 @@ public class IAAnim : MonoBehaviour
     {
         spellScript.SpellFX();
     }
+
+    public void setCounterPossibilityOn() {
+        counterPossibility = true;
+    }
+    public void setCounterPossibilityOff()
+    {
+        counterPossibility = false;
+    }
+
 
 }

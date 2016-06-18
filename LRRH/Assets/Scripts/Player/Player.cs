@@ -84,6 +84,7 @@ public class Player : MonoBehaviour {
 	private float               m_StaminaMin = 0.0f;
 	private bool                m_BeingGroggy = false;
 	private GameObject          m_CounterSense;
+    private bool                m_Counter = false;
 	public float 				m_JetPackValue = 0.0f;
 	private bool                m_AttackLongCasting = false;
 	private bool                m_AttackLongCasted = false;
@@ -592,5 +593,9 @@ public class Player : MonoBehaviour {
             _anim.SetBool("Bow", false);
             _anim.SetBool("Sword", true);
         }
+    }
+
+    public void setCounter(){
+        m_Counter = true;
     }
 }
