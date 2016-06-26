@@ -29,6 +29,7 @@ public class MushroomScript : Enemy {
 			Shot shot = shotInstance.GetComponent<Shot> ();
             shot.Source = this.gameObject;
             shot.HitDamage = DamagePerHit;
+            shot.Target = m_Player.gameObject;
             shot.iStaminaLossPerHit = staminaLossPerHit;
 			shotInstance.GetComponent<Shot> ().MoveVector = new Vector2 (ShootSpeed * transform.localScale.x * -1, 0);
 			shotInstance.transform.position = new Vector3 (this.transform.position.x + (transform.localScale.x * (-20)), this.transform.position.y + 10, this.transform.position.z);

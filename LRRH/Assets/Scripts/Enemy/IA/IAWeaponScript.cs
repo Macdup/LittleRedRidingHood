@@ -29,21 +29,21 @@ public class IAWeaponScript : MonoBehaviour {
 
         if (player != null && player.m_BeingHit == false)
         {
-
-            Vector2 dir = other.bounds.center - transform.position;
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, 200f, LayerMask.GetMask("Player"));
-
-            if (m_IATest.IsAttackLongCasted())
-                player.Hit(LongAttackDamageValue, StaminaConsomation);
-            else
-                player.Hit(DamageValue, StaminaConsomation);
-
-            Instantiate(HitPrefab, hit.point, Quaternion.identity);
-
-            /*if (player.IsBumpable)
+            if (player._isInCounterTime)
             {
-                player.Bump(this.transform.position, BumpForce);
-			}*/
+                m_IATest.startCounter();
+            }
+            else {
+                Vector2 dir = other.bounds.center - transform.position;
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, 200f, LayerMask.GetMask("Player"));
+
+                if (m_IATest.IsAttackLongCasted())
+                    player.Hit(LongAttackDamageValue, StaminaConsomation);
+                else
+                    player.Hit(DamageValue, StaminaConsomation);
+
+                Instantiate(HitPrefab, hit.point, Quaternion.identity);
+            }
 		}
 
         BushScript otherBushScript = other.gameObject.GetComponent<BushScript>();
