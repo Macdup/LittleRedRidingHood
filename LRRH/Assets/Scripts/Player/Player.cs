@@ -18,7 +18,7 @@ public class Player : MonoBehaviour {
     public float MoveSpeed = 800.0f;
 	public float JumpSpeed = 1000.0f;
 	public float MinJumpSpeed = 200.0f;
-	public float JumpDelay = 0.03f;
+	public float JumpDelay = 0.19f;
 	public float HitCoolDown = 0.5f;
 	public float BumpCoolDown = 0.5f;
 	public bool  HasJetPack = false;
@@ -368,11 +368,11 @@ public class Player : MonoBehaviour {
 
 		float move = 0.0f;
 
-		if (BSMoveLeft.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking)
+		if (BSMoveLeft.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic)
 			move = -1.0f;
-        else if (BSMoveRight.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking)
+		else if (BSMoveRight.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic)
 			move = 1.0f;
-        else if (!m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking)
+		else if (!m_BeingGroggy && !m_BeingHit && !UsingMagic)
 			move = Input.GetAxis ("Horizontal");
 
 		// Evalute states
