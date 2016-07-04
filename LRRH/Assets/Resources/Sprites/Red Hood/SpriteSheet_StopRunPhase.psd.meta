@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 9056a85a8a0244e438790bd1580af397
-timeCreated: 1462022115
+timeCreated: 1467665080
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -27,7 +27,7 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
-  isReadable: 0
+  isReadable: 1
   grayScaleToAlpha: 0
   generateCubemap: 0
   cubemapConvolution: 0
@@ -65,20 +65,21 @@ TextureImporter:
         y: 50
         width: 60
         height: 50
-      alignment: 7
+      alignment: 9
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 9, y: 44}
-        - {x: 6, y: 47}
-        - {x: -5, y: 48}
-        - {x: -10, y: 48}
-        - {x: -30, y: 38}
-        - {x: -30, y: 10}
-        - {x: -17, y: 0}
-        - {x: 4, y: 0}
-        - {x: 12, y: 11}
-        - {x: 12, y: 33}
+      - - {x: 6, y: 47}
+        - {x: 4, y: 48}
+        - {x: -15, y: 48}
+        - {x: -30, y: 42}
+        - {x: -30, y: 11}
+        - {x: -21, y: 3}
+        - {x: -14, y: 0}
+        - {x: 8, y: 0}
+        - {x: 12, y: 12}
+        - {x: 12, y: 39}
+        - {x: 9, y: 44}
     - name: SpriteSheet_StopRunPhase_1
       rect:
         serializedVersion: 2
@@ -86,18 +87,18 @@ TextureImporter:
         y: 50
         width: 60
         height: 50
-      alignment: 7
+      alignment: 9
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -12, y: 47}
-        - {x: -30, y: 35}
-        - {x: -30, y: 11}
-        - {x: -24, y: 0}
-        - {x: 7, y: 0}
-        - {x: 12, y: 8}
+      - - {x: 2, y: 47}
+        - {x: -11, y: 47}
+        - {x: -30, y: 30}
+        - {x: -30, y: 6}
+        - {x: -15, y: 0}
+        - {x: 5, y: 0}
+        - {x: 12, y: 9}
         - {x: 12, y: 45}
-        - {x: 2, y: 47}
     - name: SpriteSheet_StopRunPhase_2
       rect:
         serializedVersion: 2
@@ -105,17 +106,18 @@ TextureImporter:
         y: 50
         width: 60
         height: 50
-      alignment: 7
+      alignment: 9
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: -14, y: 49}
-        - {x: -28, y: 36}
-        - {x: -28, y: 8}
+        - {x: -15, y: 48}
+        - {x: -28, y: 31}
+        - {x: -28, y: 13}
         - {x: -22, y: 0}
-        - {x: 12, y: 0}
-        - {x: 13, y: 3}
-        - {x: 13, y: 49}
+        - {x: 13, y: 0}
+        - {x: 13, y: 46}
+        - {x: 11, y: 49}
     - name: SpriteSheet_StopRunPhase_3
       rect:
         serializedVersion: 2
@@ -123,18 +125,18 @@ TextureImporter:
         y: 50
         width: 60
         height: 50
-      alignment: 7
+      alignment: 9
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -11, y: 50}
-        - {x: -21, y: 34}
-        - {x: -21, y: 8}
-        - {x: -13, y: 0}
-        - {x: 12, y: 0}
-        - {x: 15, y: 7}
-        - {x: 15, y: 48}
-        - {x: 12, y: 50}
+      - - {x: -12, y: 50}
+        - {x: -21, y: 26}
+        - {x: -21, y: 14}
+        - {x: -8, y: 0}
+        - {x: 14, y: 0}
+        - {x: 15, y: 1}
+        - {x: 15, y: 45}
+        - {x: 11, y: 50}
     - name: SpriteSheet_StopRunPhase_4
       rect:
         serializedVersion: 2
@@ -142,19 +144,17 @@ TextureImporter:
         y: 0
         width: 60
         height: 50
-      alignment: 7
+      alignment: 9
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -11, y: 50}
-        - {x: -12, y: 49}
-        - {x: -15, y: 40}
-        - {x: -15, y: 12}
-        - {x: -10, y: 0}
-        - {x: 11, y: 0}
-        - {x: 16, y: 5}
-        - {x: 16, y: 45}
-        - {x: 13, y: 50}
+      - - {x: -13, y: 50}
+        - {x: -15, y: 41}
+        - {x: -15, y: 11}
+        - {x: -11, y: 0}
+        - {x: 9, y: 0}
+        - {x: 16, y: 4}
+        - {x: 16, y: 50}
     - name: SpriteSheet_StopRunPhase_5
       rect:
         serializedVersion: 2
@@ -162,14 +162,14 @@ TextureImporter:
         y: 0
         width: 60
         height: 50
-      alignment: 7
+      alignment: 9
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -9, y: 50}
-        - {x: -16, y: 39}
-        - {x: -16, y: 6}
-        - {x: -13, y: 0}
+      - - {x: -10, y: 50}
+        - {x: -16, y: 38}
+        - {x: -16, y: 9}
+        - {x: -12, y: 0}
         - {x: 8, y: 0}
         - {x: 15, y: 6}
         - {x: 15, y: 50}
@@ -180,12 +180,12 @@ TextureImporter:
         y: 0
         width: 60
         height: 50
-      alignment: 7
+      alignment: 9
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: -10, y: 50}
-        - {x: -17, y: 26}
+        - {x: -17, y: 24}
         - {x: -17, y: 9}
         - {x: -10, y: 0}
         - {x: 8, y: 0}
@@ -198,16 +198,16 @@ TextureImporter:
         y: 0
         width: 60
         height: 50
-      alignment: 7
+      alignment: 9
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -10, y: 50}
-        - {x: -16, y: 38}
-        - {x: -16, y: 9}
+      - - {x: -14, y: 50}
+        - {x: -16, y: 39}
+        - {x: -16, y: 3}
         - {x: -12, y: 0}
-        - {x: 11, y: 0}
-        - {x: 15, y: 9}
+        - {x: 10, y: 0}
+        - {x: 15, y: 10}
         - {x: 15, y: 38}
         - {x: 11, y: 50}
     outline: []
