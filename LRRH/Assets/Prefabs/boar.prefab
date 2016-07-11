@@ -27,6 +27,7 @@ GameObject:
   - 114: {fileID: 11480066}
   - 61: {fileID: 6194690}
   - 114: {fileID: 11403490}
+  - 50: {fileID: 5030520}
   m_Layer: 14
   m_Name: boar
   m_TagString: Untagged
@@ -122,6 +123,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -42.3, y: 52, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 438656}
   m_Father: {fileID: 458450}
@@ -135,6 +137,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 438656}
   m_RootOrder: 0
@@ -147,6 +150,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 140, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 458450}
   m_RootOrder: 2
@@ -159,6 +163,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 425486}
   m_Father: {fileID: 415222}
@@ -172,6 +177,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 458450}
   m_RootOrder: 0
@@ -184,6 +190,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1300, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 457096}
   - {fileID: 460258}
@@ -200,9 +207,27 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -370, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 458450}
   m_RootOrder: 1
+--- !u!50 &5030520
+Rigidbody2D:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 114252}
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 2
 --- !u!61 &6194690
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -271,12 +296,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Life: 15
   DamagePerHit: 20
-  HitCoolDown: 0.5
+  StopDurationAfterBeingHit: 0.5
+  NoDamageDurationAfterBeingHit: 0.3
   IsBumpable: 1
   DoesBumpPlayer: 1
-  BumpForce: 300
+  BumpForce: 200
   staminaLossPerHit: 100
   m_BeingHit: 0
+  m_Stopped: 0
+  m_Player: {fileID: 0}
+  _isInCounterTime: 0
   speed: 120
   pointA: {fileID: 191816}
   pointB: {fileID: 151682}

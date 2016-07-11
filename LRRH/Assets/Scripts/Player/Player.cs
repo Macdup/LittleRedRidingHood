@@ -28,10 +28,13 @@ public class Player : MonoBehaviour {
 	public ParticleSystem JetPackParticule;
 	public float AttackLongCastDuration = 1.5f;
 	public float AttackLongCastStartAfterTime = 1.5f;
+    public float AttackLongDashSpeed = 50.0f;
+    public float AttackLongDashDuration = 1.0f;
 
 
 
-	public ButtonScript BSMoveLeft;
+
+    public ButtonScript BSMoveLeft;
 	public ButtonScript BSMoveRight;
 	public ButtonScript BSJump;
 	public ButtonScript BSAttack;
@@ -95,12 +98,13 @@ public class Player : MonoBehaviour {
 	public float 				m_JetPackValue = 0.0f;
 	private bool                m_AttackLongCasting = false;
 	private bool                m_AttackLongCasted = false;
+    public bool                 m_AttackLongDashing = false;
 
 
 
 
-	// variable
-	private bool 		_wasJumpDown = false;
+    // variable
+    private bool 		_wasJumpDown = false;
 	private bool 		_wasJumpUp = false;
 	private bool 		_firstJump =  false;
 	private bool 		_firstJumpEnd =  false;
@@ -164,9 +168,6 @@ public class Player : MonoBehaviour {
     }
 
 
-
-	//private bool _wasJumpDown = false;
-
 	void Update() {
 		//Time.timeScale = 0.1f;
 		//Idle timer
@@ -181,14 +182,19 @@ public class Player : MonoBehaviour {
 			SetIdle(true);
 		}
 
-		// Gestion du jump
-		bool isJumpDown = false;
+
+        if (m_AttackLongDashing)
+            return;
+
+
+        // Gestion du jump
+        bool isJumpDown = false;
 		bool isJumpUp = false;
 
 		isJumpDown = Input.GetButtonDown ("Jump") || (BSJump.CurrentState == ButtonScript.ButtonState.Down && !_wasJumpDown);
 		isJumpUp = Input.GetButtonUp ("Jump") || (BSJump.CurrentState == ButtonScript.ButtonState.Up && !_wasJumpUp);
 
-
+         
 
 		if (isJumpDown && !m_BeingGroggy && !m_BeingHit && !m_Attacking)
 		{
@@ -404,9 +410,10 @@ public class Player : MonoBehaviour {
 			JetPackParticule.Stop();
 		}
 
-	 
 
-		if (m_AttackCount>0 || m_AttackLongCasting) {
+        if (m_AttackLongDashing)
+            return;
+        if (m_AttackCount>0 || m_AttackLongCasting) {
 			//if(m_BottomTouched)
 			//	m_RigidBody2D.velocity = new Vector2(m_RigidBody2D.velocity.x * SlowFactorWhileAttack, m_RigidBody2D.velocity.y);
 			move *= SlowFactorWhileAttack;
@@ -497,10 +504,11 @@ public class Player : MonoBehaviour {
 		m_Attacking = false;
 	}
 
-	public void Hit (float iDamageValue, float iStaminaLossPerHit){
-		
-		
-		if (!m_BeingHit) {
+	public void Hit (float iDamageValue, float iStaminaLossPerHit) {
+        if (m_AttackLongDashing)
+            return;
+
+        if (!m_BeingHit) {
 			m_BeingHit = true;
 
 			if (m_Defending)
@@ -656,5 +664,22 @@ public class Player : MonoBehaviour {
             shot.MoveVector = new Vector3(-MagicShotSpeed, 0, 0);
         else
             shot.MoveVector = new Vector3(MagicShotSpeed, 0, 0);
+    }
+
+    public void DashForward()
+    {
+        m_AttackLongDashing = true;
+        if(m_FacingRight)
+            m_RigidBody2D.velocity = new Vector2(-AttackLongDashSpeed, 0);
+        else
+            m_RigidBody2D.velocity = new Vector2(AttackLongDashSpeed, 0);
+
+        Invoke("ResetAttackLongDash", AttackLongDashDuration);
+    }
+
+    public void ResetAttackLongDash()
+    {
+        m_AttackLongDashing = false;
+        m_RigidBody2D.velocity = new Vector2(0, 0);
     }
 }
