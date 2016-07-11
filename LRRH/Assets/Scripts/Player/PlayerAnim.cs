@@ -54,4 +54,9 @@ public class PlayerAnim : MonoBehaviour {
     {
         playerScript.FireStick();
     }
+
+    public void DashForward()
+    {
+        playerScript.DashForward();
+    }
 }

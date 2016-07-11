@@ -8,8 +8,9 @@ namespace AssemblyCSharp
 		// public member
 		public float Life = 100.0f;
 		public float DamagePerHit = 10.0f;
-		public float HitCoolDown = 0.5f;
-		public bool  IsBumpable = false;
+		public float StopDurationAfterBeingHit = 0.5f;
+        public float NoDamageDurationAfterBeingHit = 0.3f;
+        public bool  IsBumpable = false;
 		public bool  DoesBumpPlayer = false;
 		public float BumpForce = 0.0f;
         public float staminaLossPerHit;
@@ -17,7 +18,8 @@ namespace AssemblyCSharp
 		// protected member
 		protected bool 		m_Dead = false;
 		public bool 		m_BeingHit = false;
-		protected Animator 	m_Animator;
+        public bool         m_Stopped = false;
+        protected Animator 	m_Animator;
 
 
 		// private member
@@ -66,9 +68,12 @@ namespace AssemblyCSharp
 		}
 
 		virtual public void Hit(float iDamageValue) {
-			if(!m_BeingHit) {
+			if (!m_BeingHit) {
 				m_BeingHit = true;
-	            if (m_Animator)
+                m_Stopped = true;
+                
+
+                if (m_Animator)
 	            {
 	                m_Animator.SetTrigger("hit");
 	            }
@@ -76,8 +81,9 @@ namespace AssemblyCSharp
 				if (Life <= 0)
 					Death ();
 				else {
-					Invoke ("ResetHitCoolDown", HitCoolDown);
-				}
+					Invoke ("ResetHitCoolDown", NoDamageDurationAfterBeingHit);
+                    Invoke("ResetStoppedCoolDown", StopDurationAfterBeingHit);
+                }
 			}
 		}
 
@@ -113,6 +119,11 @@ namespace AssemblyCSharp
 			m_BeingHit = false;	
 		}
 
-	}
+        virtual public void ResetStoppedCoolDown()
+        {
+            m_Stopped = false;
+        }
+
+    }
 }
 

@@ -48,12 +48,12 @@ AnimationClip:
         inSlope: Infinity
         outSlope: Infinity
         tangentMode: 31
-      - time: 0.23333333
+      - time: 0.31111112
         value: 1
         inSlope: Infinity
         outSlope: Infinity
         tangentMode: 31
-      - time: 0.25
+      - time: 0.33333334
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -129,15 +129,15 @@ AnimationClip:
   - curve:
     - time: 0
       value: {fileID: 21300004, guid: efce89a56b7e6ea47ad573932ebc52b4, type: 3}
-    - time: 0.16666667
+    - time: 0.22222222
       value: {fileID: 21300006, guid: efce89a56b7e6ea47ad573932ebc52b4, type: 3}
-    - time: 0.25
+    - time: 0.33333334
       value: {fileID: 21300014, guid: 9309183be7dd3d142848f6a4da76a5cd, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
     script: {fileID: 0}
-  m_SampleRate: 60
+  m_SampleRate: 45
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -201,7 +201,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.26666668
+    m_StopTime: 0.35555556
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -315,12 +315,12 @@ AnimationClip:
         inSlope: Infinity
         outSlope: Infinity
         tangentMode: 31
-      - time: 0.23333333
+      - time: 0.31111112
         value: 1
         inSlope: Infinity
         outSlope: Infinity
         tangentMode: 31
-      - time: 0.25
+      - time: 0.33333334
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -396,4 +396,11 @@ AnimationClip:
   m_HasGenericRootTransform: 1
   m_HasMotionFloatCurves: 0
   m_GenerateMotionCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0
+    functionName: DashForward
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
