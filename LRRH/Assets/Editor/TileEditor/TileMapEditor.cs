@@ -6,6 +6,9 @@ using UnityEditor;
 public class TileMapEditor : Editor {
 
     public TileMap map;
+    TileBrush brush;
+    Vector3 mouseHitPos;
+   
 
     public override void OnInspectorGUI()
     {
@@ -27,6 +30,7 @@ public class TileMapEditor : Editor {
             EditorGUILayout.LabelField("Tile Size", map.tileSize.x + "x" + map.tileSize.y +"y");
             EditorGUILayout.LabelField("Grid Size In Units:", map.gridSize.x + "x" + map.mapSize.y + "y");
             EditorGUILayout.LabelField("Pixels To Units:", map.pixelsToUnits.ToString());
+            UpdateBrush(map.currentTileBrush);
         }
 
         EditorGUILayout.EndVertical();
@@ -38,8 +42,13 @@ public class TileMapEditor : Editor {
 
         if (map.texture2D != null) {
             UpdateCalculations();
+            NewBrush();
         }
 
+    }
+
+    void OnDisable() {
+        DestroyBrush();
     }
 
     void UpdateCalculations() {
@@ -53,6 +62,50 @@ public class TileMapEditor : Editor {
         map.tileSize = new Vector2(width, height);
         map.pixelsToUnits = (int)(sprite.rect.width / sprite.bounds.size.x);
         map.gridSize = new Vector2((width / map.pixelsToUnits) * map.mapSize.x, (height / map.pixelsToUnits) * map.mapSize.y);
+    }
+
+    void CreateBrush() {
+        var sprite = map.currentTileBrush;
+        if (sprite != null) {
+            GameObject go = new GameObject("Brush");
+            go.transform.SetParent(map.transform);
+
+            brush = go.AddComponent<TileBrush>();
+            brush.renderer2D = go.AddComponent<SpriteRenderer>();
+
+            var pixelsToUnits = map.pixelsToUnits;
+            brush.brushSize = new Vector2(sprite.textureRect.width/pixelsToUnits,
+                                            sprite.textureRect.height/pixelsToUnits);
+            brush.UpdateBrush(sprite);
+        }
+    }
+
+    void NewBrush() {
+        if (brush == null)
+            CreateBrush();
+
+    }
+
+    void DestroyBrush() {
+        if (brush != null)
+            DestroyImmediate(brush);
+    }
+
+    public void UpdateBrush(Sprite sprite) {
+        if (brush != null)
+            brush.UpdateBrush(sprite);
+    }
+
+    private void UpdateHitPosition(){
+        var p = new Plane(map.transform.TransformDirection(Vector3.forward),Vector3.zero);
+        var ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
+        var hit = Vector3.zero;
+        var dist = 0.0f;
+
+        if(p.Raycast(ray, out dist))
+            hit = ray.origin + ray.direction.normalized  * dist;
+
+        mouseHitPos = map.transform.InverseTransformDirection(hit);
     }
 	
 }

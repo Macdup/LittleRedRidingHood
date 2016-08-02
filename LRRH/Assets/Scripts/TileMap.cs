@@ -9,6 +9,11 @@ public class TileMap : MonoBehaviour {
     public Object[] spriteReferences;
     public Vector2 gridSize = new Vector2();
     public int pixelsToUnits = 100;
+    public int tileID = 0;
+
+    public Sprite currentTileBrush {
+        get { return spriteReferences[tileID] as Sprite; }
+    }
 
 	// Use this for initialization
 	void Start () {

@@ -65,6 +65,14 @@ public class TilePickerWindow : EditorWindow {
                     currentSelection.x = Mathf.Floor((mousePos.x + scrollPosition.x) / tile.x);
                     currentSelection.y = Mathf.Floor((mousePos.y + scrollPosition.y) / tile.y);
 
+                    if (currentSelection.x > grid.x - 1)
+                        currentSelection.x = grid.x - 1;
+
+                    if (currentSelection.y > grid.y - 1)
+                        currentSelection.y = grid.y - 1;
+
+                    selection.tileID = (int)(currentSelection.x + (currentSelection.y * grid.x) + 1);
+
                     Repaint();
                 }
 
