@@ -79,6 +79,5 @@ F:\Github\LittleRedRidingHood\LRRH\Temp\bin\Debug\UnityEngine.xml
 F:\Github\LittleRedRidingHood\LRRH\Temp\bin\Debug\UnityEditor.xml
 F:\Github\LittleRedRidingHood\LRRH\Temp\bin\Debug\UnityEngine.UI.xml
 F:\Github\LittleRedRidingHood\LRRH\Temp\bin\Debug\UnityEngine.Networking.xml
-F:\Github\LittleRedRidingHood\LRRH\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
 F:\Github\LittleRedRidingHood\LRRH\obj\Debug\Assembly-CSharp.dll
 F:\Github\LittleRedRidingHood\LRRH\obj\Debug\Assembly-CSharp.pdb
