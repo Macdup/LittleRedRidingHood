@@ -12,12 +12,14 @@ public enum CreationMode // your custom enumeration
 public class WorldMapEditor : Editor {
 
     public WorldMap map;
+	public Object Tile;
     public CreationMode creationMode = CreationMode.Screen;
     Brush brush;
     Vector3 mouseHitPos;
     Vector2 tileFeedbackPos;
     Vector2 screenFeedbackMinBound;
     Vector2 screenFeedbackMaxBound;
+
 
 
     bool mouseOnMap {
@@ -40,6 +42,7 @@ public class WorldMapEditor : Editor {
         var oldSize = map.mapSize;
         map.mapSize = EditorGUILayout.Vector2Field("Map Size:", map.mapSize);
         creationMode = (CreationMode)EditorGUILayout.EnumPopup("Creation mode:", creationMode);
+		Tile = EditorGUILayout.ObjectField (Tile,  typeof(GameObject), false);
         screenFeedbackMinBound = EditorGUILayout.Vector2Field("screenFeedbackMinBound:", screenFeedbackMinBound);
         tileFeedbackPos = EditorGUILayout.Vector2Field("tileFeedbackPos:", tileFeedbackPos);
 
@@ -63,7 +66,8 @@ public class WorldMapEditor : Editor {
         updateBrushSize();
         MoveBrush();
 
-        if (Event.current.type == EventType.mouseUp && Event.current.button == 0)
+        if (Event.current.type == EventType.mouseUp && Event.current.button == 0
+			|| Event.current.control)
         {
             CreateScreenBrush();
         }   
@@ -90,15 +94,19 @@ public class WorldMapEditor : Editor {
         go.GetComponent<Brush>().brushSize = map.BrushFeedback.brushSize;
         go.AddComponent<Screen>();
         go.transform.position = map.BrushFeedback.transform.position;
+		go.GetComponent<Screen> ().minBound = screenFeedbackMinBound;
+		go.GetComponent<Screen> ().maxBound = screenFeedbackMaxBound;
     }
 
     void CreateTile() {
-        var go = new GameObject("Tile");
-        go.transform.SetParent(map.transform);
-        go.AddComponent<Brush>();
-        go.GetComponent<Brush>().brushSize = map.BrushFeedback.brushSize;
-        go.AddComponent<Tile>();
-        go.transform.position = map.BrushFeedback.transform.position;
+		var zone = getZone ();
+		var tile = getTile ();
+		if (zone != null && tile == null) {
+			GameObject go = (GameObject)Instantiate(Tile);
+			go.GetComponent<Tile> ().position = tileFeedbackPos;
+			go.transform.SetParent (zone.transform);
+			go.transform.position = map.BrushFeedback.transform.position;
+		}
     }
 
     void updateBrushSize() {
@@ -127,11 +135,13 @@ public class WorldMapEditor : Editor {
     void UpdateHitPosition(){
         var p = new Plane(map.transform.TransformDirection(Vector3.forward),Vector3.zero);
         var ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
-        var hit = Vector3.zero;
+		var hit = Vector3.zero;
         var dist = 0.0f;
 
-        if(p.Raycast(ray, out dist))
-            hit = ray.origin + ray.direction.normalized  * dist;
+		if (p.Raycast (ray, out dist)) 
+			hit = ray.origin + ray.direction.normalized  * dist;
+            
+		
 
         mouseHitPos = map.transform.InverseTransformDirection(hit);
     }
@@ -147,8 +157,8 @@ public class WorldMapEditor : Editor {
             {
                 case CreationMode.Screen:
                     x += map.transform.position.x + tileSize;
-                    screenFeedbackMinBound = new Vector2(tileFeedbackPos.x - 8, tileFeedbackPos.y + 6);
-                    screenFeedbackMinBound = new Vector2(tileFeedbackPos.x + 8, tileFeedbackPos.y - 5);
+                    screenFeedbackMinBound = new Vector2(tileFeedbackPos.x - 8, tileFeedbackPos.y + 5);
+                    screenFeedbackMaxBound = new Vector2(tileFeedbackPos.x + 9, tileFeedbackPos.y - 5);
                     break;
                 case CreationMode.Tile:
                     x += map.transform.position.x + tileSize/ 2;
@@ -160,5 +170,27 @@ public class WorldMapEditor : Editor {
             map.BrushFeedback.transform.position = new Vector3(x, y, map.transform.position.z);
         }  
     }
+
+	Screen getZone(){
+		var zoneList = map.GetComponentsInChildren<Screen> ();
+		for (var i = 0; i < zoneList.Length; i++) {
+			var screen = zoneList[i].GetComponent<Screen> ();
+			if (tileFeedbackPos.x >= screen.minBound.x && tileFeedbackPos.y <= screen.minBound.y
+			   && tileFeedbackPos.x <= screen.maxBound.x && tileFeedbackPos.y >= screen.maxBound.y) {
+				return screen;
+			}
+		}
+		return null;
+	}
+
+	Tile getTile(){
+		var tileList = map.GetComponentsInChildren<Tile> ();
+		for (var i = 0; i < tileList.Length; i++) {
+			var screen = tileList[i].GetComponent<Tile> ();
+			if (tileList[i].position == tileFeedbackPos)
+				return tileList [i];
+		}
+		return null;
+	}
 	
 }

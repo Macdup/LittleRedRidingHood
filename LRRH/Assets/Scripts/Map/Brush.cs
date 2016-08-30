@@ -6,7 +6,7 @@ public class Brush : MonoBehaviour
 
     public Vector2 brushSize;
 
-    void OnDrawGizmosSelected()
+    void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(transform.position, brushSize);

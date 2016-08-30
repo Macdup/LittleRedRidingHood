@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/LevelSpriteEditor_Test.unity
+- path: Assets/RedHood.unity
   isLoaded: 1
   isActive: 1

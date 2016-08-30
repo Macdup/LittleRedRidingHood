@@ -4,12 +4,12 @@ using System.Collections;
 public class Dropable : MonoBehaviour {
     
     // public member
-    public GameObject CoinPrefab;
 	public bool IsMultiDrop = false;
+	private CoinManager m_CoinManager;
 
 	// Use this for initialization
 	void Start () {
-	
+		m_CoinManager = GameObject.Find("CoinManager").GetComponent<CoinManager>();
 	}
 	
 	// Update is called once per frame
@@ -19,15 +19,16 @@ public class Dropable : MonoBehaviour {
 
     public void drop()
     {
-        GameObject coinInstance = (GameObject)Instantiate(CoinPrefab);
-        coinInstance.transform.position = this.transform.position;
+		var coin = m_CoinManager.getUsableCoin();
+		coin.pop (transform.position);
 
-		if (IsMultiDrop) {
+		// J'ai cassé le multidrop pour l'instant. A réparer.
+		/*if (IsMultiDrop) {
 			int nbCoin = Random.Range (50, 100);
 			for (int i = 0; i < nbCoin; ++i) {
 				GameObject coinInstance2 = (GameObject)Instantiate(CoinPrefab);
 				coinInstance2.transform.position = this.transform.position;
 			}
-		}
+		}*/
     }
 }

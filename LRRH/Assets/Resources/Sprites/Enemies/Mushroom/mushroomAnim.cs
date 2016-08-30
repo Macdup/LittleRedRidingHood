@@ -3,11 +3,11 @@ using System.Collections;
 
 public class mushroomAnim : MonoBehaviour {
 
-    private MushroomScript mushroomScript;
+    private Mushroom mushroom;
 
 	// Use this for initialization
 	void Start () {
-        mushroomScript = GetComponentInParent<MushroomScript>();
+		mushroom = GetComponentInParent<Mushroom>();
 	}
 	
 	// Update is called once per frame
@@ -16,6 +16,6 @@ public class mushroomAnim : MonoBehaviour {
 	}
 
     public void startShot() {
-        mushroomScript.shot();
+		mushroom.shot();
     }
 }

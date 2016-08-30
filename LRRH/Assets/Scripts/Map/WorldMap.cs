@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class WorldMap : MonoBehaviour {
 
@@ -9,7 +10,7 @@ public class WorldMap : MonoBehaviour {
     public Vector2 ScreenSize = new Vector2();
     public GameObject tiles;
     public Brush BrushFeedback;
-    public GameObject[] Screens;
+	public List<GameObject> Screens = new List<GameObject>();
 
 
 	// Use this for initialization
@@ -19,16 +20,17 @@ public class WorldMap : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
 	}
 
     public void OnDrawGizmosSelected() {
         var pos = transform.position;
+		pos.x -= mapSize.x * tileSize.x;
+		pos.y += mapSize.y * tileSize.y;
 
             Gizmos.color = Color.gray;
             var row = 0;
-            var maxColumns = mapSize.x;
-            var total = mapSize.x * mapSize.y;
+            var maxColumns = mapSize.x * 2;
+            var total = mapSize.x * mapSize.y * 4;
             var tile = new Vector3(tileSize.x, tileSize.y,0);
             var offset = new Vector2(tile.x/2, tile.y/2);
             
@@ -39,7 +41,7 @@ public class WorldMap : MonoBehaviour {
                 var newX = (column * tile.x) + offset.x + pos.x;
                 var newY = -(row * tile.y) - offset.y + pos.y;
 
-                Gizmos.DrawWireCube(new Vector2(newX, newY), tile);
+                //Gizmos.DrawWireCube(new Vector2(newX, newY), tile);
                 if (column == maxColumns - 1)
                 {
                     row++;
@@ -48,12 +50,15 @@ public class WorldMap : MonoBehaviour {
 
             // On dessine les limites de la grille
             gridSize.x = mapSize.x * tileSize.x;
-            gridSize.y = mapSize.y * tileSize.y;
+			gridSize.y = mapSize.y * tileSize.y;
             Gizmos.color = Color.white;
             var centerX = pos.x + (gridSize.x / 2);
             var centerY = pos.y -(gridSize.y / 2);
             Gizmos.DrawWireCube(new Vector2(centerX, centerY), gridSize);
-            
+			Gizmos.DrawWireCube(new Vector2(-centerX, centerY), gridSize);
+			Gizmos.DrawWireCube(new Vector2(-centerX, -centerY), gridSize);
+			Gizmos.DrawWireCube(new Vector2(centerX, -centerY), gridSize);    
+
             // On crée le feedback de création de zone à la sélection de la map.
             if (BrushFeedback == null) {
                 var go = new GameObject("Brush");
