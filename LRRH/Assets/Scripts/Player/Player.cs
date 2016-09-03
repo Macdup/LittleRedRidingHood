@@ -683,4 +683,20 @@ public class Player : MonoBehaviour {
         m_AttackLongDashing = false;
         m_RigidBody2D.velocity = new Vector2(0, 0);
     }
+
+	public void setDoubleJump(bool Bool){
+		_isDoubleJumpCollected = Bool;
+	}
+
+	public void setChargedAttack(bool Bool){
+		_isChargedAttackCollected = Bool;
+	}
+
+	public void setCounter(bool Bool){
+		_isCounterCollected = Bool;
+	}
+
+	public void setJetPack(bool Bool){
+		_isJetPackCollected = Bool;
+	}
 }
