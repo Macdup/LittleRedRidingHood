@@ -26,6 +26,7 @@ namespace AssemblyCSharp
 		private SpriteRenderer 	m_SpriteRenderer;
         private Dropable        m_Dropable;
         public Player          m_Player;
+		private HitFeedbackManager m_HitFeedbackManager;
 
 		// variable
         public bool _isInCounterTime = false;
@@ -42,6 +43,7 @@ namespace AssemblyCSharp
 				m_Animator = this.GetComponentInChildren<Animator> ();
 			}
             m_Player = GameObject.Find("Player").GetComponent<Player>();
+			m_HitFeedbackManager = GameObject.Find("HitFeedbackManager").GetComponent<HitFeedbackManager>();
 		}
 
 		virtual public void Update() {
@@ -76,6 +78,10 @@ namespace AssemblyCSharp
                 if (m_Animator)
 	            {
 	                m_Animator.SetTrigger("hit");
+					Vector3 feedbackPosition = transform.position;
+					feedbackPosition.y += GetComponent<BoxCollider2D> ().size.y;
+					HitPointEffect hit = m_HitFeedbackManager.getUsableHitPointEffect ();
+					hit.pop(feedbackPosition, iDamageValue);
 	            }
 				Life -= iDamageValue;
 				if (Life <= 0)

@@ -118,6 +118,10 @@ public class Player : MonoBehaviour {
 	private bool        _bumped = false;
 	private float       _attackHoldTime = 0.0f;
     public bool        _isInCounterTime = false;
+	private bool _isDoubleJumpCollected = false;
+	private bool _isCounterCollected = false;
+	private bool _isJetPackCollected = false;
+	private bool _isChargedAttackCollected = false;
 
 
 
@@ -207,13 +211,13 @@ public class Player : MonoBehaviour {
 
 				//m_RigidBody2D.velocity = new Vector2 (m_RigidBody2D.velocity.x, JumpSpeed);
 				StartCoroutine (Jump (JumpSpeed));
-			} else if (_firstJumpEnd && !_secondJump) {
+			} else if (_firstJumpEnd && !_secondJump && _isDoubleJumpCollected) {
 				_secondJump = true;
 				_secondJumpEnd = false;
 				// second jump
 				//m_RigidBody2D.velocity = new Vector2 (m_RigidBody2D.velocity.x, JumpSpeed);
 				StartCoroutine (Jump (JumpSpeed));
-			} else if (HasJetPack && _secondJumpEnd) {
+			} else if (HasJetPack && _secondJumpEnd && _isJetPackCollected) {
 				_thirdJump = true;
 			}
 		}
@@ -235,13 +239,13 @@ public class Player : MonoBehaviour {
 		bool isDefendDown = Input.GetButton("Defend") || (BSDefend.CurrentState == ButtonScript.ButtonState.Down);
 		bool isDefendUp = Input.GetButtonUp("Defend") || (BSDefend.CurrentState == ButtonScript.ButtonState.Up);
         
-		if (isDefendDown && m_Stamina > 0 && !m_BeingGroggy && !m_BeingHit && !m_Attacking)
+		if (isDefendDown && m_Stamina > 0 && !m_BeingGroggy && !m_BeingHit && !m_Attacking && _isCounterCollected)
 		{
 			m_Defending = true;
 			_anim.SetBool("Defend", true);
 		}
 
-		if (isDefendUp)
+		if (isDefendUp && _isCounterCollected)
 		{
 			m_Defending = false;
 			_anim.SetBool("Defend", false);
@@ -271,7 +275,7 @@ public class Player : MonoBehaviour {
         //Gestion du contre
         bool isCounterWasUp = Input.GetButtonDown("Defend");
 
-        if (isCounterWasUp)
+		if (isCounterWasUp && _isCounterCollected)
             _isInCounterTime = true;
 
         if (_isInCounterTime) {
@@ -334,7 +338,7 @@ public class Player : MonoBehaviour {
 		else if(!m_Defending && !m_BeingHit)
 		{
 			_attackHoldTime += Time.deltaTime;
-			if(_attackHoldTime > AttackLongCastStartAfterTime)
+			if(_attackHoldTime > AttackLongCastStartAfterTime && _isChargedAttackCollected)
 			{
 				m_AttackLongCasting = true;
                 m_AttackCount = 0;
@@ -565,15 +569,12 @@ public class Player : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
-		CoinScript otherCoin = other.gameObject.GetComponent<CoinScript>();
+		Coin otherCoin = other.gameObject.GetComponent<Coin>();
 		if (otherCoin != null)
 		{
 			PlayerLoot lootEvent = new PlayerLoot (otherCoin.gameObject);
 			Events.instance.Raise (lootEvent);
-			Vector3 lootPosition = transform.position;
-			lootPosition.y += 50f;
-			otherCoin.PopLootText(lootPosition);
-			otherCoin.CoinAnim.destroy();
+			otherCoin.isTook ();
 		}
 		
 	}
@@ -682,4 +683,20 @@ public class Player : MonoBehaviour {
         m_AttackLongDashing = false;
         m_RigidBody2D.velocity = new Vector2(0, 0);
     }
+
+	public void setDoubleJump(bool Bool){
+		_isDoubleJumpCollected = Bool;
+	}
+
+	public void setChargedAttack(bool Bool){
+		_isChargedAttackCollected = Bool;
+	}
+
+	public void setCounter(bool Bool){
+		_isCounterCollected = Bool;
+	}
+
+	public void setJetPack(bool Bool){
+		_isJetPackCollected = Bool;
+	}
 }
