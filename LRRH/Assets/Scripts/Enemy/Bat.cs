@@ -14,9 +14,6 @@ public class Bat : Enemy {
 	private Vector3 dirVector = Vector3.zero;
 
 
-	// Use this for initialization
-	void Start () {
-	}
 	
 	// Update is called once per frame
 	void Update () {
