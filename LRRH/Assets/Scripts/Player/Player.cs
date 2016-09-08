@@ -28,10 +28,13 @@ public class Player : MonoBehaviour {
 	public ParticleSystem JetPackParticule;
 	public float AttackLongCastDuration = 1.5f;
 	public float AttackLongCastStartAfterTime = 1.5f;
+    public float AttackLongDashSpeed = 50.0f;
+    public float AttackLongDashDuration = 1.0f;
 
 
 
-	public ButtonScript BSMoveLeft;
+
+    public ButtonScript BSMoveLeft;
 	public ButtonScript BSMoveRight;
 	public ButtonScript BSJump;
 	public ButtonScript BSAttack;
@@ -95,12 +98,13 @@ public class Player : MonoBehaviour {
 	public float 				m_JetPackValue = 0.0f;
 	private bool                m_AttackLongCasting = false;
 	private bool                m_AttackLongCasted = false;
+    public bool                 m_AttackLongDashing = false;
 
 
 
 
-	// variable
-	private bool 		_wasJumpDown = false;
+    // variable
+    private bool 		_wasJumpDown = false;
 	private bool 		_wasJumpUp = false;
 	private bool 		_firstJump =  false;
 	private bool 		_firstJumpEnd =  false;
@@ -114,6 +118,10 @@ public class Player : MonoBehaviour {
 	private bool        _bumped = false;
 	private float       _attackHoldTime = 0.0f;
     public bool        _isInCounterTime = false;
+	private bool _isDoubleJumpCollected = false;
+	private bool _isCounterCollected = false;
+	private bool _isJetPackCollected = false;
+	private bool _isChargedAttackCollected = false;
 
 
 
@@ -164,9 +172,6 @@ public class Player : MonoBehaviour {
     }
 
 
-
-	//private bool _wasJumpDown = false;
-
 	void Update() {
 		//Time.timeScale = 0.1f;
 		//Idle timer
@@ -181,14 +186,19 @@ public class Player : MonoBehaviour {
 			SetIdle(true);
 		}
 
-		// Gestion du jump
-		bool isJumpDown = false;
+
+        if (m_AttackLongDashing)
+            return;
+
+
+        // Gestion du jump
+        bool isJumpDown = false;
 		bool isJumpUp = false;
 
 		isJumpDown = Input.GetButtonDown ("Jump") || (BSJump.CurrentState == ButtonScript.ButtonState.Down && !_wasJumpDown);
 		isJumpUp = Input.GetButtonUp ("Jump") || (BSJump.CurrentState == ButtonScript.ButtonState.Up && !_wasJumpUp);
 
-
+         
 
 		if (isJumpDown && !m_BeingGroggy && !m_BeingHit && !m_Attacking)
 		{
@@ -201,13 +211,13 @@ public class Player : MonoBehaviour {
 
 				//m_RigidBody2D.velocity = new Vector2 (m_RigidBody2D.velocity.x, JumpSpeed);
 				StartCoroutine (Jump (JumpSpeed));
-			} else if (_firstJumpEnd && !_secondJump) {
+			} else if (_firstJumpEnd && !_secondJump && _isDoubleJumpCollected) {
 				_secondJump = true;
 				_secondJumpEnd = false;
 				// second jump
 				//m_RigidBody2D.velocity = new Vector2 (m_RigidBody2D.velocity.x, JumpSpeed);
 				StartCoroutine (Jump (JumpSpeed));
-			} else if (HasJetPack && _secondJumpEnd) {
+			} else if (HasJetPack && _secondJumpEnd && _isJetPackCollected) {
 				_thirdJump = true;
 			}
 		}
@@ -229,13 +239,13 @@ public class Player : MonoBehaviour {
 		bool isDefendDown = Input.GetButton("Defend") || (BSDefend.CurrentState == ButtonScript.ButtonState.Down);
 		bool isDefendUp = Input.GetButtonUp("Defend") || (BSDefend.CurrentState == ButtonScript.ButtonState.Up);
         
-		if (isDefendDown && m_Stamina > 0 && !m_BeingGroggy && !m_BeingHit && !m_Attacking)
+		if (isDefendDown && m_Stamina > 0 && !m_BeingGroggy && !m_BeingHit && !m_Attacking && _isCounterCollected)
 		{
 			m_Defending = true;
 			_anim.SetBool("Defend", true);
 		}
 
-		if (isDefendUp)
+		if (isDefendUp && _isCounterCollected)
 		{
 			m_Defending = false;
 			_anim.SetBool("Defend", false);
@@ -265,7 +275,7 @@ public class Player : MonoBehaviour {
         //Gestion du contre
         bool isCounterWasUp = Input.GetButtonDown("Defend");
 
-        if (isCounterWasUp)
+		if (isCounterWasUp && _isCounterCollected)
             _isInCounterTime = true;
 
         if (_isInCounterTime) {
@@ -328,7 +338,7 @@ public class Player : MonoBehaviour {
 		else if(!m_Defending && !m_BeingHit)
 		{
 			_attackHoldTime += Time.deltaTime;
-			if(_attackHoldTime > AttackLongCastStartAfterTime)
+			if(_attackHoldTime > AttackLongCastStartAfterTime && _isChargedAttackCollected)
 			{
 				m_AttackLongCasting = true;
                 m_AttackCount = 0;
@@ -404,9 +414,10 @@ public class Player : MonoBehaviour {
 			JetPackParticule.Stop();
 		}
 
-	 
 
-		if (m_AttackCount>0 || m_AttackLongCasting) {
+        if (m_AttackLongDashing)
+            return;
+        if (m_AttackCount>0 || m_AttackLongCasting) {
 			//if(m_BottomTouched)
 			//	m_RigidBody2D.velocity = new Vector2(m_RigidBody2D.velocity.x * SlowFactorWhileAttack, m_RigidBody2D.velocity.y);
 			move *= SlowFactorWhileAttack;
@@ -497,10 +508,11 @@ public class Player : MonoBehaviour {
 		m_Attacking = false;
 	}
 
-	public void Hit (float iDamageValue, float iStaminaLossPerHit){
-		
-		
-		if (!m_BeingHit) {
+	public void Hit (float iDamageValue, float iStaminaLossPerHit) {
+        if (m_AttackLongDashing)
+            return;
+
+        if (!m_BeingHit) {
 			m_BeingHit = true;
 
 			if (m_Defending)
@@ -557,15 +569,12 @@ public class Player : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
-		CoinScript otherCoin = other.gameObject.GetComponent<CoinScript>();
+		Coin otherCoin = other.gameObject.GetComponent<Coin>();
 		if (otherCoin != null)
 		{
 			PlayerLoot lootEvent = new PlayerLoot (otherCoin.gameObject);
 			Events.instance.Raise (lootEvent);
-			Vector3 lootPosition = transform.position;
-			lootPosition.y += 50f;
-			otherCoin.PopLootText(lootPosition);
-			otherCoin.CoinAnim.destroy();
+			otherCoin.isTook ();
 		}
 		
 	}
@@ -657,4 +666,37 @@ public class Player : MonoBehaviour {
         else
             shot.MoveVector = new Vector3(MagicShotSpeed, 0, 0);
     }
+
+    public void DashForward()
+    {
+        m_AttackLongDashing = true;
+        if(m_FacingRight)
+            m_RigidBody2D.velocity = new Vector2(-AttackLongDashSpeed, 0);
+        else
+            m_RigidBody2D.velocity = new Vector2(AttackLongDashSpeed, 0);
+
+        Invoke("ResetAttackLongDash", AttackLongDashDuration);
+    }
+
+    public void ResetAttackLongDash()
+    {
+        m_AttackLongDashing = false;
+        m_RigidBody2D.velocity = new Vector2(0, 0);
+    }
+
+	public void setDoubleJump(bool Bool){
+		_isDoubleJumpCollected = Bool;
+	}
+
+	public void setChargedAttack(bool Bool){
+		_isChargedAttackCollected = Bool;
+	}
+
+	public void setCounter(bool Bool){
+		_isCounterCollected = Bool;
+	}
+
+	public void setJetPack(bool Bool){
+		_isJetPackCollected = Bool;
+	}
 }
