@@ -106,7 +106,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70902724a34e3164d9c7504b5dcf00aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CoinPrefab: {fileID: 164246, guid: dff4b7e0e27d55949bc38451ff3a0c9b, type: 2}
   IsMultiDrop: 0
 --- !u!114 &11430572
 MonoBehaviour:
@@ -123,9 +122,9 @@ MonoBehaviour:
   DamagePerHit: 10
   StopDurationAfterBeingHit: 0.5
   NoDamageDurationAfterBeingHit: 0.3
-  IsBumpable: 0
-  DoesBumpPlayer: 0
-  BumpForce: 0
+  IsBumpable: 1
+  DoesBumpPlayer: 1
+  BumpForce: 10
   staminaLossPerHit: 10
   m_BeingHit: 0
   m_Stopped: 0
