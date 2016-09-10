@@ -59,4 +59,9 @@ public class PlayerAnim : MonoBehaviour {
     {
         playerScript.DashForward();
     }
+
+    public void Dash()
+    {
+        playerScript.Dash();
+    }
 }
