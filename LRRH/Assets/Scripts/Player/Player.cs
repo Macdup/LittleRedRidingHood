@@ -320,22 +320,16 @@ public class Player : MonoBehaviour {
 				_anim.SetBool("Attack", true);
 				m_Attacking = true;
 				m_Stamina -= Weapon.StaminaConsomation;
-				Dash (150);
-				Debug.Log ("1");
 				PlayerDefend DefendEvent = new PlayerDefend(m_Stamina);
 				Events.instance.Raise(DefendEvent);
 			}
 			else if (m_AttackCount == 2)
 			{
-				Dash (150);
-				Debug.Log ("2");
 				m_ComboValidated = true;
 				m_ComboPossibility = false;
 			}
 			else if (m_AttackCount == 3)
 			{
-				Dash (150);
-				Debug.Log ("3");
 				m_ComboValidated = true;
 				m_ComboPossibility = false;
 			};
@@ -684,12 +678,12 @@ public class Player : MonoBehaviour {
         Invoke("ResetAttackLongDash", AttackLongDashDuration);
     }
 
-	public void Dash(float dashValue)
+	public void Dash()
 	{
 		if(m_FacingRight)
-			m_RigidBody2D.velocity = new Vector2(-dashValue, m_RigidBody2D.velocity.y);
+			m_RigidBody2D.velocity = new Vector2(-150, m_RigidBody2D.velocity.y);
 		else
-			m_RigidBody2D.velocity = new Vector2(dashValue, m_RigidBody2D.velocity.y);
+			m_RigidBody2D.velocity = new Vector2(150, m_RigidBody2D.velocity.y);
 	}
 
     public void ResetAttackLongDash()

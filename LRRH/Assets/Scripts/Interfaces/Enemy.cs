@@ -8,8 +8,8 @@ namespace AssemblyCSharp
 		// public member
 		public float Life = 100.0f;
 		public float DamagePerHit = 10.0f;
-		public float StopDurationAfterBeingHit = 0.5f;
-        public float NoDamageDurationAfterBeingHit = 0.3f;
+		public float StopDurationAfterBeingHit = 0.2f;
+        public float NoDamageDurationAfterBeingHit = 0.1f;
         public bool  IsBumpable = false;
 		public bool  DoesBumpPlayer = false;
 		public float BumpForce = 0.0f;
@@ -100,7 +100,8 @@ namespace AssemblyCSharp
 					return;
 				
 				Vector2 bumpDir = this.transform.position.x>iSourcePosition.x? new Vector2(iBumpForce,iBumpForce) : new Vector2(-iBumpForce,iBumpForce);
-				rb.velocity += bumpDir;
+                //rb.velocity += bumpDir;
+                rb.AddForce(bumpDir);
 			}
 		}
 
