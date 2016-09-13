@@ -96,8 +96,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 117764}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 800, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 574.9, y: 57.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -310,7 +310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0593be7f3bf70d94c9a76381ae129f49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DamageValue: 5
+  DamageValue: 1
   LongAttackDamageValue: 15
   BumpForce: 30
   StaminaConsomation: 0
@@ -350,10 +350,10 @@ MonoBehaviour:
   BSMagic: {fileID: 0}
   BSWeaponSword: {fileID: 0}
   BSWeaponStick: {fileID: 0}
-  Weapon: {fileID: 0}
+  Weapon: {fileID: 11487602}
   AttackCoolDown: 0.2
   SlowFactorWhileAttack: 0.2
-  MagicShotPrefab: {fileID: 125870, guid: b14b244700f401845a55935d1586974a, type: 2}
+  MagicShotPrefab: {fileID: 174666, guid: 90b6d05f710ec70409bdbcd7a3aeb4ed, type: 2}
   MagicShotSpeed: 300
   MagicShotPositionOffsetFromPlayer: {x: 15, y: 25}
   TouchDetectionRadius: 0.2

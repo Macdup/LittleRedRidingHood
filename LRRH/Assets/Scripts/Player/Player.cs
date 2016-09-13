@@ -667,7 +667,7 @@ public class Player : MonoBehaviour {
             shot.MoveVector = new Vector3(MagicShotSpeed, 0, 0);
     }
 
-    public void DashForward()
+	public void DashForward()
     {
         m_AttackLongDashing = true;
         if(m_FacingRight)
@@ -677,6 +677,14 @@ public class Player : MonoBehaviour {
 
         Invoke("ResetAttackLongDash", AttackLongDashDuration);
     }
+
+	public void Dash()
+	{
+		if(m_FacingRight)
+			m_RigidBody2D.velocity = new Vector2(-150, m_RigidBody2D.velocity.y);
+		else
+			m_RigidBody2D.velocity = new Vector2(150, m_RigidBody2D.velocity.y);
+	}
 
     public void ResetAttackLongDash()
     {
