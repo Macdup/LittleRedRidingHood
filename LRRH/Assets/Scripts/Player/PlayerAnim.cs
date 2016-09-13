@@ -4,13 +4,15 @@ using System.Collections;
 public class PlayerAnim : MonoBehaviour {
 
     private Player playerScript;
-    private Spell spellScript; 
+    private Spell spellScript;
+    public Vector3 PlayerPosition;
 
 	// Use this for initialization
 	void Start () {
         playerScript = GetComponentInParent<Player>();
+        PlayerPosition = this.GetComponentInParent<Transform>().position;
         //spellScript = playerScript.CurrentSpell;
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
