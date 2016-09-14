@@ -15,6 +15,10 @@ public class TileEditor : Editor
         {
             createCollider();
         }
+        if (GUILayout.Button("Select Zones"))
+        {
+            getZones();
+        }
         EditorGUILayout.EndVertical();
     }
 
@@ -77,5 +81,13 @@ public class TileEditor : Editor
         polycol.points = polycolPoints;
     }
 
+    public void getZones() {
+        var selectionList = Selection.transforms;
+        List<GameObject> ZoneList = new List<GameObject>();
+        for (var i = 0; i < selectionList.Length; i++) {
+            ZoneList.Add(selectionList[i].GetComponentInParent<Screen>().gameObject);
+        }
+        Selection.objects = ZoneList.ToArray();
+    }
 
 }
