@@ -11,10 +11,12 @@ public class WeaponScript : MonoBehaviour {
     public GameObject HitPrefab;
 
     private Player m_Player;
+    private CameraScript m_Camera;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         m_Player = GetComponentInParent<Player>();
+        m_Camera = Camera.main.GetComponent<CameraScript>();
     }
 	
 	// Update is called once per frame
@@ -31,6 +33,8 @@ public class WeaponScript : MonoBehaviour {
 
             Vector2 dir = other.bounds.center - transform.position;
             RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, 200f, LayerMask.GetMask("Enemy"));
+            m_Camera.setShake(0.4f,3);
+            Handheld.Vibrate();
 
             if (m_Player.IsAttackLongCasted())
                 enemy.Hit(LongAttackDamageValue);
