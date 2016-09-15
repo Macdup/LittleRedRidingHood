@@ -37,13 +37,10 @@ public class ScreenEditor : Editor
             Vector3 newPos = selectionList[i].transform.position;
             newPos.y += 330;
             selectionList[i].transform.position = newPos;
-            var screen =  selectionList[i].GetComponent<Screen>();
-            var newMinBound = screen.minBound;
-            newMinBound.y += 11;
-            screen.minBound = newMinBound;
-            var newMaxBound = screen.maxBound;
-            newMaxBound.y += 11;
-            screen.maxBound = newMaxBound;
+			var tileFeedbackPos = new Vector2(Mathf.Floor(newPos.x / 30), Mathf.Floor(newPos.y / 30) + 1);
+			var screen = selectionList [i].GetComponent<Screen> ();
+			screen.minBound = new Vector2(tileFeedbackPos.x - 8, tileFeedbackPos.y + 5);
+			screen.maxBound = new Vector2(tileFeedbackPos.x + 9, tileFeedbackPos.y - 5);
         }
     }
 
@@ -55,13 +52,10 @@ public class ScreenEditor : Editor
             Vector3 newPos = selectionList[i].transform.position;
             newPos.y -= 330;
             selectionList[i].transform.position = newPos;
-            var screen = selectionList[i].GetComponent<Screen>();
-            var newMinBound = screen.minBound;
-            newMinBound.y -= 11;
-            screen.minBound = newMinBound;
-            var newMaxBound = screen.maxBound;
-            newMaxBound.y -= 11;
-            screen.maxBound = newMaxBound;
+			var tileFeedbackPos = new Vector2(Mathf.Floor(newPos.x / 30), Mathf.Floor(newPos.y / 30) + 1);
+			var screen = selectionList [i].GetComponent<Screen> ();
+			screen.minBound = new Vector2(tileFeedbackPos.x - 8, tileFeedbackPos.y + 5);
+			screen.maxBound = new Vector2(tileFeedbackPos.x + 9, tileFeedbackPos.y - 5);
         }
     }
 
@@ -73,13 +67,10 @@ public class ScreenEditor : Editor
             Vector3 newPos = selectionList[i].transform.position;
             newPos.x += 540;
             selectionList[i].transform.position = newPos;
-            var screen = selectionList[i].GetComponent<Screen>();
-            var newMinBound = screen.minBound;
-            newMinBound.x += 18;
-            screen.minBound = newMinBound;
-            var newMaxBound = screen.maxBound;
-            newMaxBound.x += 18;
-            screen.maxBound = newMaxBound;
+			var tileFeedbackPos = new Vector2(Mathf.Floor(newPos.x / 30), Mathf.Floor(newPos.y / 30) + 1);
+			var screen = selectionList [i].GetComponent<Screen> ();
+			screen.minBound = new Vector2(tileFeedbackPos.x - 8, tileFeedbackPos.y + 5);
+			screen.maxBound = new Vector2(tileFeedbackPos.x + 9, tileFeedbackPos.y - 5);
         }
     }
 
@@ -91,13 +82,10 @@ public class ScreenEditor : Editor
             Vector3 newPos = selectionList[i].transform.position;
             newPos.x -= 540;
             selectionList[i].transform.position = newPos;
-            var screen = selectionList[i].GetComponent<Screen>();
-            var newMinBound = screen.minBound;
-            newMinBound.x -= 18;
-            screen.minBound = newMinBound;
-            var newMaxBound = screen.maxBound;
-            newMaxBound.x -= 18;
-            screen.maxBound = newMaxBound;
+			var tileFeedbackPos = new Vector2(Mathf.Floor(newPos.x / 30), Mathf.Floor(newPos.y / 30) + 1);
+			var screen = selectionList [i].GetComponent<Screen> ();
+			screen.minBound = new Vector2(tileFeedbackPos.x - 8, tileFeedbackPos.y + 5);
+			screen.maxBound = new Vector2(tileFeedbackPos.x + 9, tileFeedbackPos.y - 5);
         }
     }
 
