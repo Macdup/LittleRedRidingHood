@@ -8,18 +8,21 @@ public class CameraScript : MonoBehaviour {
     public float xOffset = 0;
     public float DistanceMax = 170;
 
+    private float shakeDuration = 0;
+    private float shakeIntensity = 0;
+
     // Use this for initialization
     void Start () {
 	
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void LateUpdate() {
 		if(ObjectToFollow != null){
 			Vector3 pos = this.transform.position;
             pos.x = ObjectToFollow.transform.position.x + (xOffset * ObjectToFollow.transform.localScale.x);
 			pos.y = ObjectToFollow.transform.position.y + yOffset;
-            this.transform.position = Vector3.Slerp(this.transform.position,pos,0.03f);
+            this.transform.position =  Vector3.Lerp(this.transform.position,pos,0.02f);
 
             // make sure the object is always visible
 
@@ -37,5 +40,24 @@ public class CameraScript : MonoBehaviour {
 
         }
 
-	}
+        shake();
+
+
+    }
+
+    public void shake()
+    {
+        if (shakeDuration > 0)
+        {
+            Vector3 shakePos = Random.insideUnitCircle * shakeIntensity * shakeDuration;
+            shakePos.z = -1f;
+            transform.GetComponent<RectTransform>().position += shakePos;
+            shakeDuration -= Time.deltaTime * 1;
+        }
+    }
+
+    public void setShake(float _shakeDuration, float _shakeIntensity) {
+        shakeDuration = _shakeDuration;
+        shakeIntensity = _shakeIntensity;
+    }
 }
