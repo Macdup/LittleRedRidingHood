@@ -14,6 +14,7 @@ namespace AssemblyCSharp
 		public bool  DoesBumpPlayer = false;
 		public float BumpForce = 0.0f;
         public float staminaLossPerHit;
+        public float playerDetectionDistance;
 
 		// protected member
 		protected bool 		m_Dead = false;
@@ -27,8 +28,9 @@ namespace AssemblyCSharp
         private Dropable        m_Dropable;
         public Player          m_Player;
 		private HitFeedbackManager m_HitFeedbackManager;
+        protected Rigidbody2D m_RigidBody;
 
-		// variable
+        // variable
         public bool _isInCounterTime = false;
 
 		virtual public void Start() {
@@ -44,7 +46,9 @@ namespace AssemblyCSharp
 			}
             m_Player = GameObject.Find("Player").GetComponent<Player>();
 			m_HitFeedbackManager = GameObject.Find("HitFeedbackManager").GetComponent<HitFeedbackManager>();
-		}
+            m_RigidBody = transform.GetComponent<Rigidbody2D>();
+
+        }
 
 		virtual public void Update() {
 			if (m_Dead) {
