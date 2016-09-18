@@ -122,6 +122,7 @@ public class Player : MonoBehaviour {
 	private bool _isCounterCollected = false;
 	private bool _isJetPackCollected = false;
 	private bool _isChargedAttackCollected = false;
+    private float _move = 0;
 
 
 
@@ -174,7 +175,8 @@ public class Player : MonoBehaviour {
 
 	void Update() {
 		//Time.timeScale = 0.1f;
-		//Idle timer
+
+        //Gestion du idle
 		_idleTimer += Time.deltaTime;
 
 		if (m_RigidBody2D.velocity.x != 0 || m_RigidBody2D.velocity.y != 0 || m_BeingHit || m_BeingGroggy || m_Attacking)
@@ -185,6 +187,21 @@ public class Player : MonoBehaviour {
 		if (_idleTimer >= 2) {
 			SetIdle(true);
 		}
+
+        //Gestion des inputs de mouvements
+         _move = 0.0f;
+
+        if (BSMoveLeft.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking)
+            _move = -1.0f;
+        else if (BSMoveRight.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking)
+            _move = 1.0f;
+        else if (!m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking)
+            _move = Input.GetAxis("Horizontal");
+
+        if (_move > 0.1 && m_FacingRight)
+            Flip();
+        else if (_move < -0.1 && !m_FacingRight)
+            Flip();
 
 
         if (m_AttackLongDashing)
@@ -376,15 +393,6 @@ public class Player : MonoBehaviour {
 
 	void FixedUpdate () {
 
-		float move = 0.0f;
-
-		if (BSMoveLeft.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking)
-			move = -1.0f;
-        else if (BSMoveRight.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking)
-			move = 1.0f;
-        else if (!m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking)
-			move = Input.GetAxis ("Horizontal");
-
 		// Evalute states
 		m_BottomTouched = m_BottomBox.IsTouchingLayers (_wallsMask) || m_BottomLeft.IsTouchingLayers (_wallsMask) || m_BottomRight.IsTouchingLayers (_wallsMask);
 		m_FrontTouched = /*_left_box.IsTouchingLayers (wallsMask) ||*/ m_RightBox.IsTouchingLayers (_wallsMask) || m_BottomRight.IsTouchingLayers (_wallsMask);
@@ -418,15 +426,15 @@ public class Player : MonoBehaviour {
         if (m_AttackLongDashing)
             return;
         if (m_AttackCount>0 || m_AttackLongCasting) {
-			//if(m_BottomTouched)
-			//	m_RigidBody2D.velocity = new Vector2(m_RigidBody2D.velocity.x * SlowFactorWhileAttack, m_RigidBody2D.velocity.y);
-			move *= SlowFactorWhileAttack;
+            //if(m_BottomTouched)
+            //	m_RigidBody2D.velocity = new Vector2(m_RigidBody2D.velocity.x * SlowFactorWhileAttack, m_RigidBody2D.velocity.y);
+            _move *= SlowFactorWhileAttack;
 		}
 
 
 		//Animation part
 		_anim.SetFloat("velocityY", m_RigidBody2D.velocity.y);
-		if(move != 0)
+		if(_move != 0)
 			_anim.SetBool(_runHash, true);
 		else
 			_anim.SetBool(_runHash, false);
@@ -443,43 +451,39 @@ public class Player : MonoBehaviour {
 
 
 		// classic move
-		if (Mathf.Abs (move) > 0) {
+		if (Mathf.Abs (_move) > 0) {
 			if (m_Defending)
 			{
 				if (!m_FrontTouched)
 				{
-					m_RigidBody2D.velocity = new Vector2(move * MoveSpeed/2, m_RigidBody2D.velocity.y);
+					m_RigidBody2D.velocity = new Vector2(_move * MoveSpeed/2, m_RigidBody2D.velocity.y);
 				}
-				else if (m_FacingRight && move > 0)
+				else if (m_FacingRight && _move > 0)
 				{
-					m_RigidBody2D.velocity = new Vector2(move * MoveSpeed/2, m_RigidBody2D.velocity.y);
+					m_RigidBody2D.velocity = new Vector2(_move * MoveSpeed/2, m_RigidBody2D.velocity.y);
 				}
-				else if (!m_FacingRight && move < 0)
+				else if (!m_FacingRight && _move < 0)
 				{
-					m_RigidBody2D.velocity = new Vector2(move * MoveSpeed/2, m_RigidBody2D.velocity.y);
+					m_RigidBody2D.velocity = new Vector2(_move * MoveSpeed/2, m_RigidBody2D.velocity.y);
 				}
 			}
 			else {
 				if (!m_FrontTouched)
 				{
-					m_RigidBody2D.velocity = new Vector2(move * MoveSpeed, m_RigidBody2D.velocity.y);
+					m_RigidBody2D.velocity = new Vector2(_move * MoveSpeed, m_RigidBody2D.velocity.y);
 				}
-				else if (m_FacingRight && move > 0)
+				else if (m_FacingRight && _move > 0)
 				{
-					m_RigidBody2D.velocity = new Vector2(move * MoveSpeed, m_RigidBody2D.velocity.y);
+					m_RigidBody2D.velocity = new Vector2(_move * MoveSpeed, m_RigidBody2D.velocity.y);
 				}
-				else if (!m_FacingRight && move < 0)
+				else if (!m_FacingRight && _move < 0)
 				{
-					m_RigidBody2D.velocity = new Vector2(move * MoveSpeed, m_RigidBody2D.velocity.y);
+					m_RigidBody2D.velocity = new Vector2(_move * MoveSpeed, m_RigidBody2D.velocity.y);
 				}
 			}
 			
 		}
 
-		if(move > 0.1  && m_FacingRight)
-			Flip ();				
-		else if (move < -0.1 && !m_FacingRight)
-			Flip ();
 	}
 
 	private IEnumerator Jump(float iJumpSpeed) {

@@ -17,12 +17,12 @@ public class CameraScript : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void LateUpdate() {
+	void FixedUpdate() {
 		if(ObjectToFollow != null){
 			Vector3 pos = this.transform.position;
             pos.x = ObjectToFollow.transform.position.x + (xOffset * ObjectToFollow.transform.localScale.x);
 			pos.y = ObjectToFollow.transform.position.y + yOffset;
-            this.transform.position =  Vector3.Lerp(this.transform.position,pos,0.02f);
+            this.transform.position =  Vector3.Lerp(this.transform.position,pos,0.1f);
 
             // make sure the object is always visible
 
@@ -40,7 +40,7 @@ public class CameraScript : MonoBehaviour {
 
         }
 
-        shake();
+        //shake();
 
 
     }
