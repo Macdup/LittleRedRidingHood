@@ -16,12 +16,14 @@ public class ExplosionEffect : MonoBehaviour {
 	public void OnTriggerEnter2D(Collider2D other) {
 		var player = other.GetComponent<Player>();
 		if (player != null) {
-			player.Bump (transform.position,250);
+			player.Bump (transform.position,450);
 		}
 
+        
 		Enemy enemy = (Enemy)other.gameObject.GetComponent<Enemy> ();
-		if (enemy != null) {
-			enemy.Bump (transform.position,250);
+        
+        if (enemy != null) {
+			enemy.Bump (transform.position, 450);
 		}
 	}
 }
