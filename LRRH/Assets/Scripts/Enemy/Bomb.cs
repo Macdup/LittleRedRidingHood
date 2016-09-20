@@ -8,10 +8,12 @@ public class Bomb : MonoBehaviour {
     private Animator m_Animator;
     private int _tickingHash = Animator.StringToHash("ticking");
     private bool _isTicking = false;
+	private ExplosionFeedbackManager m_ExplosionFeedbackManager;
 
     // Use this for initialization
     void Start () {
         m_Animator = this.GetComponent<Animator>();
+		m_ExplosionFeedbackManager = GameObject.Find("ExplosionFeedbackManager").GetComponent<ExplosionFeedbackManager>();
 	}
 	
 	// Update is called once per frame
@@ -24,12 +26,13 @@ public class Bomb : MonoBehaviour {
         
         if (BombTimer < 0) {
             _isTicking = true;
-            Debug.Log(BombTimer);
             m_Animator.SetTrigger(_tickingHash);
         }
 	}
 
     public void Disable() {
+		ExplosionEffect explosion = m_ExplosionFeedbackManager.getUsableExplosionEffect ();
+		explosion.pop (transform.position);
         transform.gameObject.SetActive(false);
     }
 }

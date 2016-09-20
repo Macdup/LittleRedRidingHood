@@ -62,6 +62,7 @@ namespace AssemblyCSharp
 		}
 
 		virtual public void OnTriggerEnter2D(Collider2D other) {
+			Debug.Log (other.name);
 			Player player = other.gameObject.GetComponent<Player> ();
 			if (player != null) {
 				player.Hit(DamagePerHit,staminaLossPerHit);
