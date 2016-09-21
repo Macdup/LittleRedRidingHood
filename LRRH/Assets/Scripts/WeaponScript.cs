@@ -12,11 +12,13 @@ public class WeaponScript : MonoBehaviour {
 
     private Player m_Player;
     private CameraScript m_Camera;
+	private ImpactFeedbackManager m_ImpactFeedbackManager;
 
     // Use this for initialization
     void Start () {
         m_Player = GetComponentInParent<Player>();
         m_Camera = Camera.main.GetComponent<CameraScript>();
+		m_ImpactFeedbackManager = GameObject.Find("ImpactFeedbackManager").GetComponent<ImpactFeedbackManager>();
     }
 	
 	// Update is called once per frame
@@ -33,14 +35,15 @@ public class WeaponScript : MonoBehaviour {
 
             Vector2 dir = other.bounds.center - transform.position;
             RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, 200f, LayerMask.GetMask("Enemy"));
-            m_Camera.setShake(0.4f,3);
+            m_Camera.setShake(0.4f,1);
 
             if (m_Player.IsAttackLongCasted())
                 enemy.Hit(LongAttackDamageValue);
             else
                 enemy.Hit(DamageValue);
 
-            Instantiate(HitPrefab, hit.point, Quaternion.identity);
+			ImpactFeedback impact = m_ImpactFeedbackManager.getUsableImpact();
+			impact.pop (hit.point);
 
 			if (enemy.IsBumpable) {
 				enemy.Bump (this.transform.position, BumpForce);

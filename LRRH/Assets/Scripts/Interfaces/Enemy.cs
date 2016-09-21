@@ -109,8 +109,9 @@ namespace AssemblyCSharp
 					return;
 
                 _bumped = true;
-                Vector2 bumpDir = this.transform.position.x>iSourcePosition.x? new Vector2(iBumpForce,iBumpForce) : new Vector2(-iBumpForce,iBumpForce);
-                rb.velocity += bumpDir;
+                //Vector2 bumpDir = this.transform.position.x>iSourcePosition.x? new Vector2(iBumpForce,iBumpForce) : new Vector2(-iBumpForce,iBumpForce);
+				Vector2 bumpDir = ((this.transform.position - iSourcePosition).normalized) * iBumpForce;
+				rb.velocity += bumpDir;
                 Invoke("ResetBump",BumpCoolDown);
 
             }

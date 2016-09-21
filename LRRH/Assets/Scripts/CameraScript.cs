@@ -40,7 +40,7 @@ public class CameraScript : MonoBehaviour {
 
         }
 
-        //shake();
+        shake();
 
 
     }
