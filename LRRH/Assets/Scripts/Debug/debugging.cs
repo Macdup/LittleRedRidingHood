@@ -4,6 +4,7 @@ using System.Collections;
 public class debugging : MonoBehaviour {
 
     public bool getAllPower;
+	public float timeScale;
 
     Player player;
 
@@ -16,10 +17,11 @@ public class debugging : MonoBehaviour {
             player.setDoubleJump(true);
             player.setJetPack(true);
         }
+		Time.timeScale = timeScale;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	    
+		Time.timeScale = timeScale;
 	}
 }

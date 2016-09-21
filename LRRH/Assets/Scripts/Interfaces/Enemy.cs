@@ -13,7 +13,9 @@ namespace AssemblyCSharp
         public bool  IsBumpable = false;
 		public bool  DoesBumpPlayer = false;
 		public float BumpForce = 0.0f;
+        public float BumpCoolDown = 0.5f;
         public float staminaLossPerHit;
+        public float playerDetectionDistance;
 
 		// protected member
 		protected bool 		m_Dead = false;
@@ -27,11 +29,14 @@ namespace AssemblyCSharp
 		private SpriteRenderer 	m_SpriteRenderer;
         public Player          m_Player;
 		private HitFeedbackManager m_HitFeedbackManager;
+        protected Rigidbody2D m_RigidBody;
+        
 
-		// variable
+        // variable
         public bool _isInCounterTime = false;
+        private bool _bumped = false;
 
-		virtual public void Start() {
+        virtual public void Start() {
 			m_SpriteRenderer = this.GetComponent<SpriteRenderer> ();
 			if (m_SpriteRenderer == null) {
 				m_SpriteRenderer = this.GetComponentInChildren<SpriteRenderer> ();
@@ -44,7 +49,9 @@ namespace AssemblyCSharp
 			}
             m_Player = GameObject.Find("Player").GetComponent<Player>();
 			m_HitFeedbackManager = GameObject.Find("HitFeedbackManager").GetComponent<HitFeedbackManager>();
-		}
+            m_RigidBody = transform.GetComponent<Rigidbody2D>();
+
+        }
 
 		virtual public void Update() {
 			if (m_Dead) {
@@ -58,6 +65,7 @@ namespace AssemblyCSharp
 		}
 
 		virtual public void OnTriggerEnter2D(Collider2D other) {
+
 			Player player = other.gameObject.GetComponent<Player> ();
 			if (player != null) {
 				player.Hit(DamagePerHit,staminaLossPerHit);
@@ -94,18 +102,27 @@ namespace AssemblyCSharp
 		}
 
 		virtual public void Bump(Vector3 iSourcePosition, float iBumpForce) {
-			if (IsBumpable) {
+            
+            if (IsBumpable && !_bumped) {
 				Rigidbody2D rb = this.GetComponent<Rigidbody2D> ();
-				if (rb == null)
+                if (rb == null)
 					return;
-				
-				Vector2 bumpDir = this.transform.position.x>iSourcePosition.x? new Vector2(iBumpForce,iBumpForce) : new Vector2(-iBumpForce,iBumpForce);
-                //rb.velocity += bumpDir;
-                rb.AddForce(bumpDir);
-			}
+
+                _bumped = true;
+                //Vector2 bumpDir = this.transform.position.x>iSourcePosition.x? new Vector2(iBumpForce,iBumpForce) : new Vector2(-iBumpForce,iBumpForce);
+				Vector2 bumpDir = ((this.transform.position - iSourcePosition).normalized) * iBumpForce;
+				rb.velocity += bumpDir;
+                Invoke("ResetBump",BumpCoolDown);
+
+            }
 		}
 
-		virtual public void Death() {
+        virtual public void ResetBump()
+        {
+            _bumped = false;
+        }
+
+        virtual public void Death() {
 			m_Dead = true;
 			Collider2D[] colliders = this.GetComponents<Collider2D> ();
 			foreach (Collider2D c in colliders) {
