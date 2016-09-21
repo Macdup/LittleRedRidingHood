@@ -20,11 +20,11 @@ namespace AssemblyCSharp
 		public bool 		m_BeingHit = false;
         public bool         m_Stopped = false;
         protected Animator 	m_Animator;
+        protected Dropable  m_Dropable;
 
 
 		// private member
 		private SpriteRenderer 	m_SpriteRenderer;
-        private Dropable        m_Dropable;
         public Player          m_Player;
 		private HitFeedbackManager m_HitFeedbackManager;
 
