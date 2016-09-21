@@ -174,7 +174,6 @@ public class Player : MonoBehaviour {
 
 
 	void Update() {
-		//Time.timeScale = 0.1f;
 
         //Gestion du idle
 		_idleTimer += Time.deltaTime;
@@ -555,8 +554,11 @@ public class Player : MonoBehaviour {
 	public void Bump(Vector3 iSourcePosition, float iBumpForce) {
 		if (!_bumped)
 		{
-			Vector2 bumpDir = this.transform.position.x > iSourcePosition.x ? new Vector2(iBumpForce, 0) : new Vector2(-iBumpForce, 0);
-			this.m_RigidBody2D.velocity += bumpDir;
+			//Vector2 bumpDir = this.transform.position.x > iSourcePosition.x ? new Vector2(iBumpForce, iBumpForce) : new Vector2(-iBumpForce, iBumpForce);
+			Vector3 correctPlayerPosition = transform.position;
+			correctPlayerPosition.y += 40;
+			Vector2 bumpDir = correctPlayerPosition - iSourcePosition;
+			this.m_RigidBody2D.velocity += bumpDir.normalized	* iBumpForce;
 			_bumped = true;
 			Invoke("ResetBump", BumpCoolDown);
 		}
