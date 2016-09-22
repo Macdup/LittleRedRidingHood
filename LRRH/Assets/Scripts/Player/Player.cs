@@ -100,6 +100,7 @@ public class Player : MonoBehaviour {
 	private bool                m_AttackLongCasting = false;
 	private bool                m_AttackLongCasted = false;
     public bool                 m_AttackLongDashing = false;
+    private bool                m_Bumped = false;
 
 
 
@@ -116,7 +117,6 @@ public class Player : MonoBehaviour {
 	private float 		_idleTimer = 0.0f;
 	private	bool 		_capJump = false;
 	private bool 		_attackWasUp = true;
-	private bool        _bumped = false;
 	private float       _attackHoldTime = 0.0f;
     public bool        _isInCounterTime = false;
 	private bool _isDoubleJumpCollected = false;
@@ -174,10 +174,10 @@ public class Player : MonoBehaviour {
     }
 
 
-	void Update() {
-
+	void Update()
+    {
         //Gestion du idle
-		_idleTimer += Time.deltaTime;
+        _idleTimer += Time.deltaTime;
 
 		if (m_RigidBody2D.velocity.x != 0 || m_RigidBody2D.velocity.y != 0 || m_BeingHit || m_BeingGroggy || m_Attacking)
 		{
@@ -191,11 +191,11 @@ public class Player : MonoBehaviour {
         //Gestion des inputs de mouvements
          _move = 0.0f;
 
-        if (BSMoveLeft.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking)
+        if (BSMoveLeft.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped)
             _move = -1.0f;
-        else if (BSMoveRight.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking)
+        else if (BSMoveRight.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped)
             _move = 1.0f;
-        else if (!m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking)
+        else if (!m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped)
             _move = Input.GetAxis("Horizontal");
 
         if (_move > 0.1 && m_FacingRight)
@@ -391,7 +391,11 @@ public class Player : MonoBehaviour {
         }
     }
 
-	void FixedUpdate () {
+	void FixedUpdate () 
+    {
+
+        if (m_BeingHit)
+            return;
 
 		// Evalute states
 		m_BottomTouched = m_BottomBox.IsTouchingLayers (_wallsMask) || m_BottomLeft.IsTouchingLayers (_wallsMask) || m_BottomRight.IsTouchingLayers (_wallsMask);
@@ -553,20 +557,20 @@ public class Player : MonoBehaviour {
 	}
 
 	public void Bump(Vector3 iSourcePosition, float iBumpForce) {
-		if (!_bumped)
+		if (!m_Bumped)
 		{
 			//Vector2 bumpDir = this.transform.position.x > iSourcePosition.x ? new Vector2(iBumpForce, iBumpForce) : new Vector2(-iBumpForce, iBumpForce);
 			Vector3 correctPlayerPosition = transform.position;
 			correctPlayerPosition.y += 40;
 			Vector2 bumpDir = correctPlayerPosition - iSourcePosition;
-			this.m_RigidBody2D.velocity += bumpDir.normalized	* iBumpForce;
-			_bumped = true;
+			this.m_RigidBody2D.velocity = bumpDir.normalized	* iBumpForce;
+			m_Bumped = true;
 			Invoke("ResetBump", BumpCoolDown);
 		}
 	}
 
 	public void ResetBump() {
-		_bumped = false;
+		m_Bumped = false;
 	}
 
 	public void SetIdle(bool isIdle) {

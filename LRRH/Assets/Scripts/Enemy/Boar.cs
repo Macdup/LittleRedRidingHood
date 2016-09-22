@@ -31,8 +31,8 @@ public class Boar : Enemy {
 	public override void Update()
     {
 		if (!m_Dead && !m_BeingHit && !m_Stopped) {
-			
-			transform.position = Vector3.MoveTowards (transform.position, target, speed * Time.deltaTime);
+
+            transform.position = Vector3.MoveTowards (transform.position, target, speed * Time.deltaTime);
 
 			if (transform.position == Vector3.MoveTowards (transform.position, target, speed * Time.deltaTime))
 				changeDirection ();
