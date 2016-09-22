@@ -41,7 +41,7 @@ public class PlayerAnim : MonoBehaviour {
     }
 
     public void ResetBeingHit() {
-        playerScript.ResetBeingHit();
+        //playerScript.ResetBeingHit();
     }
 
     public void ResetUsingMagick()
