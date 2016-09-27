@@ -30,7 +30,7 @@ public class Boar : Enemy {
     // Update is called once per frame
 	public override void Update()
     {
-		if (!m_Dead && !m_BeingHit && !m_Stopped) {
+		if (!m_Dead && !m_BeingHit && !m_Stopped && !m_Stunned) {
 
             transform.position = Vector3.MoveTowards (transform.position, target, speed * Time.deltaTime);
 
@@ -53,5 +53,11 @@ public class Boar : Enemy {
                 transform.localScale = (new Vector3(1, 1, 1));
             }
     }
-		
+
+
+    public override void GetCountered()
+    {
+        m_Stunned = true;
+    }
+
 }
