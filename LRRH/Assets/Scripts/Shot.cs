@@ -48,19 +48,19 @@ public class Shot : MonoBehaviour {
             Player player = other.gameObject.GetComponent<Player> ();
             if (player != null && Target == player.gameObject)
             {
-                if (player._isInCounterTime)
+                /*if (player._isInCounterTime)
                 {
                     MoveVector = Source.transform.position - player.transform.position;
                     MoveVector = MoveVector.normalized * 100.0f;
                     Target = Source;
                     Source = player.gameObject;
                 }
-                else {
-                    player.Hit(HitDamage, iStaminaLossPerHit);
+                else {*/
+                    player.Hit(this, HitDamage, iStaminaLossPerHit);
                     if (this.enabled)
                         m_Anim.SetTrigger(m_collideHash);
                     this.enabled = false;
-                }
+                //}
             }
 
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
@@ -96,6 +96,17 @@ public class Shot : MonoBehaviour {
         else {
             transform.localScale = new Vector3(-1, 1, 1);
         }
+    }
+
+    virtual public void GetCountered()
+    {
+        Player player = GameObject.Find("Player").GetComponent<Player>();
+        if (player == null) return;
+
+        MoveVector = Source.transform.position - player.transform.position;
+        MoveVector = MoveVector.normalized * 100.0f;
+        Target = Source;
+        Source = player.gameObject;
     }
 
 }

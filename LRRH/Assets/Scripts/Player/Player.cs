@@ -31,6 +31,7 @@ public class Player : MonoBehaviour {
 	public float AttackLongCastStartAfterTime = 1.5f;
     public float AttackLongDashSpeed = 50.0f;
     public float AttackLongDashDuration = 1.0f;
+    public float CounterDelay = 0.2f;
 
 
 
@@ -94,7 +95,6 @@ public class Player : MonoBehaviour {
 	private bool                m_BeingGroggy = false;
 	private GameObject          m_CounterSense;
     private bool                m_Counter = false;
-    private float               m_CounterTimerMax = 0.2f;
     private float               m_CounterTimer = 0.0f;
 	public float 				m_JetPackValue = 0.0f;
 	private bool                m_AttackLongCasting = false;
@@ -119,7 +119,8 @@ public class Player : MonoBehaviour {
 	private bool 		_attackWasUp = true;
 	private float       _attackHoldTime = 0.0f;
     public bool        _isInCounterTime = false;
-	private bool _isDoubleJumpCollected = false;
+    public bool         _isCountering = false;
+    private bool _isDoubleJumpCollected = false;
 	private bool _isCounterCollected = false;
 	private bool _isJetPackCollected = false;
 	private bool _isChargedAttackCollected = false;
@@ -298,7 +299,7 @@ public class Player : MonoBehaviour {
         if (_isInCounterTime) {
             //Time.timeScale = 0.1f;
             m_CounterTimer += 1 * Time.deltaTime;
-            if (m_CounterTimer > m_CounterTimerMax) {
+            if (m_CounterTimer > CounterDelay) {
                 m_CounterTimer = 0;
                 _isInCounterTime = false;
             }
@@ -516,11 +517,29 @@ public class Player : MonoBehaviour {
 		m_Attacking = false;
 	}
 
-	public void Hit (float iDamageValue, float iStaminaLossPerHit) {
+	public void Hit (MonoBehaviour iSource, float iDamageValue, float iStaminaLossPerHit) {
         if (m_AttackLongDashing)
             return;
 
-        if (!m_BeingHit) {
+        if(_isInCounterTime)
+        {
+            if(iSource is Enemy)
+            {
+                Enemy e = (Enemy)iSource;
+                e.GetCountered();
+                _anim.SetBool("CounterEnemy", true);
+                _isCountering = true;
+                Invoke("ResetCounterEnemy", 2.0f);
+            }
+            else if (iSource.GetType() == typeof(Shot))
+            {
+                Shot s = (Shot)iSource;
+                s.GetCountered();
+            }
+
+            _isInCounterTime = false; // to counter only one Hit
+        }
+        else if (!m_BeingHit && !_isCountering) {
 			m_BeingHit = true;
 
 			if (m_Defending)
@@ -718,4 +737,10 @@ public class Player : MonoBehaviour {
 	public void setJetPack(bool Bool){
 		_isJetPackCollected = Bool;
 	}
+
+    public void ResetCounterEnemy()
+    {
+        _anim.SetBool("CounterEnemy", false);
+        _isCountering = false;
+    }
 }

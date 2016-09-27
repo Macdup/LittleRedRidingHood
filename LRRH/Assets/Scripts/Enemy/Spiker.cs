@@ -56,7 +56,7 @@ public class Spiker : Enemy
         if (_Player == other.gameObject)
         {
             Player playerScript = _Player.GetComponent<Player>();
-            playerScript.Hit(DamagePerHit, staminaLossPerHit);
+            playerScript.Hit(this, DamagePerHit, staminaLossPerHit);
 
             //Bump player
             if (DoesBumpPlayer)

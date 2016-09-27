@@ -28,7 +28,7 @@ public class ExplosionEffect : MonoBehaviour {
 	public void OnTriggerEnter2D(Collider2D other) {
 		var player = other.GetComponent<Player>(); 
 		if (player != null) {
-			player.Hit (damage,damage);
+			player.Hit (this, damage,damage);
 			player.Bump (transform.position,400);
 		}
 

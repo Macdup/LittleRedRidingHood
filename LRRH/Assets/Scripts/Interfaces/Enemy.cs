@@ -19,7 +19,8 @@ namespace AssemblyCSharp
 
 		// protected member
 		protected bool 		m_Dead = false;
-		public bool 		m_BeingHit = false;
+        protected bool      m_Stunned = false;
+        public bool 		m_BeingHit = false;
         public bool         m_Stopped = false;
         protected Animator 	m_Animator;
         protected Dropable  m_Dropable;
@@ -68,10 +69,10 @@ namespace AssemblyCSharp
 
 			Player player = other.gameObject.GetComponent<Player> ();
 			if (player != null) {
-				player.Hit(DamagePerHit,staminaLossPerHit);
+				player.Hit(this, DamagePerHit,staminaLossPerHit);
 
 				//Bump player
-				if (DoesBumpPlayer) {
+				if (DoesBumpPlayer && !m_Stunned) {
 					player.Bump(this.transform.position, BumpForce);
 				}
 			}
@@ -146,6 +147,11 @@ namespace AssemblyCSharp
         virtual public void ResetStoppedCoolDown()
         {
             m_Stopped = false;
+        }
+
+        virtual public void GetCountered()
+        {
+            // default do nothing
         }
 
     }
