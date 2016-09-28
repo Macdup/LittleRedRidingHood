@@ -38,9 +38,9 @@ public class IAWeaponScript : MonoBehaviour {
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, 200f, LayerMask.GetMask("Player"));
 
                 if (m_IATest.IsAttackLongCasted())
-                    player.Hit(LongAttackDamageValue, StaminaConsomation);
+                    player.Hit(m_IATest, LongAttackDamageValue, StaminaConsomation);
                 else
-                    player.Hit(DamageValue, StaminaConsomation);
+                    player.Hit(m_IATest, DamageValue, StaminaConsomation);
 
                 Instantiate(HitPrefab, hit.point, Quaternion.identity);
             }

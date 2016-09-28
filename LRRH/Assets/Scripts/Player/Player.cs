@@ -19,7 +19,8 @@ public class Player : MonoBehaviour {
 	public float JumpSpeed = 1000.0f;
 	public float MinJumpSpeed = 200.0f;
 	public float JumpDelay = 0.03f;
-	public float HitCoolDown = 0.5f;
+    public float DashAttackSpeed = 100.0f;
+    public float HitCoolDown = 0.5f;
 	public float BumpCoolDown = 0.5f;
 	public bool  HasJetPack = false;
 	public float JetPackSpeed = 80.0f;
@@ -30,6 +31,7 @@ public class Player : MonoBehaviour {
 	public float AttackLongCastStartAfterTime = 1.5f;
     public float AttackLongDashSpeed = 50.0f;
     public float AttackLongDashDuration = 1.0f;
+    public float CounterDelay = 0.2f;
 
 
 
@@ -93,12 +95,12 @@ public class Player : MonoBehaviour {
 	private bool                m_BeingGroggy = false;
 	private GameObject          m_CounterSense;
     private bool                m_Counter = false;
-    private float               m_CounterTimerMax = 0.2f;
     private float               m_CounterTimer = 0.0f;
 	public float 				m_JetPackValue = 0.0f;
 	private bool                m_AttackLongCasting = false;
 	private bool                m_AttackLongCasted = false;
     public bool                 m_AttackLongDashing = false;
+    private bool                m_Bumped = false;
 
 
 
@@ -115,10 +117,10 @@ public class Player : MonoBehaviour {
 	private float 		_idleTimer = 0.0f;
 	private	bool 		_capJump = false;
 	private bool 		_attackWasUp = true;
-	private bool        _bumped = false;
 	private float       _attackHoldTime = 0.0f;
     public bool        _isInCounterTime = false;
-	private bool _isDoubleJumpCollected = false;
+    public bool         _isCountering = false;
+    private bool _isDoubleJumpCollected = false;
 	private bool _isCounterCollected = false;
 	private bool _isJetPackCollected = false;
 	private bool _isChargedAttackCollected = false;
@@ -173,10 +175,10 @@ public class Player : MonoBehaviour {
     }
 
 
-	void Update() {
-
+	void Update()
+    {
         //Gestion du idle
-		_idleTimer += Time.deltaTime;
+        _idleTimer += Time.deltaTime;
 
 		if (m_RigidBody2D.velocity.x != 0 || m_RigidBody2D.velocity.y != 0 || m_BeingHit || m_BeingGroggy || m_Attacking)
 		{
@@ -190,11 +192,11 @@ public class Player : MonoBehaviour {
         //Gestion des inputs de mouvements
          _move = 0.0f;
 
-        if (BSMoveLeft.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking)
+        if (BSMoveLeft.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped)
             _move = -1.0f;
-        else if (BSMoveRight.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking)
+        else if (BSMoveRight.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped)
             _move = 1.0f;
-        else if (!m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking)
+        else if (!m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped)
             _move = Input.GetAxis("Horizontal");
 
         if (_move > 0.1 && m_FacingRight)
@@ -297,7 +299,7 @@ public class Player : MonoBehaviour {
         if (_isInCounterTime) {
             //Time.timeScale = 0.1f;
             m_CounterTimer += 1 * Time.deltaTime;
-            if (m_CounterTimer > m_CounterTimerMax) {
+            if (m_CounterTimer > CounterDelay) {
                 m_CounterTimer = 0;
                 _isInCounterTime = false;
             }
@@ -390,7 +392,11 @@ public class Player : MonoBehaviour {
         }
     }
 
-	void FixedUpdate () {
+	void FixedUpdate () 
+    {
+
+        if (m_BeingHit)
+            return;
 
 		// Evalute states
 		m_BottomTouched = m_BottomBox.IsTouchingLayers (_wallsMask) || m_BottomLeft.IsTouchingLayers (_wallsMask) || m_BottomRight.IsTouchingLayers (_wallsMask);
@@ -511,11 +517,29 @@ public class Player : MonoBehaviour {
 		m_Attacking = false;
 	}
 
-	public void Hit (float iDamageValue, float iStaminaLossPerHit) {
+	public void Hit (MonoBehaviour iSource, float iDamageValue, float iStaminaLossPerHit) {
         if (m_AttackLongDashing)
             return;
 
-        if (!m_BeingHit) {
+        if(_isInCounterTime)
+        {
+            if(iSource is Enemy)
+            {
+                Enemy e = (Enemy)iSource;
+                e.GetCountered();
+                _anim.SetBool("CounterEnemy", true);
+                _isCountering = true;
+                Invoke("ResetCounterEnemy", 2.0f);
+            }
+            else if (iSource.GetType() == typeof(Shot))
+            {
+                Shot s = (Shot)iSource;
+                s.GetCountered();
+            }
+
+            _isInCounterTime = false; // to counter only one Hit
+        }
+        else if (!m_BeingHit && !_isCountering) {
 			m_BeingHit = true;
 
 			if (m_Defending)
@@ -552,20 +576,20 @@ public class Player : MonoBehaviour {
 	}
 
 	public void Bump(Vector3 iSourcePosition, float iBumpForce) {
-		if (!_bumped)
+		if (!m_Bumped)
 		{
 			//Vector2 bumpDir = this.transform.position.x > iSourcePosition.x ? new Vector2(iBumpForce, iBumpForce) : new Vector2(-iBumpForce, iBumpForce);
 			Vector3 correctPlayerPosition = transform.position;
 			correctPlayerPosition.y += 40;
 			Vector2 bumpDir = correctPlayerPosition - iSourcePosition;
-			this.m_RigidBody2D.velocity += bumpDir.normalized	* iBumpForce;
-			_bumped = true;
+			this.m_RigidBody2D.velocity = bumpDir.normalized	* iBumpForce;
+			m_Bumped = true;
 			Invoke("ResetBump", BumpCoolDown);
 		}
 	}
 
 	public void ResetBump() {
-		_bumped = false;
+		m_Bumped = false;
 	}
 
 	public void SetIdle(bool isIdle) {
@@ -687,9 +711,9 @@ public class Player : MonoBehaviour {
 	public void Dash()
 	{
 		if(m_FacingRight)
-			m_RigidBody2D.velocity = new Vector2(-150, m_RigidBody2D.velocity.y);
+			m_RigidBody2D.velocity = new Vector2(-DashAttackSpeed, m_RigidBody2D.velocity.y);
 		else
-			m_RigidBody2D.velocity = new Vector2(150, m_RigidBody2D.velocity.y);
+			m_RigidBody2D.velocity = new Vector2(DashAttackSpeed, m_RigidBody2D.velocity.y);
 	}
 
     public void ResetAttackLongDash()
@@ -713,4 +737,10 @@ public class Player : MonoBehaviour {
 	public void setJetPack(bool Bool){
 		_isJetPackCollected = Bool;
 	}
+
+    public void ResetCounterEnemy()
+    {
+        _anim.SetBool("CounterEnemy", false);
+        _isCountering = false;
+    }
 }
