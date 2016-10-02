@@ -60,9 +60,14 @@ public class FuriousDog : Enemy {
     }
 
     void attack() {
-        Vector2 playerDir = playerDir = m_Player.transform.position - transform.position;
-        playerDir.y += 50;
-        m_RigidBody.AddForce(playerDir.normalized * 100, ForceMode2D.Impulse);
+        Vector2 playerDir = m_Player.transform.position - transform.position;
+		if (playerDir.x > 0) {
+			playerDir.x = 1;
+		} else {
+			playerDir.x = -1;
+		}
+		playerDir.y = Random.Range (0.5f,1.5f);
+		m_RigidBody.AddForce(playerDir.normalized * 80, ForceMode2D.Impulse);
         _energy = _energy -  1/5f;
         if (_energy < 0)
             StartCoroutine(FillEnergy());

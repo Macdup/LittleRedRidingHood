@@ -43,28 +43,7 @@ public class Spiker : Enemy
             _isTriggered = false;
         }
     }
-
-    //void OnCollisionEnter2D(Collision2D coll)
-    //{
-    //    if (coll.gameObject.tag == "Enemy")
-    //        coll.gameObject.SendMessage("ApplyDamage", 10);
-
-    //}
-
-    public override void OnTriggerEnter2D(Collider2D other)
-    {
-        if (_Player == other.gameObject)
-        {
-            Player playerScript = _Player.GetComponent<Player>();
-            playerScript.Hit(this, DamagePerHit, staminaLossPerHit);
-
-            //Bump player
-            if (DoesBumpPlayer)
-            {
-                playerScript.Bump(this.transform.position, BumpForce);
-            }
-        }
-    }
+		
 
     public override void Death()
     {
