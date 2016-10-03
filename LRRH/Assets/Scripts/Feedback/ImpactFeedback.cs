@@ -24,5 +24,6 @@ public class ImpactFeedback : MonoBehaviour {
 	public void pop(Vector3 position) {
 		gameObject.SetActive (true);
 		transform.position = position;
+		Invoke ("deactivate", 0.5f);
 	}
 }
