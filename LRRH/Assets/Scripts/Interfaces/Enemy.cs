@@ -66,8 +66,9 @@ namespace AssemblyCSharp
 		}
 
 		virtual public void OnTriggerEnter2D(Collider2D other) {
-
+			
 			Player player = other.gameObject.GetComponent<Player> ();
+
 			if (player != null) {
 				player.Hit(this, DamagePerHit,staminaLossPerHit);
 
@@ -76,6 +77,7 @@ namespace AssemblyCSharp
 					player.Bump(this.transform.position, BumpForce);
 				}
 			}
+	
 		}
 
 		virtual public void Hit(float iDamageValue) {
@@ -112,7 +114,8 @@ namespace AssemblyCSharp
                 _bumped = true;
                 //Vector2 bumpDir = this.transform.position.x>iSourcePosition.x? new Vector2(iBumpForce,iBumpForce) : new Vector2(-iBumpForce,iBumpForce);
 				Vector2 bumpDir = ((this.transform.position - iSourcePosition).normalized) * iBumpForce;
-				rb.velocity += bumpDir;
+				bumpDir.y = -bumpDir.y;
+				rb.velocity = bumpDir;
                 Invoke("ResetBump",BumpCoolDown);
 
             }
