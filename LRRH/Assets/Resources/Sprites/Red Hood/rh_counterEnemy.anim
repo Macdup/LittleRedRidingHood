@@ -52,7 +52,7 @@ AnimationClip:
         inSlope: {x: 0, y: Infinity, z: 0}
         outSlope: {x: 0, y: Infinity, z: 0}
         tangentMode: 0
-      - time: 1.8
+      - time: 2.1333334
         value: {x: 0, y: 0, z: 0}
         inSlope: {x: 0, y: Infinity, z: 0}
         outSlope: {x: Infinity, y: Infinity, z: 0}
@@ -62,7 +62,137 @@ AnimationClip:
       m_RotationOrder: 4
     path: 
   m_ScaleCurves: []
-  m_FloatCurves: []
+  m_FloatCurves:
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 1
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 31
+      - time: 1.9333333
+        value: 0
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 31
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_Enabled
+    path: WeaponSprite
+    classID: 61
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 76
+        inSlope: 41.249996
+        outSlope: 41.249996
+        tangentMode: 10
+      - time: 0.53333336
+        value: 98
+        inSlope: -15.000002
+        outSlope: -15.000002
+        tangentMode: 10
+      - time: 1.0666667
+        value: 60
+        inSlope: -2.2916603
+        outSlope: -2.2916603
+        tangentMode: 10
+      - time: 1.6666666
+        value: 100
+        inSlope: 66.66668
+        outSlope: 66.66668
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_Size.x
+    path: WeaponSprite
+    classID: 61
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 54
+        inSlope: 41.249996
+        outSlope: 41.249996
+        tangentMode: 10
+      - time: 0.53333336
+        value: 76
+        inSlope: 5.624999
+        outSlope: 5.624999
+        tangentMode: 10
+      - time: 1.0666667
+        value: 60
+        inSlope: -29.999998
+        outSlope: -29.999998
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_Size.y
+    path: WeaponSprite
+    classID: 61
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: -20
+        inSlope: 37.499996
+        outSlope: 37.499996
+        tangentMode: 10
+      - time: 0.53333336
+        value: 0
+        inSlope: 9.374999
+        outSlope: 9.374999
+        tangentMode: 10
+      - time: 1.0666667
+        value: -10
+        inSlope: -1.0416641
+        outSlope: -1.0416641
+        tangentMode: 10
+      - time: 1.6666666
+        value: 0
+        inSlope: 16.66667
+        outSlope: 16.66667
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_Offset.x
+    path: WeaponSprite
+    classID: 61
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: -9.374999
+        outSlope: -9.374999
+        tangentMode: 10
+      - time: 1.0666667
+        value: -10
+        inSlope: 3.6458354
+        outSlope: 3.6458354
+        tangentMode: 10
+      - time: 1.6666666
+        value: 0
+        inSlope: 16.66667
+        outSlope: 16.66667
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_Offset.y
+    path: WeaponSprite
+    classID: 61
+    script: {fileID: 0}
   m_PPtrCurves:
   - curve:
     - time: 0
@@ -97,21 +227,21 @@ AnimationClip:
       value: {fileID: 21300012, guid: 9abd6687e3870144fab9b9fa1fd37854, type: 3}
     - time: 1.2666667
       value: {fileID: 21300014, guid: 9abd6687e3870144fab9b9fa1fd37854, type: 3}
-    - time: 1.3333334
-      value: {fileID: 21300016, guid: 9abd6687e3870144fab9b9fa1fd37854, type: 3}
     - time: 1.4
-      value: {fileID: 21300018, guid: 9abd6687e3870144fab9b9fa1fd37854, type: 3}
-    - time: 1.4666667
-      value: {fileID: 21300020, guid: 9abd6687e3870144fab9b9fa1fd37854, type: 3}
+      value: {fileID: 21300016, guid: 9abd6687e3870144fab9b9fa1fd37854, type: 3}
     - time: 1.5333333
-      value: {fileID: 21300022, guid: 9abd6687e3870144fab9b9fa1fd37854, type: 3}
-    - time: 1.6
-      value: {fileID: 21300024, guid: 9abd6687e3870144fab9b9fa1fd37854, type: 3}
+      value: {fileID: 21300018, guid: 9abd6687e3870144fab9b9fa1fd37854, type: 3}
     - time: 1.6666666
-      value: {fileID: 21300026, guid: 9abd6687e3870144fab9b9fa1fd37854, type: 3}
-    - time: 1.7333333
-      value: {fileID: 21300028, guid: 9abd6687e3870144fab9b9fa1fd37854, type: 3}
+      value: {fileID: 21300020, guid: 9abd6687e3870144fab9b9fa1fd37854, type: 3}
     - time: 1.8
+      value: {fileID: 21300022, guid: 9abd6687e3870144fab9b9fa1fd37854, type: 3}
+    - time: 1.9333333
+      value: {fileID: 21300024, guid: 9abd6687e3870144fab9b9fa1fd37854, type: 3}
+    - time: 2
+      value: {fileID: 21300026, guid: 9abd6687e3870144fab9b9fa1fd37854, type: 3}
+    - time: 2.0666666
+      value: {fileID: 21300028, guid: 9abd6687e3870144fab9b9fa1fd37854, type: 3}
+    - time: 2.1333334
       value: {fileID: 21300022, guid: 02cdf76e394face4c8cf74f5e996b3da, type: 3}
     attribute: m_Sprite
     path: 
@@ -128,6 +258,36 @@ AnimationClip:
       attribute: 1
       script: {fileID: 0}
       classID: 4
+      customType: 0
+      isPPtrCurve: 0
+    - path: 2365738409
+      attribute: 3305885265
+      script: {fileID: 0}
+      classID: 61
+      customType: 0
+      isPPtrCurve: 0
+    - path: 2365738409
+      attribute: 4197328169
+      script: {fileID: 0}
+      classID: 61
+      customType: 0
+      isPPtrCurve: 0
+    - path: 2365738409
+      attribute: 2368279999
+      script: {fileID: 0}
+      classID: 61
+      customType: 0
+      isPPtrCurve: 0
+    - path: 2365738409
+      attribute: 413499720
+      script: {fileID: 0}
+      classID: 61
+      customType: 0
+      isPPtrCurve: 0
+    - path: 2365738409
+      attribute: 1872933342
+      script: {fileID: 0}
+      classID: 61
       customType: 0
       isPPtrCurve: 0
     - path: 0
@@ -166,7 +326,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1.8666667
+    m_StopTime: 2.2
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -220,7 +380,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 31
-      - time: 1.8
+      - time: 2.1333334
         value: 0
         inSlope: 0
         outSlope: Infinity
@@ -245,7 +405,7 @@ AnimationClip:
         inSlope: Infinity
         outSlope: 0
         tangentMode: 7
-      - time: 1.8
+      - time: 2.1333334
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -272,8 +432,152 @@ AnimationClip:
     path: 
     classID: 4
     script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 1
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 31
+      - time: 1.9333333
+        value: 0
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 31
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_Enabled
+    path: WeaponSprite
+    classID: 61
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 76
+        inSlope: 41.249996
+        outSlope: 41.249996
+        tangentMode: 10
+      - time: 0.53333336
+        value: 98
+        inSlope: -15.000002
+        outSlope: -15.000002
+        tangentMode: 10
+      - time: 1.0666667
+        value: 60
+        inSlope: -2.2916603
+        outSlope: -2.2916603
+        tangentMode: 10
+      - time: 1.6666666
+        value: 100
+        inSlope: 66.66668
+        outSlope: 66.66668
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_Size.x
+    path: WeaponSprite
+    classID: 61
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 54
+        inSlope: 41.249996
+        outSlope: 41.249996
+        tangentMode: 10
+      - time: 0.53333336
+        value: 76
+        inSlope: 5.624999
+        outSlope: 5.624999
+        tangentMode: 10
+      - time: 1.0666667
+        value: 60
+        inSlope: -29.999998
+        outSlope: -29.999998
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_Size.y
+    path: WeaponSprite
+    classID: 61
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: -20
+        inSlope: 37.499996
+        outSlope: 37.499996
+        tangentMode: 10
+      - time: 0.53333336
+        value: 0
+        inSlope: 9.374999
+        outSlope: 9.374999
+        tangentMode: 10
+      - time: 1.0666667
+        value: -10
+        inSlope: -1.0416641
+        outSlope: -1.0416641
+        tangentMode: 10
+      - time: 1.6666666
+        value: 0
+        inSlope: 16.66667
+        outSlope: 16.66667
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_Offset.x
+    path: WeaponSprite
+    classID: 61
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: -9.374999
+        outSlope: -9.374999
+        tangentMode: 10
+      - time: 1.0666667
+        value: -10
+        inSlope: 3.6458354
+        outSlope: 3.6458354
+        tangentMode: 10
+      - time: 1.6666666
+        value: 0
+        inSlope: 16.66667
+        outSlope: 16.66667
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_Offset.y
+    path: WeaponSprite
+    classID: 61
+    script: {fileID: 0}
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 1
   m_HasMotionFloatCurves: 0
   m_GenerateMotionCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0
+    functionName: CounterBackDash
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.53333336
+    functionName: CounterForwardDash
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0

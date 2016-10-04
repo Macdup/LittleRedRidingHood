@@ -37,17 +37,14 @@ public class WeaponScript : MonoBehaviour {
             RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, 200f, LayerMask.GetMask("Enemy"));
             m_Camera.setShake(0.4f,1);
 
-            if (m_Player.IsAttackLongCasted())
-                enemy.Hit(LongAttackDamageValue);
-            else
-                enemy.Hit(DamageValue);
+            m_Player.DoHitEnemy(enemy);
+
+            
 
 			ImpactFeedback impact = m_ImpactFeedbackManager.getUsableImpact();
 			impact.pop (hit.point);
 
-			if (enemy.IsBumpable) {
-				enemy.Bump (this.transform.position, BumpForce);
-			}
+			
 		}
 
         BushScript otherBushScript = other.gameObject.GetComponent<BushScript>();
