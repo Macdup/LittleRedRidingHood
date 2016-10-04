@@ -32,6 +32,8 @@ public class Player : MonoBehaviour {
     public float AttackLongDashSpeed = 50.0f;
     public float AttackLongDashDuration = 1.0f;
     public float CounterDelay = 0.2f;
+    public float CounterAttackBackDashSpeed = 100.0f;
+    public float CounterAttackForwardDashSpeed = 100.0f;
 
 
 
@@ -588,6 +590,25 @@ public class Player : MonoBehaviour {
 		}
 	}
 
+    public void DoHitEnemy(Enemy iEnemy)
+    {
+        WeaponScript ws = this.GetComponentInChildren<WeaponScript>();
+
+        if (m_AttackLongCasted || _isCountering)
+        {
+            iEnemy.Hit(ws.LongAttackDamageValue);
+            if (iEnemy.IsBumpable)
+                iEnemy.Bump(this.transform.position, iEnemy.BumpForce*3);
+        }
+        else
+        {
+            iEnemy.Hit(ws.DamageValue);
+            if (iEnemy.IsBumpable)
+                iEnemy.Bump(this.transform.position, iEnemy.BumpForce);
+        }
+
+    }
+
 	public void ResetBump() {
 		m_Bumped = false;
 	}
@@ -708,12 +729,12 @@ public class Player : MonoBehaviour {
         Invoke("ResetAttackLongDash", AttackLongDashDuration);
     }
 
-	public void Dash()
+	public void Dash(float iSpeed)
 	{
 		if(m_FacingRight)
-			m_RigidBody2D.velocity = new Vector2(-DashAttackSpeed, m_RigidBody2D.velocity.y);
+			m_RigidBody2D.velocity = new Vector2(-iSpeed, m_RigidBody2D.velocity.y);
 		else
-			m_RigidBody2D.velocity = new Vector2(DashAttackSpeed, m_RigidBody2D.velocity.y);
+			m_RigidBody2D.velocity = new Vector2(iSpeed, m_RigidBody2D.velocity.y);
 	}
 
     public void ResetAttackLongDash()

@@ -59,11 +59,21 @@ public class PlayerAnim : MonoBehaviour {
 
     public void DashForward()
     {
-        playerScript.DashForward();
+        playerScript.Dash(playerScript.AttackLongDashSpeed);
     }
 
     public void Dash()
     {
-        playerScript.Dash();
+        playerScript.Dash(playerScript.DashAttackSpeed);
+    }
+
+    public void CounterBackDash()
+    {
+        playerScript.Dash(-playerScript.CounterAttackBackDashSpeed);
+    }
+
+    public void CounterForwardDash()
+    {
+        playerScript.Dash(playerScript.CounterAttackForwardDashSpeed);
     }
 }
