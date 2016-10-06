@@ -40,7 +40,11 @@ public class ScreenEditor : Editor
 			var tileFeedbackPos = new Vector2(Mathf.Floor(newPos.x / 30), Mathf.Floor(newPos.y / 30) + 1);
 			var screen = selectionList [i].GetComponent<Screen> ();
 			screen.minBound = new Vector2(tileFeedbackPos.x - 8, tileFeedbackPos.y + 5);
-			screen.maxBound = new Vector2(tileFeedbackPos.x + 9, tileFeedbackPos.y - 5);
+			screen.maxBound = new Vector2(tileFeedbackPos.x + 8, tileFeedbackPos.y - 5);
+			Tile[] tiles = selectionList [i].GetComponentsInChildren<Tile> ();
+			foreach (Tile tile in tiles) {
+				tile.position.y += 12;
+			}
         }
     }
 
@@ -55,7 +59,11 @@ public class ScreenEditor : Editor
 			var tileFeedbackPos = new Vector2(Mathf.Floor(newPos.x / 30), Mathf.Floor(newPos.y / 30) + 1);
 			var screen = selectionList [i].GetComponent<Screen> ();
 			screen.minBound = new Vector2(tileFeedbackPos.x - 8, tileFeedbackPos.y + 5);
-			screen.maxBound = new Vector2(tileFeedbackPos.x + 9, tileFeedbackPos.y - 5);
+			screen.maxBound = new Vector2(tileFeedbackPos.x + 8, tileFeedbackPos.y - 5);
+			Tile[] tiles = selectionList [i].GetComponentsInChildren<Tile> ();
+			foreach (Tile tile in tiles) {
+				tile.position.y -= 12;
+			}
         }
     }
 
@@ -70,7 +78,11 @@ public class ScreenEditor : Editor
 			var tileFeedbackPos = new Vector2(Mathf.Floor(newPos.x / 30), Mathf.Floor(newPos.y / 30) + 1);
 			var screen = selectionList [i].GetComponent<Screen> ();
 			screen.minBound = new Vector2(tileFeedbackPos.x - 8, tileFeedbackPos.y + 5);
-			screen.maxBound = new Vector2(tileFeedbackPos.x + 9, tileFeedbackPos.y - 5);
+			screen.maxBound = new Vector2(tileFeedbackPos.x + 8, tileFeedbackPos.y - 5);
+			Tile[] tiles = selectionList [i].GetComponentsInChildren<Tile> ();
+			foreach (Tile tile in tiles) {
+				tile.position.x += 17;
+			}
         }
     }
 
@@ -85,7 +97,11 @@ public class ScreenEditor : Editor
 			var tileFeedbackPos = new Vector2(Mathf.Floor(newPos.x / 30), Mathf.Floor(newPos.y / 30) + 1);
 			var screen = selectionList [i].GetComponent<Screen> ();
 			screen.minBound = new Vector2(tileFeedbackPos.x - 8, tileFeedbackPos.y + 5);
-			screen.maxBound = new Vector2(tileFeedbackPos.x + 9, tileFeedbackPos.y - 5);
+			screen.maxBound = new Vector2(tileFeedbackPos.x + 8, tileFeedbackPos.y - 5);
+			Tile[] tiles = selectionList [i].GetComponentsInChildren<Tile> ();
+			foreach (Tile tile in tiles) {
+				tile.position.x -= 17;
+			}
         }
     }
 
