@@ -7,6 +7,7 @@ using System.Collections.Generic;
 [CustomEditor(typeof(Screen))]
 public class ScreenEditor : Editor
 {
+	Vector2 centerPos;
 
     public override void OnInspectorGUI()
     {
@@ -43,7 +44,7 @@ public class ScreenEditor : Editor
 			screen.maxBound = new Vector2(tileFeedbackPos.x + 8, tileFeedbackPos.y - 5);
 			Tile[] tiles = selectionList [i].GetComponentsInChildren<Tile> ();
 			foreach (Tile tile in tiles) {
-				tile.position.y += 12;
+				calculateTilesPosition (tile);
 			}
         }
     }
@@ -62,7 +63,7 @@ public class ScreenEditor : Editor
 			screen.maxBound = new Vector2(tileFeedbackPos.x + 8, tileFeedbackPos.y - 5);
 			Tile[] tiles = selectionList [i].GetComponentsInChildren<Tile> ();
 			foreach (Tile tile in tiles) {
-				tile.position.y -= 12;
+				calculateTilesPosition (tile);
 			}
         }
     }
@@ -81,7 +82,7 @@ public class ScreenEditor : Editor
 			screen.maxBound = new Vector2(tileFeedbackPos.x + 8, tileFeedbackPos.y - 5);
 			Tile[] tiles = selectionList [i].GetComponentsInChildren<Tile> ();
 			foreach (Tile tile in tiles) {
-				tile.position.x += 17;
+				calculateTilesPosition (tile);
 			}
         }
     }
@@ -100,9 +101,14 @@ public class ScreenEditor : Editor
 			screen.maxBound = new Vector2(tileFeedbackPos.x + 8, tileFeedbackPos.y - 5);
 			Tile[] tiles = selectionList [i].GetComponentsInChildren<Tile> ();
 			foreach (Tile tile in tiles) {
-				tile.position.x -= 17;
+				calculateTilesPosition (tile);
 			}
         }
     }
+
+	void calculateTilesPosition(Tile tile){
+		tile.position = new Vector2 (tile.transform.position.x / 30 - 0.5f,tile.transform.position.y / 30 + 0.5f);
+	}
+
 
 }

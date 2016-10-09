@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEditor;
 using System.Collections.Generic;
 
-[CanEditMultipleObjects]
+
 [CustomEditor(typeof(Tile))]
 public class TileEditor : Editor
 {
@@ -19,6 +19,9 @@ public class TileEditor : Editor
         {
             getZones();
         }
+
+		Tile tile = (Tile)target;
+		EditorGUILayout.Vector2Field("centerPos:", tile.position);
         EditorGUILayout.EndVertical();
     }
 
