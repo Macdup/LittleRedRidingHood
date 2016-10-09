@@ -52,7 +52,8 @@ public class WeaponScript : MonoBehaviour {
         {
             Vector2 dir = other.bounds.center - transform.position;
             RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, 200f, LayerMask.GetMask("Objects"));
-            Instantiate(HitPrefab, hit.point, Quaternion.identity);
+			ImpactFeedback impact = m_ImpactFeedbackManager.getUsableImpact();
+			impact.pop (hit.point);
 
             otherBushScript.hit();
         }
