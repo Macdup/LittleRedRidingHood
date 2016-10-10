@@ -7,6 +7,7 @@ using System.Collections.Generic;
 [CustomEditor(typeof(Screen))]
 public class ScreenEditor : Editor
 {
+	Vector2 centerPos;
 
     public override void OnInspectorGUI()
     {
@@ -40,7 +41,11 @@ public class ScreenEditor : Editor
 			var tileFeedbackPos = new Vector2(Mathf.Floor(newPos.x / 30), Mathf.Floor(newPos.y / 30) + 1);
 			var screen = selectionList [i].GetComponent<Screen> ();
 			screen.minBound = new Vector2(tileFeedbackPos.x - 8, tileFeedbackPos.y + 5);
-			screen.maxBound = new Vector2(tileFeedbackPos.x + 9, tileFeedbackPos.y - 5);
+			screen.maxBound = new Vector2(tileFeedbackPos.x + 8, tileFeedbackPos.y - 5);
+			Tile[] tiles = selectionList [i].GetComponentsInChildren<Tile> ();
+			foreach (Tile tile in tiles) {
+				calculateTilesPosition (tile);
+			}
         }
     }
 
@@ -55,7 +60,11 @@ public class ScreenEditor : Editor
 			var tileFeedbackPos = new Vector2(Mathf.Floor(newPos.x / 30), Mathf.Floor(newPos.y / 30) + 1);
 			var screen = selectionList [i].GetComponent<Screen> ();
 			screen.minBound = new Vector2(tileFeedbackPos.x - 8, tileFeedbackPos.y + 5);
-			screen.maxBound = new Vector2(tileFeedbackPos.x + 9, tileFeedbackPos.y - 5);
+			screen.maxBound = new Vector2(tileFeedbackPos.x + 8, tileFeedbackPos.y - 5);
+			Tile[] tiles = selectionList [i].GetComponentsInChildren<Tile> ();
+			foreach (Tile tile in tiles) {
+				calculateTilesPosition (tile);
+			}
         }
     }
 
@@ -70,7 +79,11 @@ public class ScreenEditor : Editor
 			var tileFeedbackPos = new Vector2(Mathf.Floor(newPos.x / 30), Mathf.Floor(newPos.y / 30) + 1);
 			var screen = selectionList [i].GetComponent<Screen> ();
 			screen.minBound = new Vector2(tileFeedbackPos.x - 8, tileFeedbackPos.y + 5);
-			screen.maxBound = new Vector2(tileFeedbackPos.x + 9, tileFeedbackPos.y - 5);
+			screen.maxBound = new Vector2(tileFeedbackPos.x + 8, tileFeedbackPos.y - 5);
+			Tile[] tiles = selectionList [i].GetComponentsInChildren<Tile> ();
+			foreach (Tile tile in tiles) {
+				calculateTilesPosition (tile);
+			}
         }
     }
 
@@ -85,8 +98,17 @@ public class ScreenEditor : Editor
 			var tileFeedbackPos = new Vector2(Mathf.Floor(newPos.x / 30), Mathf.Floor(newPos.y / 30) + 1);
 			var screen = selectionList [i].GetComponent<Screen> ();
 			screen.minBound = new Vector2(tileFeedbackPos.x - 8, tileFeedbackPos.y + 5);
-			screen.maxBound = new Vector2(tileFeedbackPos.x + 9, tileFeedbackPos.y - 5);
+			screen.maxBound = new Vector2(tileFeedbackPos.x + 8, tileFeedbackPos.y - 5);
+			Tile[] tiles = selectionList [i].GetComponentsInChildren<Tile> ();
+			foreach (Tile tile in tiles) {
+				calculateTilesPosition (tile);
+			}
         }
     }
+
+	void calculateTilesPosition(Tile tile){
+		tile.position = new Vector2 (tile.transform.position.x / 30 - 0.5f,tile.transform.position.y / 30 + 0.5f);
+	}
+
 
 }

@@ -42,9 +42,7 @@ public class WorldMapEditor : Editor {
         var oldSize = map.mapSize;
         map.mapSize = EditorGUILayout.Vector2Field("Map Size:", map.mapSize);
         creationMode = (CreationMode)EditorGUILayout.EnumPopup("Creation mode:", creationMode);
-		Tile = EditorGUILayout.ObjectField (Tile,  typeof(GameObject), false);
-        screenFeedbackMinBound = EditorGUILayout.Vector2Field("screenFeedbackMinBound:", screenFeedbackMinBound);
-        tileFeedbackPos = EditorGUILayout.Vector2Field("tileFeedbackPos:", tileFeedbackPos);
+		Tile = Resources.Load ("TileGrassCenter");
 
         //map.BrushFeedback.brushSize
 
@@ -70,7 +68,15 @@ public class WorldMapEditor : Editor {
 			|| Event.current.control)
         {
             CreateScreenBrush();
-        }   
+        }
+
+		if (Event.current.alt) {
+			DeleteTile ();
+		}
+
+		if (Event.current.keyCode == KeyCode.LeftShift) {
+			switchCreationMode ();
+		}
     }
 
 
@@ -108,6 +114,14 @@ public class WorldMapEditor : Editor {
 			go.transform.position = map.BrushFeedback.transform.position;
 		}
     }
+
+	void DeleteTile() {
+		var zone = getZone ();
+		var tile = getTile ();
+		if (zone != null && tile != null) {
+			DestroyImmediate(tile.gameObject);
+		}
+	}
 
     void updateBrushSize() {
         
@@ -191,6 +205,16 @@ public class WorldMapEditor : Editor {
 				return tileList [i];
 		}
 		return null;
+	}
+
+	void switchCreationMode(){
+		if (creationMode == CreationMode.Screen) {
+			Debug.Log (creationMode);
+			creationMode = CreationMode.Tile;
+		}
+
+		else
+			creationMode = CreationMode.Screen;
 	}
 	
 }

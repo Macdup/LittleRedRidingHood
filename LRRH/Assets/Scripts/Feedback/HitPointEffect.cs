@@ -13,8 +13,7 @@ public class HitPointEffect : MonoBehaviour {
 	}
 
 	void Start () {
-		MeshRenderer.sortingLayerName = "Default";
-		MeshRenderer.sortingOrder = 1;
+		
 	}
 	
 	// Update is called once per frame
