@@ -37,7 +37,6 @@ public class Player : MonoBehaviour {
 
 
 
-
     public ButtonScript BSMoveLeft;
 	public ButtonScript BSMoveRight;
 	public ButtonScript BSJump;
@@ -618,8 +617,9 @@ public class Player : MonoBehaviour {
 			_idleTimer = 0;
 	}
 
-	void OnTriggerEnter2D(Collider2D other) {
-		Coin otherCoin = other.gameObject.GetComponent<Coin>();
+	void OnTriggerEnter2D(Collider2D other)
+    {
+        Coin otherCoin = other.gameObject.GetComponent<Coin>();
 		if (otherCoin != null)
 		{
 			PlayerLoot lootEvent = new PlayerLoot (otherCoin.gameObject);
