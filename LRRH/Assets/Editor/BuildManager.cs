@@ -3,28 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using System.IO;
+using UnityEditor.SceneManagement;
 /*
-	The MIT License (MIT)
+The MIT License (MIT)
 
-	Copyright (c) 2014 Just a Pixel LTD - http://www.justapixel.co.uk
+Copyright (c) 2014 Just a Pixel LTD - http://www.justapixel.co.uk
 
-	Permission is hereby granted, free of charge, to any person obtaining a copy
-	of this software and associated documentation files (the "Software"), to deal
-	in the Software without restriction, including without limitation the rights
-	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-	copies of the Software, and to permit persons to whom the Software is
-	furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-	The above copyright notice and this permission notice shall be included in
-	all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
 
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-	THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
 */
 namespace JustAPixel.Pipeline.Builds{
 	public class BuildManager : MonoBehaviour {	
@@ -41,17 +42,21 @@ namespace JustAPixel.Pipeline.Builds{
 		#endregion
 		[MenuItem("Build/Build All")]
 		static void BuildAll(){
-			
-			//BuildMac32(false);
-			//BuildLinux32(false);
-			//BuildPC32(false);
-			//Add whatver you want extra built into this (Like 64-bit Mac, etc)
-			BuildAndroid(false);
+
+            if (!File.Exists(LocationName))
+                LocationName = "C:\\Users\\mika2\\Google Drive\\Little Red Riding Hood";
+
+            //BuildMac32(false);
+            //BuildLinux32(false);
+            //BuildPC32(false);
+            //Add whatver you want extra built into this (Like 64-bit Mac, etc)
+            BuildAndroid(false);
 			BuildPC32 (false);
 			BuildPC64 (false);
 		}
-		#region Build Types
-		static void Build(string sFolderName, bool bIncrementSubMinorVersion, BuildTarget tTarget, BuildOptions oOptions){
+
+        #region Build Types
+        static void Build(string sFolderName, bool bIncrementSubMinorVersion, BuildTarget tTarget, BuildOptions oOptions){
 			
 			string sDate = System.DateTime.Now.ToString("yyyy-MM-dd HH_mm_ss");
 			string pPathToBuilds = Path.Combine(LocationName, "Builds");
@@ -88,14 +93,17 @@ namespace JustAPixel.Pipeline.Builds{
 			}
 			string pFilePath = Path.Combine(pPathToFolderWithDate, ApplicationName + sExtension);
 			List<string> scenes = new List<string>();
-			foreach( EditorBuildSettingsScene scene in EditorBuildSettings.scenes){
+            /*foreach( EditorBuildSettingsScene scene in EditorBuildSettings.scenes){
 				if(scene.enabled){
 					scenes.Add(scene.path);
 				}
-			}
-			BuildPipeline.BuildPlayer(scenes.ToArray(),pFilePath,tTarget,oOptions); 
+			}*/
+            
+            scenes.Add(EditorSceneManager.GetActiveScene().path);
+
+            BuildPipeline.BuildPlayer(scenes.ToArray(),pFilePath,tTarget,oOptions); 
 		}
-		/*[MenuItem("Build/Build Mac (32-Bit)")]
+        /*[MenuItem("Build/Build Mac (32-Bit)")]
 		static void BuildMac32_Internal(){
 			BuildMac32(true);
 		}
@@ -137,7 +145,7 @@ namespace JustAPixel.Pipeline.Builds{
 		static void BuildLinuxUniversal(bool bIncrement){
 			Build("Linux_32_64",bIncrement, BuildTarget.StandaloneLinuxUniversal, BuildOptions.ShowBuiltPlayer);
 		}*/
-		[MenuItem("Build/Build Windows (32-Bit)")]
+        [MenuItem("Build/Build Windows (32-Bit)")]
 		static void BuildPC32_Internal(){
 			BuildPC32(true);
 		}
@@ -158,12 +166,12 @@ namespace JustAPixel.Pipeline.Builds{
 		static void BuildAndroid(bool bIncrement){
 			Build("Android",bIncrement, BuildTarget.Android, BuildOptions.ShowBuiltPlayer);
 		}
-		#endregion	
+        #endregion
 
 
 
 
-		public static string ReadTextFile(string sFileName)
+        public static string ReadTextFile(string sFileName)
 		{
 			string sFileNameFound = "";
 			if (File.Exists(sFileName))

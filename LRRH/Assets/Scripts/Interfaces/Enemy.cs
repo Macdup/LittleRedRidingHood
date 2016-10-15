@@ -59,9 +59,9 @@ namespace AssemblyCSharp
 				if (m_Animator) {
 					m_Animator.SetBool ("dead", true);
 				}
-				Rigidbody2D rb = this.GetComponent<Rigidbody2D> ();
-				if (rb != null)
-					rb.velocity = Vector2.zero;
+				//Rigidbody2D rb = this.GetComponent<Rigidbody2D> ();
+				//if (rb != null)
+				//	rb.velocity = Vector2.zero;
 			}
 		}
 
@@ -106,19 +106,19 @@ namespace AssemblyCSharp
 
 		virtual public void Bump(Vector3 iSourcePosition, float iBumpForce) {
             
-            if (IsBumpable && !_bumped) {
-				Rigidbody2D rb = this.GetComponent<Rigidbody2D> ();
-                if (rb == null)
-					return;
+    //        if (IsBumpable && !_bumped) {
+				//Rigidbody2D rb = this.GetComponent<Rigidbody2D> ();
+    //            if (rb == null)
+				//	return;
 
-                _bumped = true;
-                //Vector2 bumpDir = this.transform.position.x>iSourcePosition.x? new Vector2(iBumpForce,iBumpForce) : new Vector2(-iBumpForce,iBumpForce);
-				Vector2 bumpDir = ((this.transform.position - iSourcePosition).normalized) * iBumpForce;
-				bumpDir.y = -bumpDir.y;
-				rb.velocity = bumpDir;
-                Invoke("ResetBump",BumpCoolDown);
+    //            _bumped = true;
+    //            //Vector2 bumpDir = this.transform.position.x>iSourcePosition.x? new Vector2(iBumpForce,iBumpForce) : new Vector2(-iBumpForce,iBumpForce);
+				//Vector2 bumpDir = ((this.transform.position - iSourcePosition).normalized) * iBumpForce;
+				//bumpDir.y = -bumpDir.y;
+				//rb.velocity = bumpDir;
+    //            Invoke("ResetBump",BumpCoolDown);
 
-            }
+    //        }
 		}
 
         virtual public void ResetBump()
