@@ -193,12 +193,13 @@ public class Player : MonoBehaviour {
         //Gestion des inputs de mouvements
          _move = 0.0f;
 
-        if (BSMoveLeft.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped)
-            _move = -1.0f;
-        else if (BSMoveRight.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped)
-            _move = 1.0f;
-        else if (!m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped)
-            _move = Input.GetAxis("Horizontal");
+		if (BSMoveLeft.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped)
+			_move = -1.0f;
+		else if (BSMoveRight.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped)
+			_move = 1.0f;
+		else if (!m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped)
+			_move = Input.GetAxis ("Horizontal");
+		
 
         if (_move > 0.1 && m_FacingRight)
             Flip();
@@ -209,6 +210,20 @@ public class Player : MonoBehaviour {
         if (m_AttackLongDashing)
             return;
 
+		//Animation part
+		_anim.SetFloat("velocityY", m_RigidBody2D.velocity.y);
+		if(Mathf.Abs(_move) == 1)
+			_anim.SetBool(_runHash, true);
+		else
+			_anim.SetBool(_runHash, false);
+
+		if (m_BottomTouched && !_anim.GetBool ("jump"))
+		{
+			_anim.SetBool("grounded", true);
+		}
+		else {
+			_anim.SetBool("grounded", false);
+		}
 
         // Gestion du jump
         bool isJumpDown = false;
@@ -392,6 +407,9 @@ public class Player : MonoBehaviour {
             SwitchWeaponTo(WeaponType.Sword);
         }
 
+
+
+
     }
 
 	void FixedUpdate () 
@@ -436,21 +454,6 @@ public class Player : MonoBehaviour {
             _move *= SlowFactorWhileAttack;
 		}
 
-
-		//Animation part
-		_anim.SetFloat("velocityY", m_RigidBody2D.velocity.y);
-		if(_move != 0)
-			_anim.SetBool(_runHash, true);
-		else
-			_anim.SetBool(_runHash, false);
-
-		if (m_BottomTouched && !_anim.GetBool ("jump"))
-		{
-			_anim.SetBool("grounded", true);
-		}
-		else {
-			_anim.SetBool("grounded", false);
-		}
 
 
 
