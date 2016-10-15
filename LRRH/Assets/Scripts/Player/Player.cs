@@ -392,6 +392,7 @@ public class Player : MonoBehaviour {
         {
             SwitchWeaponTo(WeaponType.Sword);
         }
+
     }
 
 	void FixedUpdate () 
@@ -432,9 +433,7 @@ public class Player : MonoBehaviour {
 
         if (m_AttackLongDashing)
             return;
-        if (m_AttackCount>0 || m_AttackLongCasting) {
-            //if(m_BottomTouched)
-            //	m_RigidBody2D.velocity = new Vector2(m_RigidBody2D.velocity.x * SlowFactorWhileAttack, m_RigidBody2D.velocity.y);
+		if ((m_AttackCount>0 || m_AttackLongCasting) && m_BottomTouched) {
             _move *= SlowFactorWhileAttack;
 		}
 
@@ -459,7 +458,7 @@ public class Player : MonoBehaviour {
 
 		// classic move
 		if (Mathf.Abs (_move) > 0) {
-			if (m_Defending)
+			if (m_Defending && m_BottomTouched)
 			{
 				if (!m_FrontTouched)
 				{
@@ -731,10 +730,12 @@ public class Player : MonoBehaviour {
 
 	public void Dash(float iSpeed)
 	{
-		if(m_FacingRight)
-			m_RigidBody2D.velocity = new Vector2(-iSpeed, m_RigidBody2D.velocity.y);
-		else
-			m_RigidBody2D.velocity = new Vector2(iSpeed, m_RigidBody2D.velocity.y);
+		if (m_BottomTouched) {
+			if(m_FacingRight)
+				m_RigidBody2D.velocity = new Vector2(-iSpeed, m_RigidBody2D.velocity.y);
+			else
+				m_RigidBody2D.velocity = new Vector2(iSpeed, m_RigidBody2D.velocity.y);
+		}
 	}
 
     public void ResetAttackLongDash()
