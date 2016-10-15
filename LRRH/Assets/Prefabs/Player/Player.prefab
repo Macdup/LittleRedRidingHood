@@ -96,8 +96,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 117764}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 574.9, y: 57.9, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 407, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -299,6 +299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9ed5ce13dc7bcd4fa8648ed4a41814a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &11487602
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -331,6 +332,7 @@ MonoBehaviour:
   JumpSpeed: 470
   MinJumpSpeed: 300
   JumpDelay: 0.04
+  DashAttackSpeed: 100
   HitCoolDown: 0.5
   BumpCoolDown: 0.5
   HasJetPack: 1
@@ -342,6 +344,9 @@ MonoBehaviour:
   AttackLongCastStartAfterTime: 0.2
   AttackLongDashSpeed: 300
   AttackLongDashDuration: 0.5
+  CounterDelay: 0.2
+  CounterAttackBackDashSpeed: 100
+  CounterAttackForwardDashSpeed: 100
   BSMoveLeft: {fileID: 0}
   BSMoveRight: {fileID: 0}
   BSJump: {fileID: 0}
@@ -374,6 +379,7 @@ MonoBehaviour:
   m_JetPackValue: 0
   m_AttackLongDashing: 0
   _isInCounterTime: 0
+  _isCountering: 0
 --- !u!212 &21226482
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -563,7 +569,7 @@ ParticleSystem:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011415314068}
-  serializedVersion: 2
+  serializedVersion: 4
   lengthInSec: 1
   startDelay:
     scalar: 0
@@ -601,12 +607,13 @@ ParticleSystem:
       m_RotationOrder: 4
     minMaxState: 0
   speed: 1
-  randomSeed: 0
   looping: 1
   prewarm: 0
   playOnAwake: 0
   moveWithTransform: 0
+  autoRandomSeed: 1
   scalingMode: 1
+  randomSeed: 0
   InitialModule:
     serializedVersion: 2
     enabled: 1
