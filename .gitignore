@@ -42,3 +42,4 @@ LRRH/Library/InspectorExpandedItems.asset
 *.asset
 LRRH/Library/CurrentMaximizeLayout.dwlt
 LRRH/Assets/RedHood.unity
+LRRH/Assets/Editor/BuildManager.cs

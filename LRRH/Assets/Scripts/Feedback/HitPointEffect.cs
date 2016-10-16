@@ -1,15 +1,14 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class HitPointEffect : MonoBehaviour {
 
-	private MeshRenderer MeshRenderer;
-	private TextMesh TextMesh;
+	private Text Text;
 
 	// Use this for initialization
 	void Awake () {
-		MeshRenderer = this.GetComponentInChildren<MeshRenderer>();
-		TextMesh= this.GetComponentInChildren<TextMesh>();
+		Text= this.GetComponentInChildren<Text>();
 	}
 
 	void Start () {
@@ -27,7 +26,7 @@ public class HitPointEffect : MonoBehaviour {
 
 	public void pop(Vector3 position, float damageValue) {
 		gameObject.SetActive (true);
-		TextMesh.text = damageValue.ToString ();
+		Text.text = damageValue.ToString ();
 		transform.position = position;
 	}
 }
