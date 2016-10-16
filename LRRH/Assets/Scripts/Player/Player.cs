@@ -356,17 +356,17 @@ public class Player : MonoBehaviour {
 				m_Stamina -= Weapon.StaminaConsomation;
 				PlayerDefend DefendEvent = new PlayerDefend(m_Stamina);
 				Events.instance.Raise(DefendEvent);
-			}
+            }
 			else if (m_AttackCount == 2)
 			{
 				m_ComboValidated = true;
 				m_ComboPossibility = false;
-			}
+            }
 			else if (m_AttackCount == 3)
 			{
 				m_ComboValidated = true;
 				m_ComboPossibility = false;
-			};
+            };
 
 		}
 		else if(!m_Defending && !m_BeingHit)
