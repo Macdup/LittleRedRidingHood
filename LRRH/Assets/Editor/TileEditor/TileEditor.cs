@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEditor;
 using System.Collections.Generic;
 
-
+[CanEditMultipleObjects]
 [CustomEditor(typeof(Tile))]
 public class TileEditor : Editor
 {
