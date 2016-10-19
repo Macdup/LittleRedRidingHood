@@ -115,7 +115,8 @@ public class Player : MonoBehaviour {
 	private bool 		_secondJumpEnd =  false;
 	private bool 		_thirdJump =  false;
 	private LayerMask 	_wallsMask;
-	private float 		_idleTimer = 0.0f;
+    private LayerMask   _enemiesMask;
+    private float 		_idleTimer = 0.0f;
 	private	bool 		_capJump = false;
 	private bool 		_attackWasUp = true;
 	private float       _attackHoldTime = 0.0f;
@@ -148,8 +149,9 @@ public class Player : MonoBehaviour {
 		_anim = GetComponentInChildren<Animator>();
 		m_RigidBody2D = GetComponent<Rigidbody2D> ();
 		_wallsMask = LayerMask.GetMask("Walls");
+        _enemiesMask = LayerMask.GetMask("Enemy");
 
-		m_BottomBox = GetComponents<BoxCollider2D> () [1];
+        m_BottomBox = GetComponents<BoxCollider2D> () [1];
 		m_BottomLeft = GetComponents<CircleCollider2D> () [0];
 		m_BottomRight = GetComponents<CircleCollider2D> () [1];
 		m_RightBox = GetComponents<BoxCollider2D> () [3];
@@ -172,7 +174,7 @@ public class Player : MonoBehaviour {
             _anim.SetBool("Sword", true);
         }
 
-        Weapon = GetComponentInChildren<WeaponScript>();
+        Weapon = GetComponentInChildren<WeaponScript>(true);
     }
 
 
@@ -323,8 +325,6 @@ public class Player : MonoBehaviour {
         }
 
 		//Gestion de l'attaque
-		float TestStamina = m_Stamina - Weapon.StaminaConsomation;
-
 		if (BSAttack.CurrentState != ButtonScript.ButtonState.Down && Input.GetAxis("Attack") != 1)
 		{
 			_attackWasUp = true;
@@ -341,7 +341,7 @@ public class Player : MonoBehaviour {
                 _anim.SetBool(_attackLongReleasedHash, false);
             }
 		}
-		else if (_attackWasUp && m_AttackCount < 3 && TestStamina > m_StaminaMin && (m_AttackCount == 0 || m_ComboPossibility == true) && !m_Defending && !m_BeingHit)
+		else if (_attackWasUp && m_AttackCount < 3 && m_Stamina - Weapon.StaminaConsomation > m_StaminaMin && (m_AttackCount == 0 || m_ComboPossibility == true) && !m_Defending && !m_BeingHit)
 		{
 			SetIdle(false);
 			_attackWasUp = false;
@@ -419,7 +419,8 @@ public class Player : MonoBehaviour {
             return;
 
 		// Evalute states
-		m_BottomTouched = m_BottomBox.IsTouchingLayers (_wallsMask) || m_BottomLeft.IsTouchingLayers (_wallsMask) || m_BottomRight.IsTouchingLayers (_wallsMask);
+		m_BottomTouched = m_BottomBox.IsTouchingLayers (_wallsMask) || m_BottomLeft.IsTouchingLayers (_wallsMask) || m_BottomRight.IsTouchingLayers (_wallsMask)
+            || m_BottomBox.IsTouchingLayers(_enemiesMask) || m_BottomLeft.IsTouchingLayers(_enemiesMask) || m_BottomRight.IsTouchingLayers(_enemiesMask);
 		m_FrontTouched = /*_left_box.IsTouchingLayers (wallsMask) ||*/ m_RightBox.IsTouchingLayers (_wallsMask) || m_BottomRight.IsTouchingLayers (_wallsMask);
 
 		if (m_BottomTouched) {

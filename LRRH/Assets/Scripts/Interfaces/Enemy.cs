@@ -24,13 +24,13 @@ namespace AssemblyCSharp
         public bool         m_Stopped = false;
         protected Animator 	m_Animator;
         protected Dropable  m_Dropable;
-
-
-		// private member
-		private SpriteRenderer 	m_SpriteRenderer;
-        public Player          m_Player;
-		private HitFeedbackManager m_HitFeedbackManager;
+        protected Player    m_Player;
         protected Rigidbody2D m_RigidBody;
+
+
+        // private member
+        private SpriteRenderer 	m_SpriteRenderer;
+		private HitFeedbackManager m_HitFeedbackManager;
         
 
         // variable

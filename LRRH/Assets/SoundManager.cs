@@ -36,6 +36,7 @@ public class SoundManager : MonoBehaviour {
 
     public void PlaySound(AudioClip iClip)
     {
+        _AudioSourceOneShot.Stop();
         _AudioSourceOneShot.PlayOneShot(iClip);
     }
 }
