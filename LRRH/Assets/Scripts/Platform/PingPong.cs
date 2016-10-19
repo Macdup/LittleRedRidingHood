@@ -38,12 +38,12 @@ public class PingPong : MonoBehaviour {
 		if (target == A)
 		{
 			target = B;
-			transform.localScale = (new Vector3(-1,1,1));
+			//transform.localScale = (new Vector3(-1,1,1));
 		}
 		else
 		{
 			target = A;
-			transform.localScale = (new Vector3(1, 1, 1));
+			//transform.localScale = (new Vector3(1, 1, 1));
 		}
 	}
 

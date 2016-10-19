@@ -37,7 +37,6 @@ public class Player : MonoBehaviour {
 
 
 
-
     public ButtonScript BSMoveLeft;
 	public ButtonScript BSMoveRight;
 	public ButtonScript BSJump;
@@ -194,12 +193,13 @@ public class Player : MonoBehaviour {
         //Gestion des inputs de mouvements
          _move = 0.0f;
 
-        if (BSMoveLeft.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped)
-            _move = -1.0f;
-        else if (BSMoveRight.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped)
-            _move = 1.0f;
-        else if (!m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped)
-            _move = Input.GetAxis("Horizontal");
+		if (BSMoveLeft.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped)
+			_move = -1.0f;
+		else if (BSMoveRight.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped)
+			_move = 1.0f;
+		else if (!m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped)
+			_move = Input.GetAxis ("Horizontal");
+		
 
         if (_move > 0.1 && m_FacingRight)
             Flip();
@@ -210,6 +210,20 @@ public class Player : MonoBehaviour {
         if (m_AttackLongDashing)
             return;
 
+		//Animation part
+		_anim.SetFloat("velocityY", m_RigidBody2D.velocity.y);
+		if(Mathf.Abs(_move) == 1)
+			_anim.SetBool(_runHash, true);
+		else
+			_anim.SetBool(_runHash, false);
+
+		if (m_BottomTouched && !_anim.GetBool ("jump"))
+		{
+			_anim.SetBool("grounded", true);
+		}
+		else {
+			_anim.SetBool("grounded", false);
+		}
 
         // Gestion du jump
         bool isJumpDown = false;
@@ -342,17 +356,17 @@ public class Player : MonoBehaviour {
 				m_Stamina -= Weapon.StaminaConsomation;
 				PlayerDefend DefendEvent = new PlayerDefend(m_Stamina);
 				Events.instance.Raise(DefendEvent);
-			}
+            }
 			else if (m_AttackCount == 2)
 			{
 				m_ComboValidated = true;
 				m_ComboPossibility = false;
-			}
+            }
 			else if (m_AttackCount == 3)
 			{
 				m_ComboValidated = true;
 				m_ComboPossibility = false;
-			};
+            };
 
 		}
 		else if(!m_Defending && !m_BeingHit)
@@ -392,6 +406,10 @@ public class Player : MonoBehaviour {
         {
             SwitchWeaponTo(WeaponType.Sword);
         }
+
+
+
+
     }
 
 	void FixedUpdate () 
@@ -432,34 +450,17 @@ public class Player : MonoBehaviour {
 
         if (m_AttackLongDashing)
             return;
-        if (m_AttackCount>0 || m_AttackLongCasting) {
-            //if(m_BottomTouched)
-            //	m_RigidBody2D.velocity = new Vector2(m_RigidBody2D.velocity.x * SlowFactorWhileAttack, m_RigidBody2D.velocity.y);
+		if ((m_AttackCount>0 || m_AttackLongCasting) && m_BottomTouched) {
             _move *= SlowFactorWhileAttack;
 		}
 
-
-		//Animation part
-		_anim.SetFloat("velocityY", m_RigidBody2D.velocity.y);
-		if(_move != 0)
-			_anim.SetBool(_runHash, true);
-		else
-			_anim.SetBool(_runHash, false);
-
-		if (m_BottomTouched && !_anim.GetBool ("jump"))
-		{
-			_anim.SetBool("grounded", true);
-		}
-		else {
-			_anim.SetBool("grounded", false);
-		}
 
 
 
 
 		// classic move
 		if (Mathf.Abs (_move) > 0) {
-			if (m_Defending)
+			if (m_Defending && m_BottomTouched)
 			{
 				if (!m_FrontTouched)
 				{
@@ -619,8 +620,9 @@ public class Player : MonoBehaviour {
 			_idleTimer = 0;
 	}
 
-	void OnTriggerEnter2D(Collider2D other) {
-		Coin otherCoin = other.gameObject.GetComponent<Coin>();
+	void OnTriggerEnter2D(Collider2D other)
+    {
+        Coin otherCoin = other.gameObject.GetComponent<Coin>();
 		if (otherCoin != null)
 		{
 			PlayerLoot lootEvent = new PlayerLoot (otherCoin.gameObject);
@@ -731,10 +733,12 @@ public class Player : MonoBehaviour {
 
 	public void Dash(float iSpeed)
 	{
-		if(m_FacingRight)
-			m_RigidBody2D.velocity = new Vector2(-iSpeed, m_RigidBody2D.velocity.y);
-		else
-			m_RigidBody2D.velocity = new Vector2(iSpeed, m_RigidBody2D.velocity.y);
+		if (m_BottomTouched) {
+			if(m_FacingRight)
+				m_RigidBody2D.velocity = new Vector2(-iSpeed, m_RigidBody2D.velocity.y);
+			else
+				m_RigidBody2D.velocity = new Vector2(iSpeed, m_RigidBody2D.velocity.y);
+		}
 	}
 
     public void ResetAttackLongDash()

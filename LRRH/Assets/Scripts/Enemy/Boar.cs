@@ -32,10 +32,20 @@ public class Boar : Enemy {
     {
 		if (!m_Dead && !m_BeingHit && !m_Stopped && !m_Stunned) {
 
-            transform.position = Vector3.MoveTowards (transform.position, target, speed * Time.deltaTime);
+            Vector3 dir = target - transform.position;
+
+            if (dir.magnitude < 1) // close enough from target
+                changeDirection();
+
+            dir = target - transform.position;
+            dir.Normalize();
+
+            m_RigidBody.velocity = (dir * speed);
+
+            /*transform.position = Vector3.MoveTowards (transform.position, target, speed * Time.deltaTime);
 
 			if (transform.position == Vector3.MoveTowards (transform.position, target, speed * Time.deltaTime))
-				changeDirection ();
+				changeDirection ();*/
 		}
 
 		base.Update ();

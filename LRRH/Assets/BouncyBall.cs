@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using AssemblyCSharp;
 
-public class BouncyBall : MonoBehaviour {
+public class BouncyBall : Enemy {
 
     public Vector2 InitialDirection = new Vector2(-50, 0);
 

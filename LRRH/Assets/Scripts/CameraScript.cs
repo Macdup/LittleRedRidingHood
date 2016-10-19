@@ -10,15 +10,17 @@ public class CameraScript : MonoBehaviour {
 
     private float shakeDuration = 0;
     private float shakeIntensity = 0;
+    private float _lockZ = 0;
 
     // Use this for initialization
     void Start () {
-	
-	}
+        _lockZ = transform.position.z;
+    }
 	
 	// Update is called once per frame
 	void FixedUpdate() {
-		if(ObjectToFollow != null){
+		if(ObjectToFollow != null)
+        {
 			Vector3 pos = this.transform.position;
             pos.x = ObjectToFollow.transform.position.x + (xOffset * ObjectToFollow.transform.localScale.x);
 			pos.y = ObjectToFollow.transform.position.y + yOffset;
@@ -42,7 +44,10 @@ public class CameraScript : MonoBehaviour {
 
         shake();
 
-
+        // Lock Z
+        Vector3 posZLock = this.transform.position;
+        posZLock.z = _lockZ;
+        transform.position = posZLock;
     }
 
     public void shake()
