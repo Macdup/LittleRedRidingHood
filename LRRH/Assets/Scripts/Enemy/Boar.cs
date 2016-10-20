@@ -34,7 +34,7 @@ public class Boar : Enemy {
 
             Vector3 dir = target - transform.position;
 
-            if (dir.magnitude < 1) // close enough from target
+            if (dir.magnitude < 10) // close enough from target
                 changeDirection();
 
             dir = target - transform.position;

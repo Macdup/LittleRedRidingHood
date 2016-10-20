@@ -25,9 +25,12 @@ GameObject:
   m_Component:
   - 4: {fileID: 458450}
   - 114: {fileID: 11480066}
-  - 61: {fileID: 6194690}
   - 114: {fileID: 11403490}
   - 50: {fileID: 5030520}
+  - 61: {fileID: 6194690}
+  - 58: {fileID: 58000010254921724}
+  - 61: {fileID: 61000013385464764}
+  - 58: {fileID: 58000011150701272}
   m_Layer: 14
   m_Name: boar
   m_TagString: Untagged
@@ -188,7 +191,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 114252}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1300, y: 0, z: 0}
+  m_LocalPosition: {x: 1300, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -224,10 +227,10 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 2
+  m_Constraints: 4
 --- !u!61 &6194690
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -239,9 +242,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: -3, y: 22}
+  m_Offset: {x: 4, y: 20}
   serializedVersion: 2
-  m_Size: {x: 60, y: 35}
+  m_Size: {x: 40, y: 40}
 --- !u!95 &9597114
 Animator:
   serializedVersion: 3
@@ -307,7 +310,7 @@ MonoBehaviour:
   m_Stopped: 0
   m_Player: {fileID: 0}
   _isInCounterTime: 0
-  speed: 120
+  speed: 200
   pointA: {fileID: 191816}
   pointB: {fileID: 151682}
 --- !u!212 &21217754
@@ -420,3 +423,45 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 114252}
   m_IsPrefabParent: 1
+--- !u!58 &58000010254921724
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 114252}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: -16, y: 20}
+  serializedVersion: 2
+  m_Radius: 20
+--- !u!58 &58000011150701272
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 114252}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 68497ea57c9e03a4198d1d6eba1c3ad2, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: -16, y: 20}
+  serializedVersion: 2
+  m_Radius: 20
+--- !u!61 &61000013385464764
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 114252}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 68497ea57c9e03a4198d1d6eba1c3ad2, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 4, y: 20}
+  serializedVersion: 2
+  m_Size: {x: 40, y: 40}
