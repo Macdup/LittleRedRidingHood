@@ -7892,7 +7892,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -7966,10 +7966,10 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.1
+  m_Volume: 0.05
   m_Pitch: 1
   Loop: 0
-  Mute: 0
+  Mute: 1
   Spatialize: 0
   Priority: 128
   DopplerLevel: 1
@@ -11365,6 +11365,7 @@ MonoBehaviour:
   AudioClipAttack3: {fileID: 8300000, guid: 5ba0fd83a6a65d544bce6d3065a0c14d, type: 3}
   AudioClipJump1: {fileID: 8300000, guid: 2f43b484817637945b6365c99ff225a3, type: 3}
   AudioClipJump2: {fileID: 8300000, guid: a9e9fe3b43b9a0b4aae1f0c8ad20fc58, type: 3}
+  AudioClipHit1: {fileID: 8300000, guid: d7dfde0520b94724eb21cf67220a62c6, type: 3}
 --- !u!114 &114000013329243468
 MonoBehaviour:
   m_ObjectHideFlags: 1

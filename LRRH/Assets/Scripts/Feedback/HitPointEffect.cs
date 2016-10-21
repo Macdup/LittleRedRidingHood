@@ -28,5 +28,6 @@ public class HitPointEffect : MonoBehaviour {
 		gameObject.SetActive (true);
 		Text.text = damageValue.ToString ();
 		transform.position = position;
+        SoundManager.instance.PlaySound(SoundManager.instance.AudioClipHit1);
 	}
 }

@@ -9,6 +9,7 @@ public class SoundManager : MonoBehaviour {
     public AudioClip AudioClipAttack3;
     public AudioClip AudioClipJump1;
     public AudioClip AudioClipJump2;
+    public AudioClip AudioClipHit1;
 
     public static SoundManager instance = null;
     private AudioSource _AudioSourceOneShot;
