@@ -30552,6 +30552,14 @@ Prefab:
       propertyPath: shakeDuration
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1000013632002550, guid: e3f7831f5927a1349a8099b88e3780da, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000013632002550, guid: e3f7831f5927a1349a8099b88e3780da, type: 2}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e3f7831f5927a1349a8099b88e3780da, type: 2}
   m_IsPrefabParent: 0
@@ -77454,11 +77462,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 451048, guid: 458e54b50841a164ab7d6951424758f4, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 1000
+      value: 1800
       objectReference: {fileID: 0}
     - target: {fileID: 451048, guid: 458e54b50841a164ab7d6951424758f4, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 60
+      value: 353
       objectReference: {fileID: 0}
     - target: {fileID: 451048, guid: 458e54b50841a164ab7d6951424758f4, type: 2}
       propertyPath: m_LocalPosition.z
@@ -77516,6 +77524,48 @@ Prefab:
       propertyPath: BSWeaponStick
       value: 
       objectReference: {fileID: 1264509503}
+    - target: {fileID: 117764, guid: 458e54b50841a164ab7d6951424758f4, type: 2}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000011415314068, guid: 458e54b50841a164ab7d6951424758f4, type: 2}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 431904, guid: 458e54b50841a164ab7d6951424758f4, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6162026, guid: 458e54b50841a164ab7d6951424758f4, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 58000013428885748, guid: 458e54b50841a164ab7d6951424758f4,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 58000012453860260, guid: 458e54b50841a164ab7d6951424758f4,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 120224, guid: 458e54b50841a164ab7d6951424758f4, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494494, guid: 458e54b50841a164ab7d6951424758f4, type: 2}
+      propertyPath: AttackCoolDown
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494494, guid: 458e54b50841a164ab7d6951424758f4, type: 2}
+      propertyPath: CounterAttackForwardDashSpeed
+      value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494494, guid: 458e54b50841a164ab7d6951424758f4, type: 2}
+      propertyPath: CounterDelay
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 458e54b50841a164ab7d6951424758f4, type: 2}
   m_IsPrefabParent: 0
@@ -93900,6 +93950,11 @@ Prefab:
     - target: {fileID: 4000010158997458, guid: 8d4f7dc4ad85cb84582ed3681089b9b6, type: 2}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010345227760, guid: 8d4f7dc4ad85cb84582ed3681089b9b6,
+        type: 2}
+      propertyPath: timeScale
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8d4f7dc4ad85cb84582ed3681089b9b6, type: 2}
