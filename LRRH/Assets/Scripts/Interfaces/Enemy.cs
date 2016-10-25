@@ -104,7 +104,8 @@ namespace AssemblyCSharp
 			}
 		}
 
-		virtual public void Bump(Vector3 iSourcePosition, float iBumpForce) {
+		virtual public void Bump(Vector3 iSourcePosition, float iBumpForce)
+        {
             
     //        if (IsBumpable && !_bumped) {
 				//Rigidbody2D rb = this.GetComponent<Rigidbody2D> ();

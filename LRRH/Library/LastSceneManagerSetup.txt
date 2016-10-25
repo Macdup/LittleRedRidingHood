@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/MA_EnemyTest.unity
+- path: Assets/Enemies_Lab.unity
   isLoaded: 1
   isActive: 1
