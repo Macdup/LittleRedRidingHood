@@ -351,6 +351,7 @@ public class Player : MonoBehaviour {
 
             if (m_AttackCount == 1)
 			{
+                Debug.Log("Attack Count 1");
 				_anim.SetBool("Attack", true);
 				m_Attacking = true;
 				m_Stamina -= Weapon.StaminaConsomation;
@@ -359,7 +360,9 @@ public class Player : MonoBehaviour {
             }
 			else if (m_AttackCount == 2)
 			{
-				m_ComboValidated = true;
+                Debug.Log("Attack Count 2");
+
+                m_ComboValidated = true;
 				m_ComboPossibility = false;
             }
 			else if (m_AttackCount == 3)
@@ -573,6 +576,7 @@ public class Player : MonoBehaviour {
 					_anim.SetTrigger(_deathHash);
 					this.enabled = false;
 				}
+                m_RigidBody2D.AddForce(new Vector2(0, 8000), ForceMode2D.Force); // en vrai 8000 c'est cool
 			}
 			Invoke("ResetBeingHit", HitCoolDown);
 
@@ -650,7 +654,8 @@ public class Player : MonoBehaviour {
 
 	 public void ComboCheck()
 	 {
-		 if (m_ComboValidated)
+        Debug.Log("Combo check");
+        if (m_ComboValidated)
 		 {
 			 _anim.SetBool("ComboValidated", true);
 		 }
@@ -661,6 +666,7 @@ public class Player : MonoBehaviour {
 			 m_AttackCount = 0;
 		 }
 	 }
+
 	 public void ResetComboValidated()
 	 {
 		 m_ComboValidated = false;
