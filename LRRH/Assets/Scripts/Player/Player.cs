@@ -87,7 +87,7 @@ public class Player : MonoBehaviour {
 	private bool 				m_Attacking = false;
 	private bool                m_ComboPossibility = false;
 	private bool                m_ComboValidated = false;
-	private int 				m_AttackCount = 0;
+	public int 				m_AttackCount = 0;
 	public bool 				m_BeingHit = false;
 	private bool                m_Defending;
 	private float               m_Stamina = 100.0f;
@@ -343,7 +343,8 @@ public class Player : MonoBehaviour {
 		}
 		else if (_attackWasUp && m_AttackCount < 3 && m_Stamina - Weapon.StaminaConsomation > m_StaminaMin && (m_AttackCount == 0 || m_ComboPossibility == true) && !m_Defending && !m_BeingHit)
 		{
-			SetIdle(false);
+            Debug.Log("Attack !");
+            SetIdle(false);
 			_attackWasUp = false;
 			++m_AttackCount;
 			_attackHoldTime = 0.0f;
@@ -364,11 +365,15 @@ public class Player : MonoBehaviour {
 
                 m_ComboValidated = true;
 				m_ComboPossibility = false;
+
+                _anim.SetBool("ComboValidated", true);
             }
 			else if (m_AttackCount == 3)
 			{
 				m_ComboValidated = true;
 				m_ComboPossibility = false;
+
+                _anim.SetBool("ComboValidated", true);
             };
 
 		}
@@ -517,7 +522,7 @@ public class Player : MonoBehaviour {
 	}
 
 
-	void ResetAttackTrippleAnim() {
+	public void ResetAttackTrippleAnim() {
 		_anim.SetBool ("Attack", false);
 		_anim.SetBool ("AttackDouble", false);
 		_anim.SetBool ("AttackTripple", false);
