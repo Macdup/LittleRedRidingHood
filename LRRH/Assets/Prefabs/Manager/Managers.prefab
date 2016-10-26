@@ -2565,7 +2565,6 @@ GameObject:
   - 199: {fileID: 199000012840859202}
   - 114: {fileID: 114000010418692388}
   - 114: {fileID: 114000014133792164}
-  - 82: {fileID: 82000010860285306}
   m_Layer: 0
   m_Name: HitParticle
   m_TagString: Untagged
@@ -7882,80 +7881,6 @@ BoxCollider2D:
   m_Offset: {x: 0, y: -2.34}
   serializedVersion: 2
   m_Size: {x: 16.77, y: 14.1}
---- !u!82 &82000010860285306
-AudioSource:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013545896928}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: d7dfde0520b94724eb21cf67220a62c6, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.55
-  m_Pitch: 1.52
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
 --- !u!82 &82000012206470770
 AudioSource:
   m_ObjectHideFlags: 1
@@ -7967,7 +7892,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -8041,10 +7966,10 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.1
+  m_Volume: 0.05
   m_Pitch: 1
   Loop: 0
-  Mute: 0
+  Mute: 1
   Spatialize: 0
   Priority: 128
   DopplerLevel: 1
@@ -11440,6 +11365,7 @@ MonoBehaviour:
   AudioClipAttack3: {fileID: 8300000, guid: 5ba0fd83a6a65d544bce6d3065a0c14d, type: 3}
   AudioClipJump1: {fileID: 8300000, guid: 2f43b484817637945b6365c99ff225a3, type: 3}
   AudioClipJump2: {fileID: 8300000, guid: a9e9fe3b43b9a0b4aae1f0c8ad20fc58, type: 3}
+  AudioClipHit1: {fileID: 8300000, guid: d7dfde0520b94724eb21cf67220a62c6, type: 3}
 --- !u!114 &114000013329243468
 MonoBehaviour:
   m_ObjectHideFlags: 1

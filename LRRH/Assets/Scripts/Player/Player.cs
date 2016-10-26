@@ -115,7 +115,8 @@ public class Player : MonoBehaviour {
 	private bool 		_secondJumpEnd =  false;
 	private bool 		_thirdJump =  false;
 	private LayerMask 	_wallsMask;
-	private float 		_idleTimer = 0.0f;
+    private LayerMask   _enemiesMask;
+    private float 		_idleTimer = 0.0f;
 	private	bool 		_capJump = false;
 	private bool 		_attackWasUp = true;
 	private float       _attackHoldTime = 0.0f;
@@ -148,8 +149,9 @@ public class Player : MonoBehaviour {
 		_anim = GetComponentInChildren<Animator>();
 		m_RigidBody2D = GetComponent<Rigidbody2D> ();
 		_wallsMask = LayerMask.GetMask("Walls");
+        _enemiesMask = LayerMask.GetMask("Enemy");
 
-		m_BottomBox = GetComponents<BoxCollider2D> () [1];
+        m_BottomBox = GetComponents<BoxCollider2D> () [1];
 		m_BottomLeft = GetComponents<CircleCollider2D> () [0];
 		m_BottomRight = GetComponents<CircleCollider2D> () [1];
 		m_RightBox = GetComponents<BoxCollider2D> () [3];
@@ -172,7 +174,7 @@ public class Player : MonoBehaviour {
             _anim.SetBool("Sword", true);
         }
 
-        Weapon = GetComponentInChildren<WeaponScript>();
+        Weapon = GetComponentInChildren<WeaponScript>(true);
     }
 
 
@@ -323,8 +325,6 @@ public class Player : MonoBehaviour {
         }
 
 		//Gestion de l'attaque
-		float TestStamina = m_Stamina - Weapon.StaminaConsomation;
-
 		if (BSAttack.CurrentState != ButtonScript.ButtonState.Down && Input.GetAxis("Attack") != 1)
 		{
 			_attackWasUp = true;
@@ -341,7 +341,7 @@ public class Player : MonoBehaviour {
                 _anim.SetBool(_attackLongReleasedHash, false);
             }
 		}
-		else if (_attackWasUp && m_AttackCount < 3 && TestStamina > m_StaminaMin && (m_AttackCount == 0 || m_ComboPossibility == true) && !m_Defending && !m_BeingHit)
+		else if (_attackWasUp && m_AttackCount < 3 && m_Stamina - Weapon.StaminaConsomation > m_StaminaMin && (m_AttackCount == 0 || m_ComboPossibility == true) && !m_Defending && !m_BeingHit)
 		{
 			SetIdle(false);
 			_attackWasUp = false;
@@ -351,6 +351,7 @@ public class Player : MonoBehaviour {
 
             if (m_AttackCount == 1)
 			{
+                Debug.Log("Attack Count 1");
 				_anim.SetBool("Attack", true);
 				m_Attacking = true;
 				m_Stamina -= Weapon.StaminaConsomation;
@@ -359,7 +360,9 @@ public class Player : MonoBehaviour {
             }
 			else if (m_AttackCount == 2)
 			{
-				m_ComboValidated = true;
+                Debug.Log("Attack Count 2");
+
+                m_ComboValidated = true;
 				m_ComboPossibility = false;
             }
 			else if (m_AttackCount == 3)
@@ -419,7 +422,8 @@ public class Player : MonoBehaviour {
             return;
 
 		// Evalute states
-		m_BottomTouched = m_BottomBox.IsTouchingLayers (_wallsMask) || m_BottomLeft.IsTouchingLayers (_wallsMask) || m_BottomRight.IsTouchingLayers (_wallsMask);
+		m_BottomTouched = m_BottomBox.IsTouchingLayers (_wallsMask) || m_BottomLeft.IsTouchingLayers (_wallsMask) || m_BottomRight.IsTouchingLayers (_wallsMask)
+            || m_BottomBox.IsTouchingLayers(_enemiesMask) || m_BottomLeft.IsTouchingLayers(_enemiesMask) || m_BottomRight.IsTouchingLayers(_enemiesMask);
 		m_FrontTouched = /*_left_box.IsTouchingLayers (wallsMask) ||*/ m_RightBox.IsTouchingLayers (_wallsMask) || m_BottomRight.IsTouchingLayers (_wallsMask);
 
 		if (m_BottomTouched) {
@@ -572,6 +576,7 @@ public class Player : MonoBehaviour {
 					_anim.SetTrigger(_deathHash);
 					this.enabled = false;
 				}
+                m_RigidBody2D.AddForce(new Vector2(0, 8000), ForceMode2D.Force); // en vrai 8000 c'est cool
 			}
 			Invoke("ResetBeingHit", HitCoolDown);
 
@@ -649,7 +654,8 @@ public class Player : MonoBehaviour {
 
 	 public void ComboCheck()
 	 {
-		 if (m_ComboValidated)
+        Debug.Log("Combo check");
+        if (m_ComboValidated)
 		 {
 			 _anim.SetBool("ComboValidated", true);
 		 }
@@ -660,6 +666,7 @@ public class Player : MonoBehaviour {
 			 m_AttackCount = 0;
 		 }
 	 }
+
 	 public void ResetComboValidated()
 	 {
 		 m_ComboValidated = false;

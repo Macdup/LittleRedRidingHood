@@ -10,14 +10,26 @@ public class Mushroom : Enemy {
 
     Animator _anim;
     int shotHash = Animator.StringToHash("shot");
+    private BoxCollider2D _MushroomZone;
 
-	// Use this for initialization
-	public override void Start () {
+    // Use this for initialization
+    public override void Start () {
         _anim = GetComponentInChildren<Animator>();
-        Invoke("startShot", ShootCoolDown);
-
+        _MushroomZone = transform.GetChild(1).GetComponent<BoxCollider2D>();
 		base.Start ();
 	}
+
+    public void FixedUpdate()
+    {
+        bool playerInZone = _MushroomZone.OverlapPoint(new Vector2(m_Player.transform.position.x, m_Player.transform.position.y));
+        if(playerInZone && !_anim.GetBool("PlayerInZone"))
+        {
+            _anim.SetBool("PlayerInZone", playerInZone);
+            startShot();
+        }
+        else
+            _anim.SetBool("PlayerInZone", playerInZone);
+    }
 
     void startShot() {
         _anim.SetTrigger(shotHash);
