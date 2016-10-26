@@ -15,6 +15,7 @@ public class Boar : Enemy {
     private Vector3 B;
     private Vector3 target;
     private bool isFacingRight;
+    private int _StopCount = 0;
 
     // Use this for initialization
     public override void Start()
@@ -34,7 +35,7 @@ public class Boar : Enemy {
 
             Vector3 dir = target - transform.position;
 
-            if (dir.magnitude < 1) // close enough from target
+            if (dir.magnitude < 10) // close enough from target
                 changeDirection();
 
             dir = target - transform.position;
@@ -50,7 +51,24 @@ public class Boar : Enemy {
 
 		base.Update ();
     }
-		
+
+    public override void OnTriggerEnter2D(Collider2D other)
+    {
+        Player player = other.gameObject.GetComponent<Player>();
+
+        if (player != null)
+        {
+            m_Stopped = true;
+            ++_StopCount;
+            _anim.SetBool("HitPlayer", true);
+            Invoke("ResetStoppedCoolDown", 1);
+
+            m_RigidBody.velocity = new Vector2(0, m_RigidBody.velocity.y);
+
+        }
+        base.OnTriggerEnter2D(other);
+    }
+
     void changeDirection() {
         if (target == A)
            {
@@ -70,4 +88,13 @@ public class Boar : Enemy {
         m_Stunned = true;
     }
 
+    public override void ResetStoppedCoolDown()
+    {
+        --_StopCount;
+        if(_StopCount <= 0)
+        {
+            m_Stopped = false;
+            _anim.SetBool("HitPlayer", false);
+        }
+    }
 }
