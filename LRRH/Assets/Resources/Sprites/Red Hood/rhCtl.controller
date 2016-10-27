@@ -3553,10 +3553,10 @@ AnimatorStateMachine:
   m_EntryTransitions: []
   m_StateMachineTransitions:
     data:
-      first: {fileID: 110727060}
+      first: {fileID: 110749580}
       second: []
     data:
-      first: {fileID: 110749580}
+      first: {fileID: 110727060}
       second: []
     data:
       first: {fileID: 110715830}
