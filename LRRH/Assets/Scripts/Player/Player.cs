@@ -84,7 +84,7 @@ public class Player : MonoBehaviour {
 	private CircleCollider2D 	m_BottomLeft;
 	private CircleCollider2D 	m_BottomRight;
 	private BoxCollider2D 		m_RightBox;
-	private bool 				m_Attacking = false;
+	public bool 				m_Attacking = false;
 	private bool                m_ComboPossibility = false;
 	private bool                m_ComboValidated = false;
 	public int 				m_AttackCount = 0;
@@ -374,8 +374,7 @@ public class Player : MonoBehaviour {
 				m_ComboPossibility = false;
 
                 _anim.SetBool("ComboValidated", true);
-            };
-
+            }
 		}
 		else if(!m_Defending && !m_BeingHit)
 		{
