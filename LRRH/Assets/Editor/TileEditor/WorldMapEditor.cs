@@ -44,6 +44,11 @@ public class WorldMapEditor : Editor {
         creationMode = (CreationMode)EditorGUILayout.EnumPopup("Creation mode:", creationMode);
 		Tile = Resources.Load ("TileGrassCenter");
 
+		if(GUILayout.Button("Update Tiles Visu"))
+		{
+			updateTileVisu ();
+		}
+
         //map.BrushFeedback.brushSize
 
         EditorGUILayout.EndVertical();
@@ -216,5 +221,124 @@ public class WorldMapEditor : Editor {
 		else
 			creationMode = CreationMode.Screen;
 	}
+
+	public void updateTileVisu() {
+		//Je récupère l’ensemble des tiles du niveau.
+		var tileList = map.GetComponentsInChildren<Tile>();
+		int layerMask = 1 << LayerMask.NameToLayer ("Walls");
+		//Pour chacune, je vérifie si elle a des voisins (lancé de rayon en haut, en bas, à gauche à droite) avec pour longueur la largeur d’une tile. Les objets rencontrés sont stockés au niveau de la tile elle - même.
+		foreach (Tile tile in tileList) {
+			tileAroundDetection (tile, Vector2.up, layerMask);
+			tileAroundDetection (tile, Vector2.right, layerMask);
+			tileAroundDetection (tile, Vector2.down, layerMask);
+			tileAroundDetection (tile, Vector2.left, layerMask);
+		}
+		//En fonction de ses voisins, je définis de quel type de voisin il s’agit.Voir plus la classification.
+		foreach(Tile tile in tileList){
+			SpriteRenderer spriteRenderer = tile.GetComponent<SpriteRenderer> ();
+			if (tile.Up && tile.Right && tile.Down && tile.Left) {
+				//Assigner la texture centre à la tile
+				spriteRenderer.sprite = Resources.Load<Sprite>("TilesetGrass/ForestGround_Center");
+			}
+			else if (tile.Up && tile.Right && tile.Left) {
+				//Assigner la texture centre à la tile
+				spriteRenderer.sprite = Resources.Load<Sprite>("TilesetGrass/ForestGround_South");
+			}
+			else if (tile.Up && tile.Right && tile.Down) {
+				//Assigner la texture centre à la tile
+				spriteRenderer.sprite = Resources.Load<Sprite>("TilesetGrass/ForestGround_West");
+			}
+			else if (tile.Up && tile.Right) {
+				//Assigner la texture centre à la tile
+				spriteRenderer.sprite = Resources.Load<Sprite>("TilesetGrass/ForestGround_SouthWest");
+			}
+			else if (tile.Up && tile.Down && tile.Left) {
+				//Assigner la texture centre à la tile
+				spriteRenderer.sprite = Resources.Load<Sprite>("TilesetGrass/ForestGround_East");
+			}
+			else if (tile.Up && tile.Left) {
+				//Assigner la texture centre à la tile
+				spriteRenderer.sprite = Resources.Load<Sprite>("TilesetGrass/ForestGround_SouthEast");
+			}
+			else if (tile.Up && tile.Down) {
+				//Assigner la texture centre à la tile
+				spriteRenderer.sprite = Resources.Load<Sprite>("TilesetGrass/ForestGround_WestEast");
+			}
+			else if (tile.Up) {
+				//Assigner la texture centre à la tile
+				spriteRenderer.sprite = Resources.Load<Sprite>("TilesetGrass/ForestGround_SouthWestEast");
+			}
+			else if (tile.Right && tile.Down && tile.Left) {
+				//Assigner la texture centre à la tile
+				spriteRenderer.sprite = Resources.Load<Sprite>("TilesetGrass/ForestGround_North");
+			}
+			else if (tile.Down && tile.Left) {
+				//Assigner la texture centre à la tile
+				spriteRenderer.sprite = Resources.Load<Sprite>("TilesetGrass/ForestGround_NorthEast");
+			}
+			else if (tile.Down && !tile.Left && !tile.Up && !tile.Right) {
+				//Assigner la texture centre à la tile
+				Debug.Log(tile.Down);
+				Debug.Log(tile.Right);
+				Debug.Log(tile.Left);
+				Debug.Log(tile.Up);
+
+				spriteRenderer.sprite = Resources.Load<Sprite>("TilesetGrass/ForestGround_NorthWestEast");
+			}
+			else if (tile.Left && !tile.Right && !tile.Up && !tile.Down) {
+				//Assigner la texture centre à la tile
+				spriteRenderer.sprite = Resources.Load<Sprite>("TilesetGrass/ForestGround_NorthSouthEast");
+			}
+			else if (tile.Right && !tile.Left && !tile.Up && !tile.Down) {
+				//Assigner la texture centre à la tile
+				spriteRenderer.sprite = Resources.Load<Sprite>("TilesetGrass/ForestGround_NorthSouthWest");
+			}
+			else if (tile.Right && tile.Left && !tile.Up && !tile.Down) {
+				//Assigner la texture centre à la tile
+				spriteRenderer.sprite = Resources.Load<Sprite>("TilesetGrass/ForestGround_NorthSouth");
+			}
+			else if (tile.Right && tile.Down && !tile.Up && !tile.Left) {
+				//Assigner la texture centre à la tile
+				spriteRenderer.sprite = Resources.Load<Sprite>("TilesetGrass/ForestGround_NorthWest");
+			}
+		}
+		//En fonction de la zone à laquelle elle appartient, j’applique la texture correspondante.
+		//To Do after the proto
+		//Il faudrait construire le path vers la texture sur laquelle taper.Et si ce n’est pas une bordure, supprimer les composants non nécessaires dessus
+	}
+
+	void tileAroundDetection(Tile tile, Vector2 direction, LayerMask layerMask){
+		Vector3 origin = tile.transform.position;
+		if (direction == Vector2.up) {
+			origin.y += 16;
+			RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.up,0,layerMask);
+			if (hit.transform != null){
+				tile.Up = hit.transform.GetComponent<Tile> ();	
+			}
+		}
+		else if (direction == Vector2.right) {
+			origin.x += 16;
+			RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.right,0,layerMask);
+			if (hit.transform != null){
+				tile.Right = hit.transform.GetComponent<Tile> ();	
+			}
+		}
+		else if (direction == Vector2.down) {
+			origin.y -= 16;
+			RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down,0,layerMask);
+			if (hit.transform != null){
+				tile.Down = hit.transform.GetComponent<Tile> ();	
+			}
+		}
+		else if (direction == Vector2.left) {
+			origin.x -= 16;
+			RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.left,0,layerMask);
+			if (hit.transform != null){
+				tile.Left = hit.transform.GetComponent<Tile> ();	
+			}
+		}
+	}
+
+
 	
 }
