@@ -12,6 +12,7 @@ public class ButtonScript : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 	
 	public ButtonState CurrentState;
     public bool HandleEnterExit = true;
+	public int ClickCount = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -20,7 +21,17 @@ public class ButtonScript : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
 	public void OnPointerDown (PointerEventData eventData) {
 		CurrentState = ButtonState.Down;
+		if (ClickCount < 2) {
+			ClickCount++;
+			Invoke ("resetClickCount",0.2f);
+		}
+		Debug.Log ("ClickCount : " + ClickCount);
+
         this.GetComponent<Image>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+	}
+
+	public void resetClickCount(){
+		ClickCount = 0;
 	}
 
 	public void OnPointerUp (PointerEventData eventData) {

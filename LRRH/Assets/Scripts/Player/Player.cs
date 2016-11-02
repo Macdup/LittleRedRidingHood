@@ -130,6 +130,7 @@ public class Player : MonoBehaviour {
 
 
 
+
 	// should be in some PlayerAnim script !!!
 	Animator _anim;
 	int _runHash = Animator.StringToHash("run");
@@ -141,6 +142,7 @@ public class Player : MonoBehaviour {
 	int _attackLongHash = Animator.StringToHash("AttackLong");
 	int _attackLongCastedHash = Animator.StringToHash("AttackLongCasted");
     int _attackLongReleasedHash = Animator.StringToHash("AttackLongReleased");
+	int _BackDashHash = Animator.StringToHash("BackDash");
 
 
 
@@ -195,12 +197,19 @@ public class Player : MonoBehaviour {
         //Gestion des inputs de mouvements
          _move = 0.0f;
 
-		if (BSMoveLeft.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped)
-			_move = -1.0f;
-		else if (BSMoveRight.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped)
+		if (BSMoveLeft.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped) {
+			if (BSMoveLeft.ClickCount > 1 && m_FacingRight) {
+				Debug.Log ("test");
+				_anim.SetTrigger (_BackDashHash);
+			} else {
+				_move = -1.0f;
+			}
+		} else if (BSMoveRight.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped) {
 			_move = 1.0f;
+		}
 		else if (!m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped)
 			_move = Input.GetAxis ("Horizontal");
+
 		
 
         if (_move > 0.1 && m_FacingRight)
