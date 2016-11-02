@@ -21,6 +21,10 @@ public class TileEditor : Editor
         }
 
 		Tile tile = (Tile)target;
+		EditorGUILayout.Toggle ("tileUp", tile.Up);
+		EditorGUILayout.Toggle ("tileRight", tile.Right);
+		EditorGUILayout.Toggle ("tileDown", tile.Down);
+		EditorGUILayout.Toggle ("tileLeft", tile.Left);
 		EditorGUILayout.Vector2Field("centerPos:", tile.position);
         EditorGUILayout.EndVertical();
     }
