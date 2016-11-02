@@ -34,12 +34,15 @@ public class Player : MonoBehaviour {
     public float CounterDelay = 0.2f;
     public float CounterAttackBackDashSpeed = 100.0f;
     public float CounterAttackForwardDashSpeed = 100.0f;
+    public float BackDashSpeed = 50.0f;
+    public float BackDashDuration = 1.0f;
 
 
 
     public ButtonScript BSMoveLeft;
 	public ButtonScript BSMoveRight;
-	public ButtonScript BSJump;
+    public ButtonScript BSBackDash;
+    public ButtonScript BSJump;
 	public ButtonScript BSAttack;
 	public ButtonScript BSDefend;
 	public ButtonScript BSMagic;
@@ -102,7 +105,7 @@ public class Player : MonoBehaviour {
 	private bool                m_AttackLongCasted = false;
     public bool                 m_AttackLongDashing = false;
     private bool                m_Bumped = false;
-
+    private bool                m_BackDashing = false;
 
 
 
@@ -194,20 +197,20 @@ public class Player : MonoBehaviour {
 			SetIdle(true);
 		}
 
-        //Gestion des inputs de mouvements
-         _move = 0.0f;
+        //Gestion du backdash
+        if (BSBackDash.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped && !m_BackDashing && !m_Defending && m_BottomTouched)
+        {
+            _anim.SetTrigger(_BackDashHash);
+        }
 
-		if (BSMoveLeft.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped) {
-			if (BSMoveLeft.ClickCount > 1 && m_FacingRight) {
-				Debug.Log ("test");
-				_anim.SetTrigger (_BackDashHash);
-			} else {
+        //Gestion des inputs de mouvements
+        _move = 0.0f;
+
+		if (BSMoveLeft.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped && !m_BackDashing)
 				_move = -1.0f;
-			}
-		} else if (BSMoveRight.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped) {
+		else if (BSMoveRight.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped && !m_BackDashing)
 			_move = 1.0f;
-		}
-		else if (!m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped)
+		else if (!m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped && !m_BackDashing)
 			_move = Input.GetAxis ("Horizontal");
 
 		
@@ -423,9 +426,6 @@ public class Player : MonoBehaviour {
         {
             SwitchWeaponTo(WeaponType.Sword);
         }
-
-
-
 
     }
 
@@ -752,7 +752,20 @@ public class Player : MonoBehaviour {
         Invoke("ResetAttackLongDash", AttackLongDashDuration);
     }
 
-	public void Dash(float iSpeed)
+    public void BackDash()
+    {
+       m_BackDashing = true;
+       m_RigidBody2D.velocity = new Vector2(0, 0);
+
+        if (m_FacingRight)
+            m_RigidBody2D.velocity = new Vector2(BackDashSpeed, 0);
+        else
+            m_RigidBody2D.velocity = new Vector2(-BackDashSpeed, 0);
+
+        Invoke("ResetBackDash", BackDashDuration);
+    }
+
+    public void Dash(float iSpeed)
 	{
 		if (m_BottomTouched) {
 			if(m_FacingRight)
@@ -768,7 +781,13 @@ public class Player : MonoBehaviour {
         m_RigidBody2D.velocity = new Vector2(0, 0);
     }
 
-	public void setDoubleJump(bool Bool){
+    public void ResetBackDash()
+    {
+        m_BackDashing = false;
+        m_RigidBody2D.velocity = new Vector2(0, 0);
+    }
+
+    public void setDoubleJump(bool Bool){
 		_isDoubleJumpCollected = Bool;
 	}
 
