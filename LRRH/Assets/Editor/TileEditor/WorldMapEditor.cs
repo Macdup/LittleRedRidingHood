@@ -5,14 +5,15 @@ using UnityEditor;
 public enum CreationMode // your custom enumeration
 {
     Screen,
-    Tile
+    LevelDesign,
+    Artist
 };
 
 [CustomEditor(typeof(WorldMap))]
 public class WorldMapEditor : Editor {
 
     public WorldMap map;
-	public Object Tile;
+	public GameObject Tile;
     public CreationMode creationMode = CreationMode.Screen;
     Brush brush;
     Vector3 mouseHitPos;
@@ -40,16 +41,26 @@ public class WorldMapEditor : Editor {
         EditorGUILayout.BeginVertical();
 
         var oldSize = map.mapSize;
-        map.mapSize = EditorGUILayout.Vector2Field("Map Size:", map.mapSize);
-        creationMode = (CreationMode)EditorGUILayout.EnumPopup("Creation mode:", creationMode);
-		Tile = Resources.Load ("TileGrassCenter");
+        //map.mapSize = EditorGUILayout.Vector2Field("Map Size:", map.mapSize);
 
-		if(GUILayout.Button("Update Tiles Visu"))
+        creationMode = (CreationMode)EditorGUILayout.EnumPopup("Creation mode:", creationMode);
+
+        if (creationMode == CreationMode.LevelDesign) {
+            Tile = (GameObject)Resources.Load("TileGrassCenter");
+        }
+        else if (creationMode == CreationMode.Artist)
+        {
+            Tile = (GameObject)EditorGUILayout.ObjectField(Tile, typeof(GameObject), true);
+        }
+
+        if (GUILayout.Button("Update Tiles Visu"))
 		{
 			updateTileVisu ();
 		}
 
         //map.BrushFeedback.brushSize
+
+        //prefab = 
 
         EditorGUILayout.EndVertical();
     }
@@ -79,9 +90,6 @@ public class WorldMapEditor : Editor {
 			DeleteTile ();
 		}
 
-		if (Event.current.keyCode == KeyCode.LeftShift) {
-			switchCreationMode ();
-		}
     }
 
 
@@ -91,8 +99,11 @@ public class WorldMapEditor : Editor {
             case CreationMode.Screen:
                 CreateScreen();
                 break;
-            case CreationMode.Tile:
+            case CreationMode.LevelDesign:
                 CreateTile();
+                break;
+            case CreationMode.Artist:
+                CreateObject();
                 break;
         }
         
@@ -114,13 +125,28 @@ public class WorldMapEditor : Editor {
 		var tile = getTile ();
 		if (zone != null && tile == null) {
 			GameObject go = (GameObject)Instantiate(Tile);
-			go.GetComponent<Tile> ().position = tileFeedbackPos;
+            go.GetComponent<Tile>().position = tileFeedbackPos;
 			go.transform.SetParent (zone.transform);
 			go.transform.position = map.BrushFeedback.transform.position;
 		}
     }
 
-	void DeleteTile() {
+    void CreateObject()
+    {
+        var zone = getZone();
+        var tile = getTile();
+        if (zone != null && tile == null)
+        {
+            GameObject go = (GameObject)Instantiate(Tile);
+            go.transform.SetParent(zone.transform);
+            BoxCollider2D collider = go.GetComponent<BoxCollider2D>();
+            go.transform.position = new Vector3(map.BrushFeedback.transform.position.x - collider.offset.x,
+                                               map.BrushFeedback.transform.position.y - collider.offset.y,
+                                               map.BrushFeedback.transform.position.z);
+        }
+    }
+
+    void DeleteTile() {
 		var zone = getZone ();
 		var tile = getTile ();
 		if (zone != null && tile != null) {
@@ -138,8 +164,16 @@ public class WorldMapEditor : Editor {
             case CreationMode.Screen:
                 map.BrushFeedback.brushSize = new Vector2(540, 330);
                 break;
-            case CreationMode.Tile:
+            case CreationMode.LevelDesign:
                 map.BrushFeedback.brushSize = new Vector2(30, 30);
+                break;
+            case CreationMode.Artist:
+                BoxCollider2D collider = Tile.GetComponent<BoxCollider2D>();
+                if (collider != null) {
+                    map.BrushFeedback.brushSize = collider.size;
+                }
+                else
+                    map.BrushFeedback.brushSize = new Vector2(30, 30);
                 break;
         }
     }
@@ -179,8 +213,11 @@ public class WorldMapEditor : Editor {
                     screenFeedbackMinBound = new Vector2(tileFeedbackPos.x - 8, tileFeedbackPos.y + 5);
                     screenFeedbackMaxBound = new Vector2(tileFeedbackPos.x + 9, tileFeedbackPos.y - 5);
                     break;
-                case CreationMode.Tile:
+                case CreationMode.LevelDesign:
                     x += map.transform.position.x + tileSize/ 2;
+                    break;
+                case CreationMode.Artist:
+                    x += map.transform.position.x + tileSize / 2;
                     break;
             }
             
@@ -210,16 +247,6 @@ public class WorldMapEditor : Editor {
 				return tileList [i];
 		}
 		return null;
-	}
-
-	void switchCreationMode(){
-		if (creationMode == CreationMode.Screen) {
-			Debug.Log (creationMode);
-			creationMode = CreationMode.Tile;
-		}
-
-		else
-			creationMode = CreationMode.Screen;
 	}
 
 	public void updateTileVisu() {
