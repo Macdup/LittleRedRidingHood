@@ -87,7 +87,7 @@ public class Player : MonoBehaviour {
 	private CircleCollider2D 	m_BottomLeft;
 	private CircleCollider2D 	m_BottomRight;
 	private BoxCollider2D 		m_RightBox;
-	private bool 				m_Attacking = false;
+	public bool 				m_Attacking = false;
 	private bool                m_ComboPossibility = false;
 	private bool                m_ComboValidated = false;
 	public int 				m_AttackCount = 0;
@@ -125,11 +125,11 @@ public class Player : MonoBehaviour {
 	private float       _attackHoldTime = 0.0f;
     public bool        _isInCounterTime = false;
     public bool         _isCountering = false;
-    private bool _isDoubleJumpCollected = false;
-	private bool _isCounterCollected = false;
-	private bool _isJetPackCollected = false;
-	private bool _isChargedAttackCollected = false;
-    private float _move = 0;
+    private bool        _isDoubleJumpCollected = false;
+	private bool        _isCounterCollected = false;
+	private bool        _isJetPackCollected = false;
+	private bool        _isChargedAttackCollected = false;
+    private float       _move = 0;
 
 
 
@@ -198,7 +198,7 @@ public class Player : MonoBehaviour {
 		}
 
         //Gestion du backdash
-        if (BSBackDash.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped && !m_BackDashing && !m_Defending && m_BottomTouched)
+        if ((BSBackDash.CurrentState == ButtonScript.ButtonState.Down || Input.GetButtonDown("BackDash")) && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped && !m_BackDashing && !m_Defending && m_BottomTouched)
         {
             _anim.SetTrigger(_BackDashHash);
         }
@@ -224,9 +224,10 @@ public class Player : MonoBehaviour {
         if (m_AttackLongDashing)
             return;
 
-		//Animation part
-		_anim.SetFloat("velocityY", m_RigidBody2D.velocity.y);
-		if(Mathf.Abs(_move) == 1)
+        //Animation part
+        _anim.SetFloat("velocityX", Mathf.Abs(m_RigidBody2D.velocity.x));
+        _anim.SetFloat("velocityY", m_RigidBody2D.velocity.y);
+        if (Mathf.Abs(_move) == 1)
 			_anim.SetBool(_runHash, true);
 		else
 			_anim.SetBool(_runHash, false);
@@ -478,7 +479,11 @@ public class Player : MonoBehaviour {
 
 		// classic move
 		if (Mathf.Abs (_move) > 0) {
-			if (m_Defending && m_BottomTouched)
+            if (m_BackDashing) {
+                return;
+            }
+
+            if (m_Defending && m_BottomTouched)
 			{
 				if (!m_FrontTouched)
 				{
@@ -758,11 +763,10 @@ public class Player : MonoBehaviour {
        m_RigidBody2D.velocity = new Vector2(0, 0);
 
         if (m_FacingRight)
-            m_RigidBody2D.velocity = new Vector2(BackDashSpeed, 0);
+            m_RigidBody2D.AddForce(new Vector2(BackDashSpeed,0),ForceMode2D.Impulse);
         else
-            m_RigidBody2D.velocity = new Vector2(-BackDashSpeed, 0);
-
-        Invoke("ResetBackDash", BackDashDuration);
+            m_RigidBody2D.AddForce(new Vector2(-BackDashSpeed, 0), ForceMode2D.Impulse);
+        Invoke("ResetBackDash",BackDashDuration);
     }
 
     public void Dash(float iSpeed)
@@ -783,8 +787,13 @@ public class Player : MonoBehaviour {
 
     public void ResetBackDash()
     {
-        m_BackDashing = false;
         m_RigidBody2D.velocity = new Vector2(0, 0);
+        StartCoroutine(delayBackDash());
+    }
+
+    IEnumerator delayBackDash() {
+        yield return new WaitForSeconds(0.2f);
+        m_BackDashing = false;
     }
 
     public void setDoubleJump(bool Bool){
