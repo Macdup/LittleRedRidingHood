@@ -77,6 +77,11 @@ public class PlayerAnim : MonoBehaviour {
         playerScript.Dash(playerScript.CounterAttackForwardDashSpeed);
     }
 
+    public void BackDash()
+    {
+        playerScript.BackDash();
+    }
+
     public void PlaySoundAttack1()
     {
         SoundManager.instance.PlaySound(SoundManager.instance.AudioClipAttack1);
