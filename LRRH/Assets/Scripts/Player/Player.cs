@@ -87,7 +87,7 @@ public class Player : MonoBehaviour {
 	private bool 				m_Attacking = false;
 	private bool                m_ComboPossibility = false;
 	private bool                m_ComboValidated = false;
-	private int 				m_AttackCount = 0;
+	public int 				m_AttackCount = 0;
 	public bool 				m_BeingHit = false;
 	private bool                m_Defending;
 	private float               m_Stamina = 100.0f;
@@ -130,6 +130,7 @@ public class Player : MonoBehaviour {
 
 
 
+
 	// should be in some PlayerAnim script !!!
 	Animator _anim;
 	int _runHash = Animator.StringToHash("run");
@@ -141,6 +142,7 @@ public class Player : MonoBehaviour {
 	int _attackLongHash = Animator.StringToHash("AttackLong");
 	int _attackLongCastedHash = Animator.StringToHash("AttackLongCasted");
     int _attackLongReleasedHash = Animator.StringToHash("AttackLongReleased");
+	int _BackDashHash = Animator.StringToHash("BackDash");
 
 
 
@@ -195,12 +197,19 @@ public class Player : MonoBehaviour {
         //Gestion des inputs de mouvements
          _move = 0.0f;
 
-		if (BSMoveLeft.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped)
-			_move = -1.0f;
-		else if (BSMoveRight.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped)
+		if (BSMoveLeft.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped) {
+			if (BSMoveLeft.ClickCount > 1 && m_FacingRight) {
+				Debug.Log ("test");
+				_anim.SetTrigger (_BackDashHash);
+			} else {
+				_move = -1.0f;
+			}
+		} else if (BSMoveRight.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped) {
 			_move = 1.0f;
+		}
 		else if (!m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped)
 			_move = Input.GetAxis ("Horizontal");
+
 		
 
         if (_move > 0.1 && m_FacingRight)
@@ -343,7 +352,8 @@ public class Player : MonoBehaviour {
 		}
 		else if (_attackWasUp && m_AttackCount < 3 && m_Stamina - Weapon.StaminaConsomation > m_StaminaMin && (m_AttackCount == 0 || m_ComboPossibility == true) && !m_Defending && !m_BeingHit)
 		{
-			SetIdle(false);
+            Debug.Log("Attack !");
+            SetIdle(false);
 			_attackWasUp = false;
 			++m_AttackCount;
 			_attackHoldTime = 0.0f;
@@ -364,11 +374,15 @@ public class Player : MonoBehaviour {
 
                 m_ComboValidated = true;
 				m_ComboPossibility = false;
+
+                _anim.SetBool("ComboValidated", true);
             }
 			else if (m_AttackCount == 3)
 			{
 				m_ComboValidated = true;
 				m_ComboPossibility = false;
+
+                _anim.SetBool("ComboValidated", true);
             };
 
 		}
@@ -517,7 +531,7 @@ public class Player : MonoBehaviour {
 	}
 
 
-	void ResetAttackTrippleAnim() {
+	public void ResetAttackTrippleAnim() {
 		_anim.SetBool ("Attack", false);
 		_anim.SetBool ("AttackDouble", false);
 		_anim.SetBool ("AttackTripple", false);
