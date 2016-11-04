@@ -328,7 +328,12 @@ public class WorldMapEditor : Editor {
 				//Assigner la texture centre à la tile
 				spriteRenderer.sprite = Resources.Load<Sprite>("TilesetGrass/ForestGround_NorthWest");
 			}
-		}
+            else if (!tile.Right && !tile.Down && !tile.Up && !tile.Left)
+            {
+                //Assigner la texture centre à la tile
+                spriteRenderer.sprite = Resources.Load<Sprite>("TilesetGrass/ForestGround_NorthSouthWestEast");
+            }
+        }
 		//En fonction de la zone à laquelle elle appartient, j’applique la texture correspondante.
 		//To Do after the proto
 		//Il faudrait construire le path vers la texture sur laquelle taper.Et si ce n’est pas une bordure, supprimer les composants non nécessaires dessus
