@@ -26,19 +26,18 @@ public class FuriousDog : Enemy {
 
     // Use this for initialization
     public override void Update () {
-        
         detectPlayer();
-
-        if (_PlayerInSight == true && _energy > 0 && m_BottomTouched == true) {
-            attack();
-        }
-
     }
 
     void FixedUpdate()
     {
         // Evalute states
         m_BottomTouched = m_BottomBox.IsTouchingLayers(_wallsMask);
+
+        if (_PlayerInSight == true && _energy > 0 && m_BottomTouched == true)
+        {
+            attack();
+        }
     }
 
     void detectPlayer()
