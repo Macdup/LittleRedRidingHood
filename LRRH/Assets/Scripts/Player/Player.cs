@@ -34,13 +34,16 @@ public class Player : MonoBehaviour {
     public float CounterDelay = 0.2f;
     public float CounterAttackBackDashSpeed = 100.0f;
     public float CounterAttackForwardDashSpeed = 100.0f;
+    public float BackDashSpeed = 50.0f;
+    public float BackDashDuration = 1.0f;
     public float FlipLockTime = 0.2f;
 
 
 
     public ButtonScript BSMoveLeft;
 	public ButtonScript BSMoveRight;
-	public ButtonScript BSJump;
+    public ButtonScript BSBackDash;
+    public ButtonScript BSJump;
 	public ButtonScript BSAttack;
 	public ButtonScript BSDefend;
 	public ButtonScript BSMagic;
@@ -103,9 +106,9 @@ public class Player : MonoBehaviour {
 	private bool                m_AttackLongCasted = false;
     public bool                 m_AttackLongDashing = false;
     private bool                m_Bumped = false;
+    private bool                m_BackDashing = false;
     private bool                m_Flipping = false;
-    private int                 m_FlippingCount = 0;
-
+    private int                 m_FlippingCount = 0
 
 
 
@@ -125,11 +128,12 @@ public class Player : MonoBehaviour {
 	private float       _attackHoldTime = 0.0f;
     public bool        _isInCounterTime = false;
     public bool         _isCountering = false;
-    private bool _isDoubleJumpCollected = false;
-	private bool _isCounterCollected = false;
-	private bool _isJetPackCollected = false;
-	private bool _isChargedAttackCollected = false;
-    private float _move = 0;
+    private bool        _isDoubleJumpCollected = false;
+	private bool        _isCounterCollected = false;
+	private bool        _isJetPackCollected = false;
+	private bool        _isChargedAttackCollected = false;
+    private float       _move = 0;
+
 
 
 	// should be in some PlayerAnim script !!!
@@ -143,6 +147,7 @@ public class Player : MonoBehaviour {
 	int _attackLongHash = Animator.StringToHash("AttackLong");
 	int _attackLongCastedHash = Animator.StringToHash("AttackLongCasted");
     int _attackLongReleasedHash = Animator.StringToHash("AttackLongReleased");
+	int _BackDashHash = Animator.StringToHash("BackDash");
 
 
 
@@ -194,15 +199,22 @@ public class Player : MonoBehaviour {
 			SetIdle(true);
 		}
 
-        //Gestion des inputs de mouvements
-         _move = 0.0f;
+        //Gestion du backdash
+        if ((BSBackDash.CurrentState == ButtonScript.ButtonState.Down || Input.GetButtonDown("BackDash")) && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped && !m_BackDashing && !m_Defending && m_BottomTouched)
+        {
+            _anim.SetTrigger(_BackDashHash);
+        }
 
-		if (BSMoveLeft.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped)
-			_move = -1.0f;
-		else if (BSMoveRight.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped)
+        //Gestion des inputs de mouvements
+        _move = 0.0f;
+
+		if (BSMoveLeft.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped && !m_BackDashing)
+				_move = -1.0f;
+		else if (BSMoveRight.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped && !m_BackDashing)
 			_move = 1.0f;
-		else if (!m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped)
+		else if (!m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped && !m_BackDashing)
 			_move = Input.GetAxis ("Horizontal");
+
 		
 
         if (_move > 0.1 && m_FacingRight)
@@ -214,9 +226,10 @@ public class Player : MonoBehaviour {
         if (m_AttackLongDashing)
             return;
 
-		//Animation part
-		_anim.SetFloat("velocityY", m_RigidBody2D.velocity.y);
-		if(Mathf.Abs(_move) == 1)
+        //Animation part
+        _anim.SetFloat("velocityX", Mathf.Abs(m_RigidBody2D.velocity.x));
+        _anim.SetFloat("velocityY", m_RigidBody2D.velocity.y);
+        if (Mathf.Abs(_move) == 1)
 			_anim.SetBool(_runHash, true);
 		else
 			_anim.SetBool(_runHash, false);
@@ -416,9 +429,6 @@ public class Player : MonoBehaviour {
             SwitchWeaponTo(WeaponType.Sword);
         }
 
-
-
-
     }
 
 	void FixedUpdate () 
@@ -470,7 +480,11 @@ public class Player : MonoBehaviour {
 
 		// classic move
 		if (Mathf.Abs (_move) > 0) {
-			if (m_Defending && m_BottomTouched)
+            if (m_BackDashing) {
+                return;
+            }
+
+            if (m_Defending && m_BottomTouched)
 			{
 				if (!m_FrontTouched)
 				{
@@ -526,15 +540,8 @@ public class Player : MonoBehaviour {
 		transform.localScale = lScale;
 
         m_RigidBody2D.velocity = new Vector2(0, m_RigidBody2D.velocity.y);
-    }
+	}
 
-
-    void ResetFlipping()
-    {
-        --m_FlippingCount;
-        if (m_FlippingCount <= 0)
-            m_Flipping = false;
-    }
 
 	public void ResetAttackTrippleAnim() {
 		_anim.SetBool ("Attack", false);
@@ -757,7 +764,19 @@ public class Player : MonoBehaviour {
         Invoke("ResetAttackLongDash", AttackLongDashDuration);
     }
 
-	public void Dash(float iSpeed)
+    public void BackDash()
+    {
+       m_BackDashing = true;
+       m_RigidBody2D.velocity = new Vector2(0, 0);
+
+        if (m_FacingRight)
+            m_RigidBody2D.AddForce(new Vector2(BackDashSpeed,0),ForceMode2D.Impulse);
+        else
+            m_RigidBody2D.AddForce(new Vector2(-BackDashSpeed, 0), ForceMode2D.Impulse);
+        Invoke("ResetBackDash",BackDashDuration);
+    }
+
+    public void Dash(float iSpeed)
 	{
 		if (m_BottomTouched) {
 			if(m_FacingRight)
@@ -773,7 +792,18 @@ public class Player : MonoBehaviour {
         m_RigidBody2D.velocity = new Vector2(0, 0);
     }
 
-	public void setDoubleJump(bool Bool){
+    public void ResetBackDash()
+    {
+        m_RigidBody2D.velocity = new Vector2(0, 0);
+        StartCoroutine(delayBackDash());
+    }
+
+    IEnumerator delayBackDash() {
+        yield return new WaitForSeconds(0.2f);
+        m_BackDashing = false;
+    }
+
+    public void setDoubleJump(bool Bool){
 		_isDoubleJumpCollected = Bool;
 	}
 

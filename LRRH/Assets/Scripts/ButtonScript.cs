@@ -47,6 +47,5 @@ public class ButtonScript : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
         // Update is called once per frame
         void Update () {
-	
 	}
 }

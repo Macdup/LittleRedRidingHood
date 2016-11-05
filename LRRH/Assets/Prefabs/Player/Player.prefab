@@ -104,7 +104,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 117764}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 703.7, y: 69.4, z: 0}
+  m_LocalPosition: {x: 5534, y: 453.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -356,6 +356,7 @@ MonoBehaviour:
   CounterAttackForwardDashSpeed: 100
   BSMoveLeft: {fileID: 0}
   BSMoveRight: {fileID: 0}
+  BSBackDash: {fileID: 0}
   BSJump: {fileID: 0}
   BSAttack: {fileID: 0}
   BSDefend: {fileID: 0}
