@@ -108,7 +108,7 @@ public class Player : MonoBehaviour {
     private bool                m_Bumped = false;
     private bool                m_BackDashing = false;
     private bool                m_Flipping = false;
-    private int                 m_FlippingCount = 0
+    private int                 m_FlippingCount = 0;
 
 
 
@@ -542,8 +542,16 @@ public class Player : MonoBehaviour {
         m_RigidBody2D.velocity = new Vector2(0, m_RigidBody2D.velocity.y);
 	}
 
+    void ResetFlipping()
+    {
+        --m_FlippingCount;
+        if (m_FlippingCount <= 0)
+            m_Flipping = false;
+    }
 
-	public void ResetAttackTrippleAnim() {
+
+
+    public void ResetAttackTrippleAnim() {
 		_anim.SetBool ("Attack", false);
 		_anim.SetBool ("AttackDouble", false);
 		_anim.SetBool ("AttackTripple", false);
