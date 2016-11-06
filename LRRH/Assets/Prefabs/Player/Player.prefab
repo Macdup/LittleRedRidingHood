@@ -104,7 +104,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 117764}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5534, y: 453.7, z: 0}
+  m_LocalPosition: {x: 2200, y: 219, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -354,6 +354,9 @@ MonoBehaviour:
   CounterDelay: 0.2
   CounterAttackBackDashSpeed: 100
   CounterAttackForwardDashSpeed: 100
+  BackDashSpeed: 50
+  BackDashDuration: 1
+  FlipLockTime: 0.2
   BSMoveLeft: {fileID: 0}
   BSMoveRight: {fileID: 0}
   BSBackDash: {fileID: 0}
@@ -383,6 +386,7 @@ MonoBehaviour:
   HealthMin: 0
   CounterFeedback: {fileID: 1000010038506918}
   m_BottomTouched: 0
+  m_Attacking: 0
   m_AttackCount: 0
   m_BeingHit: 0
   m_JetPackValue: 0
@@ -402,7 +406,7 @@ SpriteRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: c5c4a94e0f6f9f7448086ecd31b8e5e5, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
@@ -2536,7 +2540,7 @@ SpriteRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: c5c4a94e0f6f9f7448086ecd31b8e5e5, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
