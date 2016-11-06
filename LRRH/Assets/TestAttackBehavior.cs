@@ -22,8 +22,8 @@ public class TestAttackBehavior : StateMachineBehaviour {
         //p.Invoke("ComboCheck", 0.5f);
         //p.ResetAttackTrippleAnim();
         p.GetComponentInChildren<Animator>().SetBool("Attack", false);
-        p.m_AttackCount--; p.m_AttackCount--;
-        if (p.m_AttackCount <= 0)
+        p.m_AttackCount--;
+        if(p.m_AttackCount <= 0)
             p.m_Attacking = false;
     }
 
