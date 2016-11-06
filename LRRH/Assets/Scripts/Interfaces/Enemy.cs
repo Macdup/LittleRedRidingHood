@@ -141,7 +141,10 @@ namespace AssemblyCSharp
 
             if(m_Dropable != null)
                 m_Dropable.drop();
-		}
+
+            m_RigidBody.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+
+        }
 
 
 		virtual public void ResetHitCoolDown() {
