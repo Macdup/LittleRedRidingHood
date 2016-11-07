@@ -36,6 +36,7 @@ public class Player : MonoBehaviour {
     public float CounterAttackForwardDashSpeed = 100.0f;
     public float BackDashSpeed = 50.0f;
     public float BackDashDuration = 1.0f;
+    public float FlipLockTime = 0.2f;
 
 
 
@@ -106,6 +107,8 @@ public class Player : MonoBehaviour {
     public bool                 m_AttackLongDashing = false;
     private bool                m_Bumped = false;
     private bool                m_BackDashing = false;
+    private bool                m_Flipping = false;
+    private int                 m_FlippingCount = 0;
 
 
 
@@ -130,7 +133,6 @@ public class Player : MonoBehaviour {
 	private bool        _isJetPackCollected = false;
 	private bool        _isChargedAttackCollected = false;
     private float       _move = 0;
-
 
 
 
@@ -387,8 +389,7 @@ public class Player : MonoBehaviour {
 				m_ComboPossibility = false;
 
                 _anim.SetBool("ComboValidated", true);
-            };
-
+            }
 		}
 		else if(!m_Defending && !m_BeingHit)
 		{
@@ -467,7 +468,7 @@ public class Player : MonoBehaviour {
 		}
 
 
-        if (m_AttackLongDashing)
+        if (m_AttackLongDashing || m_Flipping)
             return;
 		if ((m_AttackCount>0 || m_AttackLongCasting) && m_BottomTouched) {
             _move *= SlowFactorWhileAttack;
@@ -529,14 +530,28 @@ public class Player : MonoBehaviour {
 	}
 
 	void Flip() {
+        m_Flipping = true;
+        ++m_FlippingCount;
+        Invoke("ResetFlipping", FlipLockTime);
+
 		m_FacingRight = !m_FacingRight;
 		Vector3 lScale = transform.localScale;
 		lScale.x *= -1;
 		transform.localScale = lScale;
+
+        m_RigidBody2D.velocity = new Vector2(0, m_RigidBody2D.velocity.y);
 	}
 
+    void ResetFlipping()
+    {
+        --m_FlippingCount;
+        if (m_FlippingCount <= 0)
+            m_Flipping = false;
+    }
 
-	public void ResetAttackTrippleAnim() {
+
+
+    public void ResetAttackTrippleAnim() {
 		_anim.SetBool ("Attack", false);
 		_anim.SetBool ("AttackDouble", false);
 		_anim.SetBool ("AttackTripple", false);

@@ -85,6 +85,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12e1489888fcb8447a8a38d45614b583, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Life: 100
+  DamagePerHit: 10
+  StopDurationAfterBeingHit: 0.2
+  NoDamageDurationAfterBeingHit: 0.1
+  IsBumpable: 0
+  DoesBumpPlayer: 0
+  BumpForce: 0
+  BumpCoolDown: 0.5
+  staminaLossPerHit: 0
+  playerDetectionDistance: 0
+  m_BeingHit: 0
+  m_Stopped: 0
+  _isInCounterTime: 0
   InitialDirection: {x: 50, y: 0}
 --- !u!212 &212000010578791908
 SpriteRenderer:

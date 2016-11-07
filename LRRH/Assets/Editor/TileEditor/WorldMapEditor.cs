@@ -139,9 +139,8 @@ public class WorldMapEditor : Editor {
         {
             GameObject go = (GameObject)Instantiate(Tile);
             go.transform.SetParent(zone.transform);
-            BoxCollider2D collider = go.GetComponent<BoxCollider2D>();
-            go.transform.position = new Vector3(map.BrushFeedback.transform.position.x - collider.offset.x,
-                                               map.BrushFeedback.transform.position.y - collider.offset.y,
+            go.transform.position = new Vector3(map.BrushFeedback.transform.position.x,
+                                               map.BrushFeedback.transform.position.y,
                                                map.BrushFeedback.transform.position.z);
         }
     }
@@ -168,9 +167,9 @@ public class WorldMapEditor : Editor {
                 map.BrushFeedback.brushSize = new Vector2(30, 30);
                 break;
             case CreationMode.Artist:
-                BoxCollider2D collider = Tile.GetComponent<BoxCollider2D>();
-                if (collider != null) {
-                    map.BrushFeedback.brushSize = collider.size;
+			SpriteRenderer renderer = Tile.GetComponent<SpriteRenderer>();
+				if (renderer != null) {
+					map.BrushFeedback.brushSize = renderer.sprite.bounds.size;
                 }
                 else
                     map.BrushFeedback.brushSize = new Vector2(30, 30);
@@ -210,18 +209,28 @@ public class WorldMapEditor : Editor {
             {
                 case CreationMode.Screen:
                     x += map.transform.position.x + tileSize;
+					y += map.transform.position.y + tileSize / 2;
                     screenFeedbackMinBound = new Vector2(tileFeedbackPos.x - 8, tileFeedbackPos.y + 5);
                     screenFeedbackMaxBound = new Vector2(tileFeedbackPos.x + 9, tileFeedbackPos.y - 5);
                     break;
                 case CreationMode.LevelDesign:
                     x += map.transform.position.x + tileSize/ 2;
+					y += map.transform.position.y + tileSize / 2;
                     break;
-                case CreationMode.Artist:
-                    x += map.transform.position.x + tileSize / 2;
+			case CreationMode.Artist:
+				SpriteRenderer renderer = Tile.GetComponent<SpriteRenderer> ();
+					if ((renderer.bounds.size.x / 30f) % 2 != 0) {
+						x += map.transform.position.x + tileSize / 2;
+					} else
+						x += map.transform.position.x + tileSize;
+					
+					if ((renderer.bounds.size.y / 30f) % 2 != 0) {
+						y += map.transform.position.y - tileSize / 2;
+					} else
+						y += map.transform.position.y + tileSize;
                     break;
             }
             
-            y += map.transform.position.y + tileSize / 2;
 
             map.BrushFeedback.transform.position = new Vector3(x, y, map.transform.position.z);
         }  
