@@ -51,9 +51,7 @@ public class WorldMapEditor : Editor {
             Tile = (GameObject)Resources.Load("TileGrassCenter");
             if (GUILayout.Button("Update Tiles Visu"))
             {
-                int controlID = EditorGUIUtility.GetControlID(FocusType.Passive);
-                EditorGUIUtility.ShowObjectPicker<GameObject>(null, true, "", controlID);
-                //updateTileVisu();
+                updateTileVisu();
             }
         }
         else if (creationMode == CreationMode.Artist)
