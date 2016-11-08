@@ -20,9 +20,10 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000011736792612}
   - 212: {fileID: 212000012402976804}
+  - 61: {fileID: 61000012569627488}
   m_Layer: 0
   m_Name: Stalagtites 03_Cave
-  m_TagString: Untagged
+  m_TagString: Props
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -40,6 +41,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!61 &61000012569627488
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012366712366}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 30, y: 30}
 --- !u!212 &212000012402976804
 SpriteRenderer:
   m_ObjectHideFlags: 1
