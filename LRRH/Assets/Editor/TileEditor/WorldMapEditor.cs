@@ -137,8 +137,21 @@ public class WorldMapEditor : Editor {
     void CreateObject()
     {
         var zone = getZone();
-        var tile = getTile();
-        if (zone != null && tile == null)
+        var tileOccupied = false;
+
+        RaycastHit2D[] hits = Physics2D.RaycastAll(mouseHitPos, -Vector2.up, 10);
+        if (hits.Length != 0)
+        {
+            foreach (RaycastHit2D hit in hits)
+            {
+                if (hit.transform.tag == "Props")
+                {
+                    tileOccupied = true;
+                }
+            }
+        }
+
+        if (zone != null && tileOccupied == false)
         {
             GameObject go = (GameObject)Instantiate(Tile);
             Undo.RegisterCreatedObjectUndo(go, "Created go");
@@ -252,7 +265,7 @@ public class WorldMapEditor : Editor {
 					if ((renderer.bounds.size.y / 30f) % 2 != 0) {
 						y += map.transform.position.y + tileSize/2 ;
 					} else
-						y += map.transform.position.y - tileSize;
+						y += map.transform.position.y + tileSize;
                     break;
             }
             
