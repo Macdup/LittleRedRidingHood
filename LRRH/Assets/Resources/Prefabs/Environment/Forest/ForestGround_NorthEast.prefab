@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000013567099498}
   - 61: {fileID: 61000014177759262}
+  - 114: {fileID: 114000010815518546}
   m_Layer: 9
   m_Name: ForestGround_NorthEast
   m_TagString: Untagged
@@ -84,6 +85,22 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 30, y: 30}
+--- !u!114 &114000010815518546
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011634026304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f701696e04389424582c0272b3b0c593, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 0, y: 0}
+  Up: 0
+  Right: 0
+  Down: 0
+  Left: 0
 --- !u!212 &212000010445412508
 SpriteRenderer:
   m_ObjectHideFlags: 1

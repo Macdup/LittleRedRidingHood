@@ -309,7 +309,7 @@ public class WorldMapEditor : Editor {
 
 	public void updateTileVisu() {
 		//Je récupère l’ensemble des tiles du niveau.
-		var tileList = GameObject.FindGameObjectsWithTag("Walls");
+		var tileList = map.GetComponentsInChildren<Tile>();
 		int layerMask = 1 << LayerMask.NameToLayer ("Walls");
 		//Pour chacune, je vérifie si elle a des voisins (lancé de rayon en haut, en bas, à gauche à droite) avec pour longueur la largeur d’une tile. Les objets rencontrés sont stockés au niveau de la tile elle - même.
 
