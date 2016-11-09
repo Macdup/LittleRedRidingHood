@@ -40,15 +40,13 @@ public class WorldMapEditor : Editor {
     public override void OnInspectorGUI(){
         EditorGUILayout.BeginVertical();
 
-        Debug.Log(Selection.activeObject);
-
         var oldSize = map.mapSize;
         //map.mapSize = EditorGUILayout.Vector2Field("Map Size:", map.mapSize);
 
         creationMode = (CreationMode)EditorGUILayout.EnumPopup("Creation mode:", creationMode);
 
         if (creationMode == CreationMode.LevelDesign) {
-            Tile = (GameObject)Resources.Load("TileGrassCenter");
+			Tile = (GameObject)Resources.Load("Prefabs/Environment/Forest/ForestGround_Center");
             if (GUILayout.Button("Update Tiles Visu"))
             {
                 updateTileVisu();
@@ -275,7 +273,7 @@ public class WorldMapEditor : Editor {
 					} else
 						x += map.transform.position.x + tileSize;
 					
-					if ((renderer.bounds.size.y / 30f) % 2 != 0) {
+					if ((Mathf.CeilToInt(renderer.bounds.size.y) / 30f) % 2 != 0) {
 						y += map.transform.position.y + tileSize/2 ;
 					} else
 						y += map.transform.position.y + tileSize;
@@ -311,9 +309,27 @@ public class WorldMapEditor : Editor {
 
 	public void updateTileVisu() {
 		//Je récupère l’ensemble des tiles du niveau.
-		var tileList = map.GetComponentsInChildren<Tile>();
+		var tileList = GameObject.FindGameObjectsWithTag("Walls");
 		int layerMask = 1 << LayerMask.NameToLayer ("Walls");
 		//Pour chacune, je vérifie si elle a des voisins (lancé de rayon en haut, en bas, à gauche à droite) avec pour longueur la largeur d’une tile. Les objets rencontrés sont stockés au niveau de la tile elle - même.
+
+		Object center = Resources.Load<Object>("Prefabs/Environment/Forest/ForestGround_Center");
+		GameObject south = Resources.Load<GameObject>("Prefabs/Environment/Forest/ForestGround_South");
+		GameObject west = Resources.Load<GameObject>("Prefabs/Environment/Forest/ForestGround_West");
+		GameObject southWest = Resources.Load<GameObject>("Prefabs/Environment/Forest/ForestGround_SouthWest");
+		GameObject east = Resources.Load<GameObject>("Prefabs/Environment/Forest/ForestGround_East");
+		GameObject southEast = Resources.Load<GameObject>("Prefabs/Environment/Forest/ForestGround_SouthEast");
+		GameObject westEast = Resources.Load<GameObject>("Prefabs/Environment/Forest/ForestGround_WestEast");
+		GameObject southWestEast = Resources.Load<GameObject>("Prefabs/Environment/Forest/ForestGround_SouthWestEast");
+		GameObject north = Resources.Load<GameObject>("Prefabs/Environment/Forest/ForestGround_North");
+		GameObject northEast = Resources.Load<GameObject>("Prefabs/Environment/Forest/ForestGround_NorthEast");
+		GameObject nortWestEast = Resources.Load<GameObject>("Prefabs/Environment/Forest/ForestGround_NorthWestEast");
+		GameObject northSouthEast = Resources.Load<GameObject>("Prefabs/Environment/Forest/ForestGround_NorthSouthEast");
+		GameObject northSouthWest = Resources.Load<GameObject>("Prefabs/Environment/Forest/ForestGround_NorthSouthWest");
+		GameObject northSouth = Resources.Load<GameObject>("Prefabs/Environment/Forest/ForestGround_NorthSouth");
+		GameObject northWest = Resources.Load<GameObject>("Prefabs/Environment/Forest/ForestGround_NorthWest");
+		GameObject northSouthWestEast = Resources.Load<GameObject>("Prefabs/Environment/Forest/ForestGround_NorthSouthWestEast");
+
 		foreach (Tile tile in tileList) {
 			tileAroundDetection (tile, Vector2.up, layerMask);
 			tileAroundDetection (tile, Vector2.right, layerMask);
@@ -325,75 +341,76 @@ public class WorldMapEditor : Editor {
 			SpriteRenderer spriteRenderer = tile.GetComponent<SpriteRenderer> ();
 			if (tile.Up && tile.Right && tile.Down && tile.Left) {
 				//Assigner la texture centre à la tile
-				spriteRenderer.sprite = Resources.Load<Sprite>("Environment/Forest/ForestGround_Center");
+				Instantiate(center,tile.transform.position,Quaternion.identity,tile.transform.parent);
 			}
 			else if (tile.Up && tile.Right && tile.Left) {
 				//Assigner la texture centre à la tile
-				spriteRenderer.sprite = Resources.Load<Sprite>("Environment/Forest/ForestGround_South");
+				Instantiate(south,tile.transform.position,Quaternion.identity,tile.transform.parent);
 			}
 			else if (tile.Up && tile.Right && tile.Down) {
 				//Assigner la texture centre à la tile
-				spriteRenderer.sprite = Resources.Load<Sprite>("Environment/Forest/ForestGround_West");
+				Instantiate(west,tile.transform.position,Quaternion.identity,tile.transform.parent);
 			}
 			else if (tile.Up && tile.Right) {
 				//Assigner la texture centre à la tile
-				spriteRenderer.sprite = Resources.Load<Sprite>("Environment/Forest/ForestGround_SouthWest");
+				Instantiate(southWest,tile.transform.position,Quaternion.identity,tile.transform.parent);
 			}
 			else if (tile.Up && tile.Down && tile.Left) {
-				//Assigner la texture centre à la tile
-				spriteRenderer.sprite = Resources.Load<Sprite>("Environment/Forest/ForestGround_East");
+				//Assigner la texture centre à la tile*
+				Vector3 offset = tile.transform.position;
+				offset.x -= east.GetComponent<BoxCollider2D> ().offset.x;
+				Instantiate(east,offset,Quaternion.identity,tile.transform.parent);
 			}
 			else if (tile.Up && tile.Left) {
 				//Assigner la texture centre à la tile
-				spriteRenderer.sprite = Resources.Load<Sprite>("Environment/Forest/ForestGround_SouthEast");
+				Instantiate(southEast,tile.transform.position,Quaternion.identity,tile.transform.parent);
 			}
 			else if (tile.Up && tile.Down) {
 				//Assigner la texture centre à la tile
-				spriteRenderer.sprite = Resources.Load<Sprite>("Environment/Forest/ForestGround_WestEast");
+				Instantiate(westEast,tile.transform.position,Quaternion.identity,tile.transform.parent);
 			}
 			else if (tile.Up) {
 				//Assigner la texture centre à la tile
-				spriteRenderer.sprite = Resources.Load<Sprite>("Environment/Forest/ForestGround_SouthWestEast");
+				Instantiate(southWestEast,tile.transform.position,Quaternion.identity,tile.transform.parent);
 			}
 			else if (tile.Right && tile.Down && tile.Left) {
 				//Assigner la texture centre à la tile
-				spriteRenderer.sprite = Resources.Load<Sprite>("Environment/Forest/ForestGround_North");
+				Instantiate(north,tile.transform.position,Quaternion.identity,tile.transform.parent);
 			}
 			else if (tile.Down && tile.Left) {
 				//Assigner la texture centre à la tile
-				spriteRenderer.sprite = Resources.Load<Sprite>("Environment/Forest/ForestGround_NorthEast");
+				Instantiate(northEast,tile.transform.position,Quaternion.identity,tile.transform.parent);
 			}
 			else if (tile.Down && !tile.Left && !tile.Up && !tile.Right) {
 				//Assigner la texture centre à la tile
-				Debug.Log(tile.Down);
-				Debug.Log(tile.Right);
-				Debug.Log(tile.Left);
-				Debug.Log(tile.Up);
-
-				spriteRenderer.sprite = Resources.Load<Sprite>("Environment/Forest/ForestGround_NorthWestEast");
+				Instantiate(nortWestEast,tile.transform.position,Quaternion.identity,tile.transform.parent);
 			}
 			else if (tile.Left && !tile.Right && !tile.Up && !tile.Down) {
 				//Assigner la texture centre à la tile
-				spriteRenderer.sprite = Resources.Load<Sprite>("Environment/Forest/ForestGround_NorthSouthEast");
+				Instantiate(northSouthEast,tile.transform.position,Quaternion.identity,tile.transform.parent);
 			}
 			else if (tile.Right && !tile.Left && !tile.Up && !tile.Down) {
 				//Assigner la texture centre à la tile
-				spriteRenderer.sprite = Resources.Load<Sprite>("Environment/Forest/ForestGround_NorthSouthWest");
+				Instantiate(northSouthWest,tile.transform.position,Quaternion.identity,tile.transform.parent);
 			}
 			else if (tile.Right && tile.Left && !tile.Up && !tile.Down) {
 				//Assigner la texture centre à la tile
-				spriteRenderer.sprite = Resources.Load<Sprite>("Environment/Forest/ForestGround_NorthSouth");
+				Instantiate(northSouth,tile.transform.position,Quaternion.identity,tile.transform.parent);
 			}
 			else if (tile.Right && tile.Down && !tile.Up && !tile.Left) {
 				//Assigner la texture centre à la tile
-				spriteRenderer.sprite = Resources.Load<Sprite>("Environment/Forest/ForestGround_NorthWest");
+				Instantiate(northWest,tile.transform.position,Quaternion.identity,tile.transform.parent);
 			}
             else if (!tile.Right && !tile.Down && !tile.Up && !tile.Left)
             {
                 //Assigner la texture centre à la tile
-                spriteRenderer.sprite = Resources.Load<Sprite>("Environment/Forest/ForestGround_NorthSouthWestEast");
-            }
+				Instantiate(northSouthWestEast,tile.transform.position,Quaternion.identity,tile.transform.parent);
+			}
         }
+
+		foreach (Tile tile in tileList) {
+			DestroyImmediate (tile.gameObject);
+		}
 		//En fonction de la zone à laquelle elle appartient, j’applique la texture correspondante.
 		//To Do after the proto
 		//Il faudrait construire le path vers la texture sur laquelle taper.Et si ce n’est pas une bordure, supprimer les composants non nécessaires dessus
@@ -430,6 +447,8 @@ public class WorldMapEditor : Editor {
 			}
 		}
 	}
+
+
 
 
 	

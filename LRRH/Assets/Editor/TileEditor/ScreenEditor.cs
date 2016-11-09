@@ -7,7 +7,15 @@ using System.Collections.Generic;
 [CustomEditor(typeof(Screen))]
 public class ScreenEditor : Editor
 {
+
+	enum Zone // your custom enumeration
+	{
+		Forest,
+		Cave
+	};
+
 	Vector2 centerPos;
+	Zone zone;
 
     public override void OnInspectorGUI()
     {
@@ -28,6 +36,12 @@ public class ScreenEditor : Editor
         {
             moveZonesLeft();
         }
+
+		zone = (Zone) EditorGUILayout.EnumPopup("Zone :", zone);
+		if (GUILayout.Button("Update Tile Screen"))
+		{
+			moveZonesLeft();
+		}
         EditorGUILayout.EndVertical();
     }
 
