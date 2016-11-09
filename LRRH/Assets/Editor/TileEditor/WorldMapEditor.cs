@@ -13,8 +13,8 @@ public enum CreationMode // your custom enumeration
 public class WorldMapEditor : Editor {
 
     public WorldMap map;
-	public GameObject Tile;
-    public CreationMode creationMode = CreationMode.Screen;
+    static GameObject Tile;
+    static CreationMode creationMode = CreationMode.Screen;
     Brush brush;
     Vector3 mouseHitPos;
     Vector2 tileFeedbackPos;
@@ -56,12 +56,25 @@ public class WorldMapEditor : Editor {
         }
         else if (creationMode == CreationMode.Artist)
         {
+            if (GUILayout.Button("Search in Cave Zone"))
+            {
+                int controlID = EditorGUIUtility.GetControlID(FocusType.Passive);
+                EditorGUIUtility.ShowObjectPicker<GameObject>(null, false, "BackGround_Cave", controlID);
+            }
+
+            string commandName = Event.current.commandName;
+            if (commandName == "ObjectSelectorUpdated")
+            {
+                var currentObject = EditorGUIUtility.GetObjectPickerObject();
+                Repaint();
+            }
+            else if (commandName == "ObjectSelectorClosed")
+            {
+               Tile = (GameObject)EditorGUIUtility.GetObjectPickerObject();
+            }
+
             Tile = (GameObject)EditorGUILayout.ObjectField(Tile, typeof(GameObject),false);
         }
-
-        //map.BrushFeedback.brushSize
-
-        //prefab = 
 
         EditorGUILayout.EndVertical();
     }
