@@ -56,7 +56,7 @@ public class Boar : Enemy {
     {
         Player player = other.gameObject.GetComponent<Player>();
 
-        if (player != null)
+        if (player != null && !m_Stopped)
         {
             m_Stopped = true;
             ++_StopCount;
@@ -65,8 +65,8 @@ public class Boar : Enemy {
 
             m_RigidBody.velocity = new Vector2(0, m_RigidBody.velocity.y);
 
+            base.OnTriggerEnter2D(other);
         }
-        base.OnTriggerEnter2D(other);
     }
 
     void changeDirection() {
