@@ -43,10 +43,7 @@ public class Boar : Enemy {
 
             m_RigidBody.velocity = (dir * speed);
 
-            /*transform.position = Vector3.MoveTowards (transform.position, target, speed * Time.deltaTime);
 
-			if (transform.position == Vector3.MoveTowards (transform.position, target, speed * Time.deltaTime))
-				changeDirection ();*/
 		}
 
 		base.Update ();

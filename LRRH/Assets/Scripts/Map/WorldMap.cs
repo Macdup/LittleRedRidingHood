@@ -12,8 +12,8 @@ public class WorldMap : MonoBehaviour {
     public Brush BrushFeedback;
 	public List<GameObject> Screens = new List<GameObject>();
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 
 	}
 	

@@ -63,14 +63,15 @@ namespace AssemblyCSharp
 				//if (rb != null)
 				//	rb.velocity = Vector2.zero;
 			}
-		}
+           
+        }
 
 		virtual public void OnTriggerEnter2D(Collider2D other) {
-			
+            
 			Player player = other.gameObject.GetComponent<Player> ();
 
 			if (player != null) {
-				player.Hit(this, DamagePerHit,staminaLossPerHit);
+                player.Hit(this, DamagePerHit,staminaLossPerHit);
 
 				//Bump player
 				if (DoesBumpPlayer && !m_Stunned) {

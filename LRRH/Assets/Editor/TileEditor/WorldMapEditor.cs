@@ -13,8 +13,8 @@ public enum CreationMode // your custom enumeration
 public class WorldMapEditor : Editor {
 
     public WorldMap map;
-	public GameObject Tile;
-    public CreationMode creationMode = CreationMode.Screen;
+    static GameObject Tile;
+    static CreationMode creationMode = CreationMode.Screen;
     Brush brush;
     Vector3 mouseHitPos;
     Vector2 tileFeedbackPos;
@@ -40,6 +40,8 @@ public class WorldMapEditor : Editor {
     public override void OnInspectorGUI(){
         EditorGUILayout.BeginVertical();
 
+        Debug.Log(Selection.activeObject);
+
         var oldSize = map.mapSize;
         //map.mapSize = EditorGUILayout.Vector2Field("Map Size:", map.mapSize);
 
@@ -47,20 +49,32 @@ public class WorldMapEditor : Editor {
 
         if (creationMode == CreationMode.LevelDesign) {
             Tile = (GameObject)Resources.Load("TileGrassCenter");
+            if (GUILayout.Button("Update Tiles Visu"))
+            {
+                updateTileVisu();
+            }
         }
         else if (creationMode == CreationMode.Artist)
         {
-            Tile = (GameObject)EditorGUILayout.ObjectField(Tile, typeof(GameObject), true);
+            if (GUILayout.Button("Search in Cave Zone"))
+            {
+                int controlID = EditorGUIUtility.GetControlID(FocusType.Passive);
+                EditorGUIUtility.ShowObjectPicker<GameObject>(null, false, "BackGround_Cave", controlID);
+            }
+
+            string commandName = Event.current.commandName;
+            if (commandName == "ObjectSelectorUpdated")
+            {
+                var currentObject = EditorGUIUtility.GetObjectPickerObject();
+                Repaint();
+            }
+            else if (commandName == "ObjectSelectorClosed")
+            {
+               Tile = (GameObject)EditorGUIUtility.GetObjectPickerObject();
+            }
+
+            Tile = (GameObject)EditorGUILayout.ObjectField(Tile, typeof(GameObject),false);
         }
-
-        if (GUILayout.Button("Update Tiles Visu"))
-		{
-			updateTileVisu ();
-		}
-
-        //map.BrushFeedback.brushSize
-
-        //prefab = 
 
         EditorGUILayout.EndVertical();
     }
@@ -81,7 +95,7 @@ public class WorldMapEditor : Editor {
         MoveBrush();
 
         if (Event.current.type == EventType.mouseUp && Event.current.button == 0
-			|| Event.current.control)
+			|| Event.current.shift)
         {
             CreateScreenBrush();
         }
@@ -111,6 +125,7 @@ public class WorldMapEditor : Editor {
 
     void CreateScreen() {
         var go = new GameObject("Screen");
+        Undo.RegisterCreatedObjectUndo(go, "Created go");
         go.transform.SetParent(map.transform);
         go.AddComponent<Brush>();
         go.GetComponent<Brush>().brushSize = map.BrushFeedback.brushSize;
@@ -125,6 +140,7 @@ public class WorldMapEditor : Editor {
 		var tile = getTile ();
 		if (zone != null && tile == null) {
 			GameObject go = (GameObject)Instantiate(Tile);
+            Undo.RegisterCreatedObjectUndo(go, "Created go");
             go.GetComponent<Tile>().position = tileFeedbackPos;
 			go.transform.SetParent (zone.transform);
 			go.transform.position = map.BrushFeedback.transform.position;
@@ -134,10 +150,24 @@ public class WorldMapEditor : Editor {
     void CreateObject()
     {
         var zone = getZone();
-        var tile = getTile();
-        if (zone != null && tile == null)
+        var tileOccupied = false;
+
+        RaycastHit2D[] hits = Physics2D.RaycastAll(mouseHitPos, -Vector2.up, 10);
+        if (hits.Length != 0)
+        {
+            foreach (RaycastHit2D hit in hits)
+            {
+                if (hit.transform.tag == "Props")
+                {
+                    tileOccupied = true;
+                }
+            }
+        }
+
+        if (zone != null && tileOccupied == false)
         {
             GameObject go = (GameObject)Instantiate(Tile);
+            Undo.RegisterCreatedObjectUndo(go, "Created go");
             go.transform.SetParent(zone.transform);
             go.transform.position = new Vector3(map.BrushFeedback.transform.position.x,
                                                map.BrushFeedback.transform.position.y,
@@ -145,13 +175,31 @@ public class WorldMapEditor : Editor {
         }
     }
 
-    void DeleteTile() {
-		var zone = getZone ();
-		var tile = getTile ();
-		if (zone != null && tile != null) {
-			DestroyImmediate(tile.gameObject);
-		}
-	}
+    void DeleteTile()
+    {
+       
+        if (creationMode == CreationMode.LevelDesign)
+        {
+            var zone = getZone();
+            var tile = getTile();
+            if (zone != null && tile != null)
+            {
+                DestroyImmediate(tile.gameObject);
+            }
+        }
+
+        if (creationMode == CreationMode.Artist)
+        {
+            RaycastHit2D[] hits = Physics2D.RaycastAll(mouseHitPos, -Vector2.up, 10);
+            if (hits.Length != 0) {
+                foreach (RaycastHit2D hit in hits) {
+                    if (hit.transform.tag == "Props") {
+                        DestroyImmediate(hit.transform.gameObject);
+                    }
+                }
+            }
+        }
+    }
 
     void updateBrushSize() {
         
@@ -199,7 +247,8 @@ public class WorldMapEditor : Editor {
     }
 
     void MoveBrush() {
-        if (map.BrushFeedback != null) {
+        
+            if (map.BrushFeedback != null) {
             var tileSize = map.tileSize.x;
             var x = Mathf.Floor(mouseHitPos.x / tileSize) * tileSize;
             var y = Mathf.Floor(mouseHitPos.y / tileSize) * tileSize;
@@ -213,11 +262,13 @@ public class WorldMapEditor : Editor {
                     screenFeedbackMinBound = new Vector2(tileFeedbackPos.x - 8, tileFeedbackPos.y + 5);
                     screenFeedbackMaxBound = new Vector2(tileFeedbackPos.x + 9, tileFeedbackPos.y - 5);
                     break;
+
                 case CreationMode.LevelDesign:
                     x += map.transform.position.x + tileSize/ 2;
 					y += map.transform.position.y + tileSize / 2;
                     break;
-			case CreationMode.Artist:
+
+                case CreationMode.Artist:
 				SpriteRenderer renderer = Tile.GetComponent<SpriteRenderer> ();
 					if ((renderer.bounds.size.x / 30f) % 2 != 0) {
 						x += map.transform.position.x + tileSize / 2;
@@ -225,7 +276,7 @@ public class WorldMapEditor : Editor {
 						x += map.transform.position.x + tileSize;
 					
 					if ((renderer.bounds.size.y / 30f) % 2 != 0) {
-						y += map.transform.position.y - tileSize / 2;
+						y += map.transform.position.y + tileSize/2 ;
 					} else
 						y += map.transform.position.y + tileSize;
                     break;
@@ -274,43 +325,43 @@ public class WorldMapEditor : Editor {
 			SpriteRenderer spriteRenderer = tile.GetComponent<SpriteRenderer> ();
 			if (tile.Up && tile.Right && tile.Down && tile.Left) {
 				//Assigner la texture centre à la tile
-				spriteRenderer.sprite = Resources.Load<Sprite>("TilesetGrass/ForestGround_Center");
+				spriteRenderer.sprite = Resources.Load<Sprite>("Environment/Forest/ForestGround_Center");
 			}
 			else if (tile.Up && tile.Right && tile.Left) {
 				//Assigner la texture centre à la tile
-				spriteRenderer.sprite = Resources.Load<Sprite>("TilesetGrass/ForestGround_South");
+				spriteRenderer.sprite = Resources.Load<Sprite>("Environment/Forest/ForestGround_South");
 			}
 			else if (tile.Up && tile.Right && tile.Down) {
 				//Assigner la texture centre à la tile
-				spriteRenderer.sprite = Resources.Load<Sprite>("TilesetGrass/ForestGround_West");
+				spriteRenderer.sprite = Resources.Load<Sprite>("Environment/Forest/ForestGround_West");
 			}
 			else if (tile.Up && tile.Right) {
 				//Assigner la texture centre à la tile
-				spriteRenderer.sprite = Resources.Load<Sprite>("TilesetGrass/ForestGround_SouthWest");
+				spriteRenderer.sprite = Resources.Load<Sprite>("Environment/Forest/ForestGround_SouthWest");
 			}
 			else if (tile.Up && tile.Down && tile.Left) {
 				//Assigner la texture centre à la tile
-				spriteRenderer.sprite = Resources.Load<Sprite>("TilesetGrass/ForestGround_East");
+				spriteRenderer.sprite = Resources.Load<Sprite>("Environment/Forest/ForestGround_East");
 			}
 			else if (tile.Up && tile.Left) {
 				//Assigner la texture centre à la tile
-				spriteRenderer.sprite = Resources.Load<Sprite>("TilesetGrass/ForestGround_SouthEast");
+				spriteRenderer.sprite = Resources.Load<Sprite>("Environment/Forest/ForestGround_SouthEast");
 			}
 			else if (tile.Up && tile.Down) {
 				//Assigner la texture centre à la tile
-				spriteRenderer.sprite = Resources.Load<Sprite>("TilesetGrass/ForestGround_WestEast");
+				spriteRenderer.sprite = Resources.Load<Sprite>("Environment/Forest/ForestGround_WestEast");
 			}
 			else if (tile.Up) {
 				//Assigner la texture centre à la tile
-				spriteRenderer.sprite = Resources.Load<Sprite>("TilesetGrass/ForestGround_SouthWestEast");
+				spriteRenderer.sprite = Resources.Load<Sprite>("Environment/Forest/ForestGround_SouthWestEast");
 			}
 			else if (tile.Right && tile.Down && tile.Left) {
 				//Assigner la texture centre à la tile
-				spriteRenderer.sprite = Resources.Load<Sprite>("TilesetGrass/ForestGround_North");
+				spriteRenderer.sprite = Resources.Load<Sprite>("Environment/Forest/ForestGround_North");
 			}
 			else if (tile.Down && tile.Left) {
 				//Assigner la texture centre à la tile
-				spriteRenderer.sprite = Resources.Load<Sprite>("TilesetGrass/ForestGround_NorthEast");
+				spriteRenderer.sprite = Resources.Load<Sprite>("Environment/Forest/ForestGround_NorthEast");
 			}
 			else if (tile.Down && !tile.Left && !tile.Up && !tile.Right) {
 				//Assigner la texture centre à la tile
@@ -319,28 +370,28 @@ public class WorldMapEditor : Editor {
 				Debug.Log(tile.Left);
 				Debug.Log(tile.Up);
 
-				spriteRenderer.sprite = Resources.Load<Sprite>("TilesetGrass/ForestGround_NorthWestEast");
+				spriteRenderer.sprite = Resources.Load<Sprite>("Environment/Forest/ForestGround_NorthWestEast");
 			}
 			else if (tile.Left && !tile.Right && !tile.Up && !tile.Down) {
 				//Assigner la texture centre à la tile
-				spriteRenderer.sprite = Resources.Load<Sprite>("TilesetGrass/ForestGround_NorthSouthEast");
+				spriteRenderer.sprite = Resources.Load<Sprite>("Environment/Forest/ForestGround_NorthSouthEast");
 			}
 			else if (tile.Right && !tile.Left && !tile.Up && !tile.Down) {
 				//Assigner la texture centre à la tile
-				spriteRenderer.sprite = Resources.Load<Sprite>("TilesetGrass/ForestGround_NorthSouthWest");
+				spriteRenderer.sprite = Resources.Load<Sprite>("Environment/Forest/ForestGround_NorthSouthWest");
 			}
 			else if (tile.Right && tile.Left && !tile.Up && !tile.Down) {
 				//Assigner la texture centre à la tile
-				spriteRenderer.sprite = Resources.Load<Sprite>("TilesetGrass/ForestGround_NorthSouth");
+				spriteRenderer.sprite = Resources.Load<Sprite>("Environment/Forest/ForestGround_NorthSouth");
 			}
 			else if (tile.Right && tile.Down && !tile.Up && !tile.Left) {
 				//Assigner la texture centre à la tile
-				spriteRenderer.sprite = Resources.Load<Sprite>("TilesetGrass/ForestGround_NorthWest");
+				spriteRenderer.sprite = Resources.Load<Sprite>("Environment/Forest/ForestGround_NorthWest");
 			}
             else if (!tile.Right && !tile.Down && !tile.Up && !tile.Left)
             {
                 //Assigner la texture centre à la tile
-                spriteRenderer.sprite = Resources.Load<Sprite>("TilesetGrass/ForestGround_NorthSouthWestEast");
+                spriteRenderer.sprite = Resources.Load<Sprite>("Environment/Forest/ForestGround_NorthSouthWestEast");
             }
         }
 		//En fonction de la zone à laquelle elle appartient, j’applique la texture correspondante.

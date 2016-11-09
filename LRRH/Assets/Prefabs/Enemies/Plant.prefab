@@ -184,7 +184,6 @@ MonoBehaviour:
   playerDetectionDistance: 0
   m_BeingHit: 0
   m_Stopped: 0
-  m_Player: {fileID: 0}
   _isInCounterTime: 0
   ShootPrefab: {fileID: 174666, guid: 90b6d05f710ec70409bdbcd7a3aeb4ed, type: 2}
   ShootSpeed: 100
