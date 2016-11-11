@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEditor;
+using UnityEngine.SceneManagement;
 
 public enum CreationMode // your custom enumeration
 {
@@ -46,11 +47,12 @@ public class WorldMapEditor : Editor {
         creationMode = (CreationMode)EditorGUILayout.EnumPopup("Creation mode:", creationMode);
 
         if (creationMode == CreationMode.LevelDesign) {
-			Tile = (GameObject)Resources.Load("Prefabs/Environment/Forest/ForestGround_Center");
+			Tile = (GameObject)Resources.Load("Prefabs/Environment/Tiles/ForestGround/ForestGround_Center");
             if (GUILayout.Button("Update Tiles Visu"))
             {
                 updateTileVisu();
             }
+				
         }
         else if (creationMode == CreationMode.Artist)
         {
@@ -300,7 +302,6 @@ public class WorldMapEditor : Editor {
 	Tile getTile(){
 		var tileList = map.GetComponentsInChildren<Tile> ();
 		for (var i = 0; i < tileList.Length; i++) {
-			var screen = tileList[i].GetComponent<Tile> ();
 			if (tileList[i].position == tileFeedbackPos)
 				return tileList [i];
 		}
@@ -311,25 +312,7 @@ public class WorldMapEditor : Editor {
 		//Je récupère l’ensemble des tiles du niveau.
 		var tileList = map.GetComponentsInChildren<Tile>();
 		int layerMask = 1 << LayerMask.NameToLayer ("Walls");
-		//Pour chacune, je vérifie si elle a des voisins (lancé de rayon en haut, en bas, à gauche à droite) avec pour longueur la largeur d’une tile. Les objets rencontrés sont stockés au niveau de la tile elle - même.
-
-		Object center = Resources.Load<Object>("Prefabs/Environment/Forest/ForestGround_Center");
-		GameObject south = Resources.Load<GameObject>("Prefabs/Environment/Forest/ForestGround_South");
-		GameObject west = Resources.Load<GameObject>("Prefabs/Environment/Forest/ForestGround_West");
-		GameObject southWest = Resources.Load<GameObject>("Prefabs/Environment/Forest/ForestGround_SouthWest");
-		GameObject east = Resources.Load<GameObject>("Prefabs/Environment/Forest/ForestGround_East");
-		GameObject southEast = Resources.Load<GameObject>("Prefabs/Environment/Forest/ForestGround_SouthEast");
-		GameObject westEast = Resources.Load<GameObject>("Prefabs/Environment/Forest/ForestGround_WestEast");
-		GameObject southWestEast = Resources.Load<GameObject>("Prefabs/Environment/Forest/ForestGround_SouthWestEast");
-		GameObject north = Resources.Load<GameObject>("Prefabs/Environment/Forest/ForestGround_North");
-		GameObject northEast = Resources.Load<GameObject>("Prefabs/Environment/Forest/ForestGround_NorthEast");
-		GameObject nortWestEast = Resources.Load<GameObject>("Prefabs/Environment/Forest/ForestGround_NorthWestEast");
-		GameObject northSouthEast = Resources.Load<GameObject>("Prefabs/Environment/Forest/ForestGround_NorthSouthEast");
-		GameObject northSouthWest = Resources.Load<GameObject>("Prefabs/Environment/Forest/ForestGround_NorthSouthWest");
-		GameObject northSouth = Resources.Load<GameObject>("Prefabs/Environment/Forest/ForestGround_NorthSouth");
-		GameObject northWest = Resources.Load<GameObject>("Prefabs/Environment/Forest/ForestGround_NorthWest");
-		GameObject northSouthWestEast = Resources.Load<GameObject>("Prefabs/Environment/Forest/ForestGround_NorthSouthWestEast");
-
+		//Pour chacune, je vérifie si elle a des voisins (lancé de rayon en haut, en bas, à gauche à droite) avec pour longueur la largeur d’une tile. Les objets rencontrés sont stockés au niveau de la tile elle - même
 		foreach (Tile tile in tileList) {
 			tileAroundDetection (tile, Vector2.up, layerMask);
 			tileAroundDetection (tile, Vector2.right, layerMask);
@@ -339,72 +322,78 @@ public class WorldMapEditor : Editor {
 		//En fonction de ses voisins, je définis de quel type de voisin il s’agit.Voir plus la classification.
 		foreach(Tile tile in tileList){
 			SpriteRenderer spriteRenderer = tile.GetComponent<SpriteRenderer> ();
-			if (tile.Up && tile.Right && tile.Down && tile.Left) {
-				//Assigner la texture centre à la tile
-				Instantiate(center,tile.transform.position,Quaternion.identity,tile.transform.parent);
-			}
-			else if (tile.Up && tile.Right && tile.Left) {
-				//Assigner la texture centre à la tile
-				Instantiate(south,tile.transform.position,Quaternion.identity,tile.transform.parent);
-			}
-			else if (tile.Up && tile.Right && tile.Down) {
-				//Assigner la texture centre à la tile
-				Instantiate(west,tile.transform.position,Quaternion.identity,tile.transform.parent);
-			}
-			else if (tile.Up && tile.Right) {
-				//Assigner la texture centre à la tile
-				Instantiate(southWest,tile.transform.position,Quaternion.identity,tile.transform.parent);
-			}
-			else if (tile.Up && tile.Down && tile.Left) {
-				//Assigner la texture centre à la tile*
-				Vector3 offset = tile.transform.position;
-				offset.x -= east.GetComponent<BoxCollider2D> ().offset.x;
-				Instantiate(east,offset,Quaternion.identity,tile.transform.parent);
-			}
-			else if (tile.Up && tile.Left) {
-				//Assigner la texture centre à la tile
-				Instantiate(southEast,tile.transform.position,Quaternion.identity,tile.transform.parent);
-			}
-			else if (tile.Up && tile.Down) {
-				//Assigner la texture centre à la tile
-				Instantiate(westEast,tile.transform.position,Quaternion.identity,tile.transform.parent);
-			}
-			else if (tile.Up) {
-				//Assigner la texture centre à la tile
-				Instantiate(southWestEast,tile.transform.position,Quaternion.identity,tile.transform.parent);
-			}
-			else if (tile.Right && tile.Down && tile.Left) {
-				//Assigner la texture centre à la tile
-				Instantiate(north,tile.transform.position,Quaternion.identity,tile.transform.parent);
-			}
-			else if (tile.Down && tile.Left) {
-				//Assigner la texture centre à la tile
-				Instantiate(northEast,tile.transform.position,Quaternion.identity,tile.transform.parent);
-			}
-			else if (tile.Down && !tile.Left && !tile.Up && !tile.Right) {
-				//Assigner la texture centre à la tile
-				Instantiate(nortWestEast,tile.transform.position,Quaternion.identity,tile.transform.parent);
-			}
-			else if (tile.Left && !tile.Right && !tile.Up && !tile.Down) {
-				//Assigner la texture centre à la tile
-				Instantiate(northSouthEast,tile.transform.position,Quaternion.identity,tile.transform.parent);
-			}
-			else if (tile.Right && !tile.Left && !tile.Up && !tile.Down) {
-				//Assigner la texture centre à la tile
-				Instantiate(northSouthWest,tile.transform.position,Quaternion.identity,tile.transform.parent);
-			}
-			else if (tile.Right && tile.Left && !tile.Up && !tile.Down) {
-				//Assigner la texture centre à la tile
-				Instantiate(northSouth,tile.transform.position,Quaternion.identity,tile.transform.parent);
-			}
-			else if (tile.Right && tile.Down && !tile.Up && !tile.Left) {
-				//Assigner la texture centre à la tile
-				Instantiate(northWest,tile.transform.position,Quaternion.identity,tile.transform.parent);
-			}
-            else if (!tile.Right && !tile.Down && !tile.Up && !tile.Left)
-            {
-                //Assigner la texture centre à la tile
-				Instantiate(northSouthWestEast,tile.transform.position,Quaternion.identity,tile.transform.parent);
+			Screen screen = tile.GetComponentInParent<Screen>();
+			GameObject prefab;
+
+			if (screen != null) {
+
+				if (tile.Up && tile.Right && tile.Down && tile.Left) {
+					//Assigner la texture centre à la tile
+					if (screen != null) {
+						prefab = getPrefabFromScreenZoneAndTileName (screen.zone, "_Center");
+						createAuthoringInstanceFromPrefab (prefab, tile, global::Tile.Type.Center);
+					}
+				} else if (tile.Up && tile.Right && tile.Left) {
+					//Assigner la texture centre à la tile
+					prefab = getPrefabFromScreenZoneAndTileName (screen.zone, "_South");
+					createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.South);
+				} else if (tile.Up && tile.Right && tile.Down) {
+					//Assigner la texture centre à la tile
+					prefab = getPrefabFromScreenZoneAndTileName (screen.zone, "_West");
+					createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.West);
+				} else if (tile.Up && tile.Right) {
+					//Assigner la texture centre à la tile
+					prefab = getPrefabFromScreenZoneAndTileName (screen.zone, "_SouthWest");
+					createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.SouthWest);
+				} else if (tile.Up && tile.Down && tile.Left) {
+					//Assigner la texture centre à la tile*
+					prefab = getPrefabFromScreenZoneAndTileName (screen.zone, "_East");
+					createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.East);
+				} else if (tile.Up && tile.Left) {
+					//Assigner la texture centre à la tile
+					prefab = getPrefabFromScreenZoneAndTileName (screen.zone, "_SouthEast");
+					createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.SouthEast);
+				} else if (tile.Up && tile.Down) {
+					//Assigner la texture centre à la tile
+					prefab = getPrefabFromScreenZoneAndTileName (screen.zone, "_WestEast");
+					createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.WestEast);
+				} else if (tile.Up) {
+					//Assigner la texture centre à la tile
+					prefab = getPrefabFromScreenZoneAndTileName (screen.zone, "_SouthWestEast");
+					createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.NorthSouthWestEast);
+				} else if (tile.Right && tile.Down && tile.Left) {
+					//Assigner la texture centre à la tile
+					prefab = getPrefabFromScreenZoneAndTileName (screen.zone, "_North");
+					createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.North);
+				} else if (tile.Down && tile.Left) {
+					//Assigner la texture centre à la tile
+					prefab = getPrefabFromScreenZoneAndTileName (screen.zone, "_NorthEast");
+					createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.NorthEast);
+				} else if (tile.Down && !tile.Left && !tile.Up && !tile.Right) {
+					//Assigner la texture centre à la tile
+					prefab = getPrefabFromScreenZoneAndTileName (screen.zone, "_NorthWestEast");
+					createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.NorthWestEast);
+				} else if (tile.Left && !tile.Right && !tile.Up && !tile.Down) {
+					//Assigner la texture centre à la tile
+					prefab = getPrefabFromScreenZoneAndTileName (screen.zone, "_NorthSouthEast");
+					createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.NorthSouthEast);
+				} else if (tile.Right && !tile.Left && !tile.Up && !tile.Down) {
+					//Assigner la texture centre à la tile
+					prefab = getPrefabFromScreenZoneAndTileName (screen.zone, "_NorthSouthWest");
+					createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.NorthSouthWest);
+				} else if (tile.Right && tile.Left && !tile.Up && !tile.Down) {
+					//Assigner la texture centre à la tile
+					prefab = getPrefabFromScreenZoneAndTileName (screen.zone, "_NorthSouth");
+					createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.NorthSouth);
+				} else if (tile.Right && tile.Down && !tile.Up && !tile.Left) {
+					//Assigner la texture centre à la tile
+					prefab = getPrefabFromScreenZoneAndTileName (screen.zone, "_NorthWest");
+					createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.NorthWest);
+				} else if (!tile.Right && !tile.Down && !tile.Up && !tile.Left) {
+					//Assigner la texture centre à la tile
+					prefab = getPrefabFromScreenZoneAndTileName (screen.zone, "_NorthSouthWestEast");
+					createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.NorthSouthWestEast);
+				}
 			}
         }
 
@@ -448,8 +437,24 @@ public class WorldMapEditor : Editor {
 		}
 	}
 
+	GameObject getPrefabFromScreenZoneAndTileName(Screen.Zone screenZone, string tileName){
+		GameObject tilePrefab = Resources.Load<GameObject>("Prefabs/Environment/Tiles/" 
+			+ screenZone.ToString() +
+			"/" +
+			screenZone.ToString() + tileName) as GameObject;
+		return tilePrefab;
+	}
 
-
-
+	GameObject createAuthoringInstanceFromPrefab(GameObject prefab, Tile tile, Tile.Type type){
+		GameObject instance = PrefabUtility.InstantiatePrefab(prefab,SceneManager.GetActiveScene()) as GameObject;
+		instance.transform.position = tile.transform.position;
+		instance.transform.parent = tile.transform.parent;
+		Tile instanceTile = instance.GetComponent<Tile> ();
+		instanceTile.position = tile.position;
+		instanceTile.type = type;
+		if (tile.transform.parent.GetComponent<Screen> () == null)
+			instance.GetComponent<BoxCollider2D> ().isTrigger = true;
+		return instance;
+	}
 	
 }
