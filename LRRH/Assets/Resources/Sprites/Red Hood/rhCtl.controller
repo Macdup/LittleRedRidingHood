@@ -3078,8 +3078,7 @@ AnimatorState:
   - {fileID: 110121194}
   - {fileID: 110113640}
   - {fileID: 1101000012095270032}
-  m_StateMachineBehaviours:
-  - {fileID: 114000011350318010}
+  m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -3241,8 +3240,7 @@ AnimatorState:
   - {fileID: 110104656}
   - {fileID: 110178582}
   - {fileID: 110137244}
-  m_StateMachineBehaviours:
-  - {fileID: 114000011939963100}
+  m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -3404,8 +3402,7 @@ AnimatorState:
   - {fileID: 110144916}
   - {fileID: 110119376}
   - {fileID: 110199316}
-  m_StateMachineBehaviours:
-  - {fileID: 114000012484239858}
+  m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -3813,39 +3810,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97bebbacdee44e84c9d8e6029a6c786c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114000011350318010
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a86457dca7a6e6f4da96fb79aa5ca5d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114000011939963100
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a86457dca7a6e6f4da96fb79aa5ca5d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114000012484239858
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a86457dca7a6e6f4da96fb79aa5ca5d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1101 &1101000010092525498
