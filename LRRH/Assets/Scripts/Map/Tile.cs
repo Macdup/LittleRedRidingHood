@@ -57,6 +57,7 @@ public class Tile : MonoBehaviour {
 
 	GameObject createAuthoringInstanceFromPrefab(GameObject prefab, Tile tile, Tile.Type type){
 		GameObject instance = PrefabUtility.InstantiatePrefab(prefab,SceneManager.GetActiveScene()) as GameObject;
+		Undo.RegisterCreatedObjectUndo (instance, "Create instance");
 		instance.transform.position = tile.transform.position;
 		instance.transform.parent = tile.transform.parent;
 		Tile instanceTile = instance.GetComponent<Tile> ();
@@ -64,7 +65,7 @@ public class Tile : MonoBehaviour {
 		instanceTile.type = type;
 		if (tile.transform.parent.GetComponent<Screen> () == null)
 			instance.GetComponent<BoxCollider2D> ().isTrigger = true;
-		DestroyImmediate (tile.gameObject);
+		Undo.DestroyObjectImmediate (tile.gameObject);
 		return instance;
 	}
 }
