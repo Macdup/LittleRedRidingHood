@@ -48,10 +48,10 @@ public class WorldMapEditor : Editor {
 
         if (creationMode == CreationMode.LevelDesign) {
 			Tile = (GameObject)Resources.Load("Prefabs/Environment/Tiles/ForestGround/ForestGround_Center");
-            /*if (GUILayout.Button("Update Tiles Visu"))
+           if (GUILayout.Button("Update Tiles Visu"))
             {
                 updateTileVisu();
-            }*/
+            }
 				
         }
         else if (creationMode == CreationMode.Artist)
@@ -139,7 +139,7 @@ public class WorldMapEditor : Editor {
 		var zone = getZone ();
 		var tile = getTile ();
 		if (zone != null && tile == null) {
-			GameObject go = (GameObject)Instantiate(Tile);
+			GameObject go = PrefabUtility.InstantiatePrefab(Tile,SceneManager.GetActiveScene()) as GameObject;
             Undo.RegisterCreatedObjectUndo(go, "Created go");
             go.GetComponent<Tile>().position = tileFeedbackPos;
 			go.transform.SetParent (zone.transform);
@@ -166,7 +166,7 @@ public class WorldMapEditor : Editor {
 
         if (zone != null && tileOccupied == false)
         {
-            GameObject go = (GameObject)Instantiate(Tile);
+			GameObject go = PrefabUtility.InstantiatePrefab(Tile,SceneManager.GetActiveScene()) as GameObject;
             Undo.RegisterCreatedObjectUndo(go, "Created go");
             go.transform.SetParent(zone.transform);
             go.transform.position = new Vector3(map.BrushFeedback.transform.position.x,
