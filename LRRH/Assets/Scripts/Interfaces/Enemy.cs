@@ -130,6 +130,7 @@ namespace AssemblyCSharp
 
         virtual public void Death() {
 			m_Dead = true;
+			Debug.Log ("m_Dead " + m_Dead);
 			Collider2D[] colliders = this.GetComponents<Collider2D> ();
 			foreach (Collider2D c in colliders) {
 				c.enabled = false;
@@ -150,11 +151,13 @@ namespace AssemblyCSharp
 
 		virtual public void ResetHitCoolDown() {
 			m_BeingHit = false;	
+			Debug.Log ("ResetHitCoolDown");
 		}
 
         virtual public void ResetStoppedCoolDown()
         {
             m_Stopped = false;
+			Debug.Log ("ResetStoppedCoolDown");
         }
 
         virtual public void GetCountered()

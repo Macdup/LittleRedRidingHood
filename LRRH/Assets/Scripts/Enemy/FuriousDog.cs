@@ -32,6 +32,7 @@ public class FuriousDog : Enemy {
     // Use this for initialization
     public override void Update () {
         detectPlayer();
+		base.Update ();
     }
 
     void FixedUpdate()
@@ -39,20 +40,15 @@ public class FuriousDog : Enemy {
         // Evalute states
         m_BottomTouched = m_BottomBox.IsTouchingLayers(_wallsMask);
 
-        if (m_BottomTouched)
-            m_Animator.SetBool(_jumpHash, false);
-        
-
         if (_PlayerInSight == true && _energy > 0 && m_BottomTouched == true)
         {
             attack();
-            m_Animator.SetBool(_jumpHash, true);
         }
 
         if(_energy <= 0)
             m_Animator.SetBool(_tiredHash, true);
 
-        m_Animator.SetFloat(_velocityYHash, m_RigidBody.velocity.y);
+		m_Animator.SetFloat (_velocityYHash,m_RigidBody.velocity.y);
     }
 
     void detectPlayer()
