@@ -39,8 +39,8 @@ GameObject:
   - 61: {fileID: 61000010480883214}
   - 95: {fileID: 95000013659569264}
   m_Layer: 0
-  m_Name: SpriteSheet_BackGroundOre_ALL_0
-  m_TagString: Props
+  m_Name: BackGroundOre_ALL_0
+  m_TagString: Background
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
