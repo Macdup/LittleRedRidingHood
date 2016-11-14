@@ -63,6 +63,7 @@ public class Tile : MonoBehaviour {
 		Tile instanceTile = instance.GetComponent<Tile> ();
 		instanceTile.position = tile.position;
 		instanceTile.type = type;
+		instanceTile.zone = zone;
 		if (tile.transform.parent.GetComponent<Screen> () == null)
 			instance.GetComponent<BoxCollider2D> ().isTrigger = true;
 		Undo.DestroyObjectImmediate (tile.gameObject);

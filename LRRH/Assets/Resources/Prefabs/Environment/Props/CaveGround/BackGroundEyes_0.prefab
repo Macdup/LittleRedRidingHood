@@ -23,8 +23,8 @@ GameObject:
   - 61: {fileID: 61000013860769008}
   - 95: {fileID: 95000011224298108}
   m_Layer: 0
-  m_Name: SpriteSheet_BackGroundEyes_0
-  m_TagString: Props
+  m_Name: BackGroundEyes_0
+  m_TagString: Background
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
