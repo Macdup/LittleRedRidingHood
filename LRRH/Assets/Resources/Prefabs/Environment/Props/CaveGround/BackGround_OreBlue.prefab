@@ -40,7 +40,7 @@ GameObject:
   - 95: {fileID: 95000011171547222}
   m_Layer: 0
   m_Name: BackGround_OreBlue
-  m_TagString: Props
+  m_TagString: Background
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

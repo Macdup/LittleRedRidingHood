@@ -33,7 +33,7 @@ public class ScreenEditor : Editor
         }
 
 		EditorGUI.BeginChangeCheck ();
-		screen.zone = (Screen.Zone)EditorGUILayout.EnumPopup("Zone :", screen.zone);
+		screen.zone = (Tile.Zone)EditorGUILayout.EnumPopup("Zone :", screen.zone);
 		if (EditorGUI.EndChangeCheck ()) {
 			foreach(Object obj in targets){ 
 				((Screen)obj).zone = screen.zone;
@@ -146,68 +146,68 @@ public class ScreenEditor : Editor
 							//Assigner la texture centre à la tile
 							if (screen != null) {
 								prefab = getPrefabFromScreenZoneAndTileName (screen.zone, "_Center");
-								createAuthoringInstanceFromPrefab (prefab, tile, global::Tile.Type.Center);
+								createAuthoringInstanceFromPrefab (prefab, tile, global::Tile.Type.Center,screen.zone);
 							}
 						} else if (tile.Up && tile.Right && tile.Left) {
 							//Assigner la texture centre à la tile
 							prefab = getPrefabFromScreenZoneAndTileName (screen.zone, "_South");
-							createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.South);
+							createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.South,screen.zone);
 						} else if (tile.Up && tile.Right && tile.Down) {
 							//Assigner la texture centre à la tile
 							prefab = getPrefabFromScreenZoneAndTileName (screen.zone, "_West");
-							createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.West);
+							createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.West,screen.zone);
 						} else if (tile.Up && tile.Right) {
 							//Assigner la texture centre à la tile
 							prefab = getPrefabFromScreenZoneAndTileName (screen.zone, "_SouthWest");
-							createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.SouthWest);
+							createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.SouthWest,screen.zone);
 						} else if (tile.Up && tile.Down && tile.Left) {
 							//Assigner la texture centre à la tile*
 							prefab = getPrefabFromScreenZoneAndTileName (screen.zone, "_East");
-							createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.East);
+							createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.East,screen.zone);
 						} else if (tile.Up && tile.Left) {
 							//Assigner la texture centre à la tile
 							prefab = getPrefabFromScreenZoneAndTileName (screen.zone, "_SouthEast");
-							createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.SouthEast);
+							createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.SouthEast,screen.zone);
 						} else if (tile.Up && tile.Down) {
 							//Assigner la texture centre à la tile
 							prefab = getPrefabFromScreenZoneAndTileName (screen.zone, "_WestEast");
-							createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.WestEast);
+							createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.WestEast,screen.zone);
 						} else if (tile.Up) {
 							//Assigner la texture centre à la tile
 							prefab = getPrefabFromScreenZoneAndTileName (screen.zone, "_SouthWestEast");
-							createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.NorthSouthWestEast);
+							createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.NorthSouthWestEast,screen.zone);
 						} else if (tile.Right && tile.Down && tile.Left) {
 							//Assigner la texture centre à la tile
 							prefab = getPrefabFromScreenZoneAndTileName (screen.zone, "_North");
-							createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.North);
+							createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.North,screen.zone);
 						} else if (tile.Down && tile.Left) {
 							//Assigner la texture centre à la tile
 							prefab = getPrefabFromScreenZoneAndTileName (screen.zone, "_NorthEast");
-							createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.NorthEast);
+							createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.NorthEast,screen.zone);
 						} else if (tile.Down && !tile.Left && !tile.Up && !tile.Right) {
 							//Assigner la texture centre à la tile
 							prefab = getPrefabFromScreenZoneAndTileName (screen.zone, "_NorthWestEast");
-							createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.NorthWestEast);
+							createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.NorthWestEast,screen.zone);
 						} else if (tile.Left && !tile.Right && !tile.Up && !tile.Down) {
 							//Assigner la texture centre à la tile
 							prefab = getPrefabFromScreenZoneAndTileName (screen.zone, "_NorthSouthEast");
-							createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.NorthSouthEast);
+							createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.NorthSouthEast,screen.zone);
 						} else if (tile.Right && !tile.Left && !tile.Up && !tile.Down) {
 							//Assigner la texture centre à la tile
 							prefab = getPrefabFromScreenZoneAndTileName (screen.zone, "_NorthSouthWest");
-							createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.NorthSouthWest);
+							createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.NorthSouthWest,screen.zone);
 						} else if (tile.Right && tile.Left && !tile.Up && !tile.Down) {
 							//Assigner la texture centre à la tile
 							prefab = getPrefabFromScreenZoneAndTileName (screen.zone, "_NorthSouth");
-							createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.NorthSouth);
+							createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.NorthSouth,screen.zone);
 						} else if (tile.Right && tile.Down && !tile.Up && !tile.Left) {
 							//Assigner la texture centre à la tile
 							prefab = getPrefabFromScreenZoneAndTileName (screen.zone, "_NorthWest");
-							createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.NorthWest);
+							createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.NorthWest,screen.zone);
 						} else if (!tile.Right && !tile.Down && !tile.Up && !tile.Left) {
 							//Assigner la texture centre à la tile
 							prefab = getPrefabFromScreenZoneAndTileName (screen.zone, "_NorthSouthWestEast");
-							createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.NorthSouthWestEast);
+							createAuthoringInstanceFromPrefab (prefab, tile,global::Tile.Type.NorthSouthWestEast,screen.zone);
 						}
 				}
 			}
@@ -256,7 +256,7 @@ public class ScreenEditor : Editor
 		}
 	}
 
-	GameObject getPrefabFromScreenZoneAndTileName(Screen.Zone screenZone, string tileName){
+	GameObject getPrefabFromScreenZoneAndTileName(Tile.Zone screenZone, string tileName){
 		GameObject tilePrefab = Resources.Load<GameObject>("Prefabs/Environment/Tiles/" 
 			+ screenZone.ToString() +
 			"/" +
@@ -264,7 +264,7 @@ public class ScreenEditor : Editor
 		return tilePrefab;
 	}
 
-	GameObject createAuthoringInstanceFromPrefab(GameObject prefab, Tile tile, Tile.Type type){
+	GameObject createAuthoringInstanceFromPrefab(GameObject prefab, Tile tile, Tile.Type type, Tile.Zone tileZone){
 		GameObject instance = PrefabUtility.InstantiatePrefab(prefab,SceneManager.GetActiveScene()) as GameObject;
 		Undo.RegisterCreatedObjectUndo (instance, "Create instance");
 		instance.transform.position = tile.transform.position;
@@ -272,6 +272,7 @@ public class ScreenEditor : Editor
 		Tile instanceTile = instance.GetComponent<Tile> ();
 		instanceTile.position = tile.position;
 		instanceTile.type = type;
+		instanceTile.zone = tileZone;
 		if (tile.transform.parent.GetComponent<Screen> () == null)
 			instance.GetComponent<BoxCollider2D> ().isTrigger = true;
 		return instance;
