@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CameraScript : MonoBehaviour {
 
-	public GameObject ObjectToFollow;
+	public GameObject target;
 	public float yOffset = 0;
     public float xOffset = 0;
     public float DistanceMax = 170;
@@ -11,24 +11,50 @@ public class CameraScript : MonoBehaviour {
     private float shakeDuration = 0;
     private float shakeIntensity = 0;
     private float _lockZ = 0;
+	private float _targetDirection;
+	private float _targetLastDirection;
+	private float _targetLastPosition;
+	private float _targetPositionDelta;
+	private float _targetDistanceAfterDirChange;
 
     // Use this for initialization
     void Start () {
         _lockZ = transform.position.z;
+		_targetDirection = target.transform.localScale.x;
+		_targetLastDirection = target.transform.localScale.x;
+		_targetLastPosition = target.transform.position.x;
+		_targetDistanceAfterDirChange = 0;
+		Vector3 pos = this.transform.position;
+		pos.x = target.transform.position.x + (xOffset * target.transform.localScale.x);
+		pos.y = target.transform.position.y + yOffset;
+		this.transform.position = pos;
     }
 	
 	// Update is called once per frame
 	void FixedUpdate() {
-		if(ObjectToFollow != null)
+		if(target != null)
         {
-			Vector3 pos = this.transform.position;
-            pos.x = ObjectToFollow.transform.position.x + (xOffset * ObjectToFollow.transform.localScale.x);
-			pos.y = ObjectToFollow.transform.position.y + yOffset;
-            this.transform.position =  Vector3.Lerp(this.transform.position,pos,0.1f);
+			_targetPositionDelta = target.transform.position.x - _targetLastPosition;
+			_targetLastPosition = target.transform.position.x;
+			//détecter un changement
+			_targetDirection = target.transform.localScale.x;
+			if (_targetDirection != _targetLastDirection) {
+				_targetLastDirection = _targetDirection;
+				_targetDistanceAfterDirChange = 0;
+			} else {
+				_targetDistanceAfterDirChange += _targetPositionDelta;
+			}
 
+			Vector3 pos = this.transform.position;
+			if (Mathf.Abs (_targetDistanceAfterDirChange) > 60) {
+				pos.x = target.transform.position.x + (xOffset * target.transform.localScale.x);
+				pos.y = target.transform.position.y + yOffset;
+				this.transform.position =  Vector3.Lerp(this.transform.position,pos,0.05f);
+			}
+				
             // make sure the object is always visible
 
-            Vector2 dir = new Vector2(ObjectToFollow.transform.position.x, ObjectToFollow.transform.position.y) - new Vector2(this.transform.position.x, this.transform.position.y);
+			/*Vector2 dir = new Vector2(target.transform.position.x, target.transform.position.y) - new Vector2(this.transform.position.x, this.transform.position.y);
             float dist = dir.magnitude;
             if (dir.magnitude > DistanceMax)
             {
@@ -38,7 +64,7 @@ public class CameraScript : MonoBehaviour {
                 pos.x += adjust.x;
                 pos.y += adjust.y;
                 this.transform.position = pos;
-            }
+            }*/
 
         }
 

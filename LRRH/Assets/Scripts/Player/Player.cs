@@ -21,7 +21,9 @@ public class Player : MonoBehaviour {
 	public float JumpDelay = 0.03f;
     public float DashAttackSpeed = 100.0f;
     public float HitCoolDown = 0.5f;
+	public float m_invicibleTimer = 0.5f;
 	public float BumpCoolDown = 0.5f;
+	[HideInInspector]
 	public bool  HasJetPack = false;
 	public float JetPackSpeed = 80.0f;
 	public float JetPackDuration = 3.0f;
@@ -37,20 +39,7 @@ public class Player : MonoBehaviour {
     public float BackDashSpeed = 50.0f;
     public float BackDashDuration = 1.0f;
     public float FlipLockTime = 0.2f;
-
-
-
-    public ButtonScript BSMoveLeft;
-	public ButtonScript BSMoveRight;
-    public ButtonScript BSBackDash;
-    public ButtonScript BSJump;
-	public ButtonScript BSAttack;
-	public ButtonScript BSDefend;
-	public ButtonScript BSMagic;
-    public ButtonScript BSWeaponSword;
-    public ButtonScript BSWeaponStick;
     
-
     public WeaponScript Weapon;
 	public float		AttackCoolDown = 0.15f;
     public float        SlowFactorWhileAttack = 0.5f;
@@ -65,14 +54,31 @@ public class Player : MonoBehaviour {
 	public float StaminaConsommation = 10.0f;
 	public float StaminaRegeneration = 10.0f;
 
+	public ButtonScript BSMoveLeft;
+	public ButtonScript BSMoveRight;
+	public ButtonScript BSBackDash;
+	public ButtonScript BSJump;
+	public ButtonScript BSAttack;
+	public ButtonScript BSDefend;
+	public ButtonScript BSMagic;
+	public ButtonScript BSWeaponSword;
+	public ButtonScript BSWeaponStick;
+
+	[HideInInspector]
 	public Spell CurrentSpell;
+	[HideInInspector]
 	public bool UsingMagic = false;
+	[HideInInspector]
 	public float Mana = 100.0f;
+	[HideInInspector]
 	public float ManaMax = 100.0f;
+	[HideInInspector]
 	public float ManaMin = 0.0f;
 
 	public float Health = 100.0f;
+	[HideInInspector]
 	public float HealthMax = 100.0f;
+	[HideInInspector]
 	public float HealthMin = 0.0f;
 
 	public GameObject CounterFeedback;
@@ -81,6 +87,7 @@ public class Player : MonoBehaviour {
 
 	// private member
 	private bool 				m_FacingRight = false;
+	[HideInInspector]
 	public bool 				m_BottomTouched =  false;
 	private bool 				m_FrontTouched =  false;
 	private Rigidbody2D 		m_RigidBody2D;
@@ -88,11 +95,15 @@ public class Player : MonoBehaviour {
 	private CircleCollider2D 	m_BottomLeft;
 	private CircleCollider2D 	m_BottomRight;
 	private BoxCollider2D 		m_RightBox;
+	[HideInInspector]
 	public bool 				m_Attacking = false;
 	private bool                m_ComboPossibility = false;
 	private bool                m_ComboValidated = false;
-	public int 				m_AttackCount = 0;
+	[HideInInspector]
+	public int 					m_AttackCount = 0;
+	[HideInInspector]
 	public bool 				m_BeingHit = false;
+	private bool 				m_invicible;
 	private bool                m_Defending;
 	private float               m_Stamina = 100.0f;
 	private float               m_StaminaMax = 100.0f;
@@ -101,10 +112,12 @@ public class Player : MonoBehaviour {
 	private GameObject          m_CounterSense;
     private bool                m_Counter = false;
     private float               m_CounterTimer = 0.0f;
+	[HideInInspector]
 	public float 				m_JetPackValue = 0.0f;
 	private bool                m_AttackLongCasting = false;
 	private bool                m_AttackLongCasted = false;
-    public bool                 m_AttackLongDashing = false;
+	[HideInInspector]
+	public bool                 m_AttackLongDashing = false;
     private bool                m_Bumped = false;
     private bool                m_BackDashing = false;
     private bool                m_Flipping = false;
@@ -126,8 +139,10 @@ public class Player : MonoBehaviour {
 	private	bool 		_capJump = false;
 	private bool 		_attackWasUp = true;
 	private float       _attackHoldTime = 0.0f;
-    public bool        _isInCounterTime = false;
-    public bool         _isCountering = false;
+	[HideInInspector]
+	public bool        _isInCounterTime = false;
+	[HideInInspector]
+	public bool         _isCountering = false;
     private bool        _isDoubleJumpCollected = false;
 	private bool        _isCounterCollected = false;
 	private bool        _isJetPackCollected = false;
@@ -580,7 +595,7 @@ public class Player : MonoBehaviour {
 
             _isInCounterTime = false; // to counter only one Hit
         }
-        else if (!m_BeingHit && !_isCountering) {
+		else if (!m_BeingHit && !_isCountering && !m_invicible) {
 			m_BeingHit = true;
 
 			if (m_Defending)
@@ -674,6 +689,16 @@ public class Player : MonoBehaviour {
 
 	public void ResetBeingHit() {
 		m_BeingHit = false;
+		m_invicible = true;
+		Debug.Log (gameObject.layer);
+		Debug.Log (LayerMask.NameToLayer("Player"));
+		Invoke ("ResetInvicible",m_invicibleTimer);
+		GetComponentInChildren<Flashing> ().enabled = true;
+	}
+
+	public void ResetInvicible() {
+		m_invicible = false;
+		GetComponentInChildren<Flashing> ().enabled = false;
 	}
 
 	public void ResetGroggy()

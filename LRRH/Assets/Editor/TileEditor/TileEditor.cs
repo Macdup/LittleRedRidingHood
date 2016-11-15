@@ -2,30 +2,34 @@
 using System.Collections;
 using UnityEditor;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 [CanEditMultipleObjects]
 [CustomEditor(typeof(Tile))]
 public class TileEditor : Editor
 {
+	Tile tile;
 
     public override void OnInspectorGUI()
     {
         EditorGUILayout.BeginVertical();
-        if (GUILayout.Button("Build Collider"))
+
+        if (GUILayout.Button("Select Screen"))
         {
-            createCollider();
-        }
-        if (GUILayout.Button("Select Zones"))
-        {
-            getZones();
+            getScreens();
         }
 
-		Tile tile = (Tile)target;
-		EditorGUILayout.Toggle ("tileUp", tile.Up);
-		EditorGUILayout.Toggle ("tileRight", tile.Right);
-		EditorGUILayout.Toggle ("tileDown", tile.Down);
-		EditorGUILayout.Toggle ("tileLeft", tile.Left);
-		EditorGUILayout.Vector2Field("centerPos:", tile.position);
+		tile = (Tile)target;
+
+		EditorGUI.BeginChangeCheck ();
+		tile.zone = (Tile.Zone)EditorGUILayout.EnumPopup("Zone :", tile.zone);
+		if (EditorGUI.EndChangeCheck ()) {
+			foreach(Object obj in targets){ 
+				((Tile)obj).zone = tile.zone;
+				((Tile)obj).updateTile ();
+			}
+		}
+
         EditorGUILayout.EndVertical();
     }
 
@@ -88,7 +92,7 @@ public class TileEditor : Editor
         polycol.points = polycolPoints;
     }
 
-    public void getZones() {
+	public void getScreens() {
         var selectionList = Selection.transforms;
         List<GameObject> ZoneList = new List<GameObject>();
         for (var i = 0; i < selectionList.Length; i++) {
@@ -96,5 +100,6 @@ public class TileEditor : Editor
         }
         Selection.objects = ZoneList.ToArray();
     }
+
 
 }
