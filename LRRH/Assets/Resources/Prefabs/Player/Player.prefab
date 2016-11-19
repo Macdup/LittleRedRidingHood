@@ -104,7 +104,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 117764}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2200, y: 219, z: 0}
+  m_LocalPosition: {x: 100, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -341,6 +341,7 @@ MonoBehaviour:
   JumpDelay: 0.04
   DashAttackSpeed: 100
   HitCoolDown: 0.5
+  m_invicibleTimer: 0.5
   BumpCoolDown: 0.5
   HasJetPack: 1
   JetPackSpeed: 80
@@ -357,15 +358,6 @@ MonoBehaviour:
   BackDashSpeed: 50
   BackDashDuration: 1
   FlipLockTime: 0.2
-  BSMoveLeft: {fileID: 0}
-  BSMoveRight: {fileID: 0}
-  BSBackDash: {fileID: 0}
-  BSJump: {fileID: 0}
-  BSAttack: {fileID: 0}
-  BSDefend: {fileID: 0}
-  BSMagic: {fileID: 0}
-  BSWeaponSword: {fileID: 0}
-  BSWeaponStick: {fileID: 0}
   Weapon: {fileID: 11487602}
   AttackCoolDown: 0.2
   SlowFactorWhileAttack: 0
@@ -376,6 +368,15 @@ MonoBehaviour:
   DefenseStat: 10
   StaminaConsommation: 10
   StaminaRegeneration: 10
+  BSMoveLeft: {fileID: 0}
+  BSMoveRight: {fileID: 0}
+  BSBackDash: {fileID: 0}
+  BSJump: {fileID: 0}
+  BSAttack: {fileID: 0}
+  BSDefend: {fileID: 0}
+  BSMagic: {fileID: 0}
+  BSWeaponSword: {fileID: 0}
+  BSWeaponStick: {fileID: 0}
   CurrentSpell: {fileID: 114000012314187554}
   UsingMagic: 0
   Mana: 100

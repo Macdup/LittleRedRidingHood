@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEditor;
+#if UNITY_EDITOR
+    using UnityEditor;
+#endif
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
@@ -41,7 +43,9 @@ public class Tile : MonoBehaviour {
 	public Zone zone;
 	public Type type;
 
-	public void updateTile(){
+
+#if UNITY_EDITOR
+    public void updateTile(){
 		SpriteRenderer spriterRenderer = GetComponentInChildren<SpriteRenderer> ();
 		GameObject prefab = getPrefabFromTileZoneAndTileName (zone, type);
 		createAuthoringInstanceFromPrefab (prefab, this,type);
@@ -55,7 +59,8 @@ public class Tile : MonoBehaviour {
 		return tilePrefab;
 	}
 
-	GameObject createAuthoringInstanceFromPrefab(GameObject prefab, Tile tile, Tile.Type type){
+
+    GameObject createAuthoringInstanceFromPrefab(GameObject prefab, Tile tile, Tile.Type type){
 		GameObject instance = PrefabUtility.InstantiatePrefab(prefab,SceneManager.GetActiveScene()) as GameObject;
 		Undo.RegisterCreatedObjectUndo (instance, "Create instance");
 		instance.transform.position = tile.transform.position;
@@ -69,4 +74,5 @@ public class Tile : MonoBehaviour {
 		Undo.DestroyObjectImmediate (tile.gameObject);
 		return instance;
 	}
+#endif
 }
