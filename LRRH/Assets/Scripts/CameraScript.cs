@@ -46,11 +46,10 @@ public class CameraScript : MonoBehaviour {
 			}
 
 			Vector3 pos = this.transform.position;
-			if (Mathf.Abs (_targetDistanceAfterDirChange) > 60) {
-				pos.x = target.transform.position.x + (xOffset * target.transform.localScale.x);
-				pos.y = target.transform.position.y + yOffset;
-				this.transform.position =  Vector3.Lerp(this.transform.position,pos,0.05f);
-			}
+
+			pos.x = target.transform.position.x + (xOffset * target.transform.localScale.x);
+			pos.y = target.transform.position.y + yOffset;
+			this.transform.position =  Vector3.Lerp(this.transform.position,pos,0.05f);
 				
             // make sure the object is always visible
 

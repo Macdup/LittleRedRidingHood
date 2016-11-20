@@ -64,6 +64,8 @@ public class Player : MonoBehaviour {
 	public ButtonScript BSWeaponSword;
 	public ButtonScript BSWeaponStick;
 
+	public GameObject stopWalkDust;
+
 	[HideInInspector]
 	public Spell CurrentSpell;
 	[HideInInspector]
@@ -124,7 +126,6 @@ public class Player : MonoBehaviour {
     private int                 m_FlippingCount = 0;
 
 
-
     // variable
     private bool 		_wasJumpDown = false;
 	private bool 		_wasJumpUp = false;
@@ -163,6 +164,7 @@ public class Player : MonoBehaviour {
 	int _attackLongCastedHash = Animator.StringToHash("AttackLongCasted");
     int _attackLongReleasedHash = Animator.StringToHash("AttackLongReleased");
 	int _BackDashHash = Animator.StringToHash("BackDash");
+	int _StopWalkHash = Animator.StringToHash("stopWalk");
 
 
 
@@ -222,15 +224,16 @@ public class Player : MonoBehaviour {
 
         //Gestion des inputs de mouvements
         _move = 0.0f;
-
-		if (BSMoveLeft.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped && !m_BackDashing)
-				_move = -1.0f;
-		else if (BSMoveRight.CurrentState == ButtonScript.ButtonState.Down && !m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped && !m_BackDashing)
+		bool stopWalk = _anim.GetBool(_StopWalkHash);
+		//Input Mobile + Keyboard
+		if ((BSMoveLeft.CurrentState == ButtonScript.ButtonState.Down || Input.GetKey(KeyCode.LeftArrow)) &&
+			!m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped && !m_BackDashing && !stopWalk)
+			_move = -1.0f;
+		else if ((BSMoveRight.CurrentState == ButtonScript.ButtonState.Down || Input.GetKey(KeyCode.RightArrow)) && 
+			!m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped && !m_BackDashing && !stopWalk)
 			_move = 1.0f;
-		else if (!m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped && !m_BackDashing)
-			_move = Input.GetAxis ("Horizontal");
 
-		
+
 
         if (_move > 0.1 && m_FacingRight)
             Flip();
@@ -244,7 +247,7 @@ public class Player : MonoBehaviour {
         //Animation part
         _anim.SetFloat("velocityX", Mathf.Abs(m_RigidBody2D.velocity.x));
         _anim.SetFloat("velocityY", m_RigidBody2D.velocity.y);
-        if (Mathf.Abs(_move) == 1)
+        if (Mathf.Abs(_move) >= 0.1)
 			_anim.SetBool(_runHash, true);
 		else
 			_anim.SetBool(_runHash, false);
@@ -400,6 +403,7 @@ public class Player : MonoBehaviour {
             }
 			else if (m_AttackCount == 3)
 			{
+				Debug.Log("Attack Count 3");
 				m_ComboValidated = true;
 				m_ComboPossibility = false;
 
@@ -492,46 +496,36 @@ public class Player : MonoBehaviour {
 
 
 
-
+		//Debug.Log (m_RigidBody2D.velocity);
 		// classic move
 		if (Mathf.Abs (_move) > 0) {
-            if (m_BackDashing) {
-                return;
-            }
 
-            if (m_Defending && m_BottomTouched)
-			{
-				if (!m_FrontTouched)
-				{
-					m_RigidBody2D.velocity = new Vector2(_move * MoveSpeed/2, m_RigidBody2D.velocity.y);
-				}
-				else if (m_FacingRight && _move > 0)
-				{
-					m_RigidBody2D.velocity = new Vector2(_move * MoveSpeed/2, m_RigidBody2D.velocity.y);
-				}
-				else if (!m_FacingRight && _move < 0)
-				{
-					m_RigidBody2D.velocity = new Vector2(_move * MoveSpeed/2, m_RigidBody2D.velocity.y);
-				}
+			if (m_BackDashing) {
+				return;
 			}
-			else {
-				if (!m_FrontTouched)
-				{
-					m_RigidBody2D.velocity = new Vector2(_move * MoveSpeed, m_RigidBody2D.velocity.y);
+
+			if (m_Defending && m_BottomTouched) {
+				if (!m_FrontTouched) {
+					m_RigidBody2D.velocity = new Vector2 (_move * MoveSpeed / 2, m_RigidBody2D.velocity.y);
+				} else if (m_FacingRight && _move > 0) {
+					m_RigidBody2D.velocity = new Vector2 (_move * MoveSpeed / 2, m_RigidBody2D.velocity.y);
+				} else if (!m_FacingRight && _move < 0) {
+					m_RigidBody2D.velocity = new Vector2 (_move * MoveSpeed / 2, m_RigidBody2D.velocity.y);
 				}
-				else if (m_FacingRight && _move > 0)
-				{
-					m_RigidBody2D.velocity = new Vector2(_move * MoveSpeed, m_RigidBody2D.velocity.y);
-				}
-				else if (!m_FacingRight && _move < 0)
-				{
-					m_RigidBody2D.velocity = new Vector2(_move * MoveSpeed, m_RigidBody2D.velocity.y);
+			} else {
+				if (!m_FrontTouched) {
+					m_RigidBody2D.velocity = new Vector2 (_move * MoveSpeed, m_RigidBody2D.velocity.y);
 				}
 			}
 			
 		}
 
+		else if (m_Attacking)
+			return;
+		else m_RigidBody2D.velocity = new Vector2 (0, m_RigidBody2D.velocity.y);
+
 	}
+
 
 	private IEnumerator Jump(float iJumpSpeed) {
 		_anim.SetBool ("jump", true);
@@ -597,7 +591,7 @@ public class Player : MonoBehaviour {
         }
 		else if (!m_BeingHit && !_isCountering && !m_invicible) {
 			m_BeingHit = true;
-
+			Debug.Log ("hit");
 			if (m_Defending)
 			{
 				iDamageValue -= DefenseStat;
@@ -690,8 +684,6 @@ public class Player : MonoBehaviour {
 	public void ResetBeingHit() {
 		m_BeingHit = false;
 		m_invicible = true;
-		Debug.Log (gameObject.layer);
-		Debug.Log (LayerMask.NameToLayer("Player"));
 		Invoke ("ResetInvicible",m_invicibleTimer);
 		GetComponentInChildren<Flashing> ().enabled = true;
 	}
@@ -713,7 +705,6 @@ public class Player : MonoBehaviour {
 
 	 public void ComboCheck()
 	 {
-        Debug.Log("Combo check");
         if (m_ComboValidated)
 		 {
 			 _anim.SetBool("ComboValidated", true);

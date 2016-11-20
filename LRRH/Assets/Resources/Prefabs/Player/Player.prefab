@@ -38,6 +38,7 @@ GameObject:
   - 114: {fileID: 114000012314187554}
   - 58: {fileID: 58000010300582904}
   - 82: {fileID: 82000012161914656}
+  - 114: {fileID: 114000012431836110}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -93,7 +94,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 27, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -135}
   m_Children: []
   m_Father: {fileID: 404742}
   m_RootOrder: 0
@@ -104,7 +105,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 117764}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 100, y: 0, z: 0}
+  m_LocalPosition: {x: 3710, y: 623, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -341,7 +342,7 @@ MonoBehaviour:
   JumpDelay: 0.04
   DashAttackSpeed: 100
   HitCoolDown: 0.5
-  m_invicibleTimer: 0.5
+  m_invicibleTimer: 1
   BumpCoolDown: 0.5
   HasJetPack: 1
   JetPackSpeed: 80
@@ -355,9 +356,9 @@ MonoBehaviour:
   CounterDelay: 0.2
   CounterAttackBackDashSpeed: 100
   CounterAttackForwardDashSpeed: 100
-  BackDashSpeed: 50
-  BackDashDuration: 1
-  FlipLockTime: 0.2
+  BackDashSpeed: 1000
+  BackDashDuration: 0.15
+  FlipLockTime: 0
   Weapon: {fileID: 11487602}
   AttackCoolDown: 0.2
   SlowFactorWhileAttack: 0
@@ -377,6 +378,7 @@ MonoBehaviour:
   BSMagic: {fileID: 0}
   BSWeaponSword: {fileID: 0}
   BSWeaponStick: {fileID: 0}
+  stopWalkDust: {fileID: 0}
   CurrentSpell: {fileID: 114000012314187554}
   UsingMagic: 0
   Mana: 100
@@ -735,6 +737,17 @@ MonoBehaviour:
   Player: {fileID: 0}
   Anim: {fileID: 0}
   HealAmount: 100
+--- !u!114 &114000012431836110
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 117764}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8722caad0435e65489dee8c3adfad275, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &198000011583155844
 ParticleSystem:
   m_ObjectHideFlags: 1

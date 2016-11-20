@@ -17,14 +17,10 @@ public class TestAttackBehavior : StateMachineBehaviour {
 	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         Debug.Log("End Anim" + stateInfo.ToString());
         Player p = GameObject.Find("Player").GetComponent<Player>();
-        //p.GetComponentInChildren<Animator>().SetBool("Attack", false);
-        //p.ComboCheck();
-        //p.Invoke("ComboCheck", 0.5f);
-        //p.ResetAttackTrippleAnim();
         p.GetComponentInChildren<Animator>().SetBool("Attack", false);
-        p.m_AttackCount--;
-        if(p.m_AttackCount <= 0)
-            p.m_Attacking = false;
+		p.m_AttackCount = 0;
+        p.m_Attacking = false;
+		p.ResetComboValidated ();
     }
 
 	// OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here
