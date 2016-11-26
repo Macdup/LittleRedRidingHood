@@ -18,9 +18,9 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - time: 0
-        value: {x: 19, y: 34, z: 0}
-        inSlope: {x: -190, y: 0, z: 0}
-        outSlope: {x: -190, y: 0, z: 0}
+        value: {x: -2, y: 25.5, z: 0}
+        inSlope: {x: 40, y: 0, z: 0}
+        outSlope: {x: 40, y: 0, z: 0}
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -31,9 +31,9 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 21300000, guid: 5fcecbbfffa4b864cb1017aba73f148f, type: 3}
+      value: {fileID: 21300022, guid: b6d58afcab39ec64b9b6d19d8ff3ea3f, type: 3}
     - time: 0.083333336
-      value: {fileID: 21300000, guid: 5fcecbbfffa4b864cb1017aba73f148f, type: 3}
+      value: {fileID: 21300022, guid: b6d58afcab39ec64b9b6d19d8ff3ea3f, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -58,8 +58,8 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 21300000, guid: 5fcecbbfffa4b864cb1017aba73f148f, type: 3}
-    - {fileID: 21300000, guid: 5fcecbbfffa4b864cb1017aba73f148f, type: 3}
+    - {fileID: 21300022, guid: b6d58afcab39ec64b9b6d19d8ff3ea3f, type: 3}
+    - {fileID: 21300022, guid: b6d58afcab39ec64b9b6d19d8ff3ea3f, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
@@ -85,9 +85,9 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - time: 0
-        value: 19
-        inSlope: -190
-        outSlope: -190
+        value: -2
+        inSlope: 40
+        outSlope: 40
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -100,9 +100,9 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - time: 0
-        value: 34
-        inSlope: -340
-        outSlope: -340
+        value: 25.5
+        inSlope: -255
+        outSlope: -255
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
