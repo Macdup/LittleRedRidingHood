@@ -62,6 +62,12 @@ public class WorldMapEditor : Editor {
                 EditorGUIUtility.ShowObjectPicker<GameObject>(null, false, "BackGround_Cave", controlID);
             }
 
+			if (GUILayout.Button("Search in Forest Zone"))
+			{
+				int controlID = EditorGUIUtility.GetControlID(FocusType.Passive);
+				EditorGUIUtility.ShowObjectPicker<GameObject>(null, false, "Forest", controlID);
+			}
+
             string commandName = Event.current.commandName;
             if (commandName == "ObjectSelectorUpdated")
             {
@@ -274,7 +280,7 @@ public class WorldMapEditor : Editor {
 						x += map.transform.position.x + tileSize;
 					
 					if ((Mathf.CeilToInt(renderer.bounds.size.y) / 30f) % 2 != 0) {
-						y += map.transform.position.y + tileSize/2 ;
+						y += map.BrushFeedback.brushSize.y/2;
 					} else
 						y += map.transform.position.y + tileSize;
                     break;
