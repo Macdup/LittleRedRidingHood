@@ -69,7 +69,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &404742
 Transform:
   m_ObjectHideFlags: 1
@@ -84,6 +84,7 @@ Transform:
   - {fileID: 4000011731624902}
   - {fileID: 431904}
   - {fileID: 4000013622922790}
+  - {fileID: 4000013950234952}
   m_Father: {fileID: 451048}
   m_RootOrder: 0
 --- !u!4 &431904
@@ -95,7 +96,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 27, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
   m_Children: []
   m_Father: {fileID: 404742}
   m_RootOrder: 1
@@ -106,7 +107,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 117764}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4597, y: -328.9, z: 0}
+  m_LocalPosition: {x: 4052, y: -541, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -336,7 +337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64e5fe7e61b53a04fa90944bf432a321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentWeapon: 0
+  CurrentWeapon: 1
   MoveSpeed: 170
   JumpSpeed: 470
   MinJumpSpeed: 300
@@ -363,9 +364,9 @@ MonoBehaviour:
   Weapon: {fileID: 11487602}
   AttackCoolDown: 0.2
   SlowFactorWhileAttack: 0
-  MagicShotPrefab: {fileID: 174666, guid: 90b6d05f710ec70409bdbcd7a3aeb4ed, type: 2}
-  MagicShotSpeed: 300
-  MagicShotPositionOffsetFromPlayer: {x: 15, y: 25}
+  MagicShotPrefab: {fileID: 125870, guid: b14b244700f401845a55935d1586974a, type: 2}
+  MagicShotSpeed: 400
+  MagicShotPositionOffsetFromPlayer: {x: 25, y: 25}
   TouchDetectionRadius: 0.2
   DefenseStat: 10
   StaminaConsommation: 10
@@ -457,6 +458,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!1 &1000011199075856
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 4000013950234952}
+  - 108: {fileID: 108000012306422102}
+  m_Layer: 8
+  m_Name: PlayerPointLight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
 --- !u!1 &1000011415314068
 GameObject:
   m_ObjectHideFlags: 0
@@ -489,7 +506,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000012982429958
 GameObject:
   m_ObjectHideFlags: 0
@@ -558,6 +575,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 451048}
   m_RootOrder: 1
+--- !u!4 &4000013950234952
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011199075856}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -32, y: -5, z: -10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: -0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 404742}
+  m_RootOrder: 3
 --- !u!58 &58000010300582904
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -759,6 +789,40 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 8704
+  m_Lightmapping: 4
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+--- !u!108 &108000012306422102
+Light:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011199075856}
+  m_Enabled: 1
+  serializedVersion: 7
+  m_Type: 2
+  m_Color: {r: 0.3137255, g: 0.98039216, b: 1, a: 1}
+  m_Intensity: 8
+  m_Range: 150
+  m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 0
