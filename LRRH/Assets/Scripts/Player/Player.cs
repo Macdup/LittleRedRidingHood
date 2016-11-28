@@ -401,7 +401,7 @@ public class Player : MonoBehaviour {
 
                 _anim.SetBool("ComboValidated", true);
             }
-			else if (m_AttackCount == 3)
+			else if (m_AttackCount == 3 && CurrentWeapon == WeaponType.Sword)
 			{
 				Debug.Log("Attack Count 3");
 				m_ComboValidated = true;

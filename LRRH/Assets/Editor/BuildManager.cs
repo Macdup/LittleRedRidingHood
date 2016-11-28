@@ -43,9 +43,6 @@ namespace JustAPixel.Pipeline.Builds{
 		[MenuItem("Build/Build All")]
 		static void BuildAll(){
 
-            if (!File.Exists(LocationName))
-                LocationName = "C:\\Users\\mika2\\Google Drive\\Little Red Riding Hood";
-
             //BuildMac32(false);
             //BuildLinux32(false);
             //BuildPC32(false);
@@ -57,8 +54,9 @@ namespace JustAPixel.Pipeline.Builds{
 
         #region Build Types
         static void Build(string sFolderName, bool bIncrementSubMinorVersion, BuildTarget tTarget, BuildOptions oOptions){
-			
-			string sDate = System.DateTime.Now.ToString("yyyy-MM-dd HH_mm_ss");
+            if (!File.Exists(LocationName))
+                LocationName = "C:\\Users\\mika2\\Google Drive\\Little Red Riding Hood";
+            string sDate = System.DateTime.Now.ToString("yyyy-MM-dd HH_mm_ss");
 			string pPathToBuilds = Path.Combine(LocationName, "Builds");
 			string pPathToFolder = Path.Combine(pPathToBuilds
 			                                    ,sFolderName);
