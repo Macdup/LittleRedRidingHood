@@ -45,6 +45,18 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     path: WeaponSprite
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: {x: -0, y: 0, z: 0}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: Trigger
   m_PositionCurves:
   - curve:
       serializedVersion: 2
@@ -104,9 +116,9 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - time: 0
-        value: {x: 25, y: 25, z: 0}
-        inSlope: {x: -258.33334, y: -283.33334, z: 0}
-        outSlope: {x: -258.33334, y: -283.33334, z: 0}
+        value: {x: -0, y: -53, z: 0}
+        inSlope: {x: -50, y: 366.6667, z: 0}
+        outSlope: {x: -50, y: 366.6667, z: 0}
         tangentMode: 0
       - time: 0.12
         value: {x: -6, y: -9, z: 0}
@@ -278,6 +290,12 @@ AnimationClip:
       classID: 212
       customType: 23
       isPPtrCurve: 1
+    - path: 3587585729
+      attribute: 4
+      script: {fileID: 0}
+      classID: 4
+      customType: 14
+      isPPtrCurve: 0
     pptrCurveMapping:
     - {fileID: 21300000, guid: 9309183be7dd3d142848f6a4da76a5cd, type: 3}
     - {fileID: 21300002, guid: 9309183be7dd3d142848f6a4da76a5cd, type: 3}
@@ -639,9 +657,9 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - time: 0
-        value: 25
-        inSlope: -258.33334
-        outSlope: -258.33334
+        value: -0
+        inSlope: -50
+        outSlope: -50
         tangentMode: 10
       - time: 0.12
         value: -6
@@ -664,9 +682,9 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - time: 0
-        value: 25
-        inSlope: -283.33334
-        outSlope: -283.33334
+        value: -53
+        inSlope: 366.6667
+        outSlope: 366.6667
         tangentMode: 10
       - time: 0.12
         value: -9
@@ -715,6 +733,51 @@ AnimationClip:
     path: Trigger
     classID: 61
     script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: -0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAnglesRaw.x
+    path: Trigger
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAnglesRaw.y
+    path: Trigger
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAnglesRaw.z
+    path: Trigger
+    classID: 4
+    script: {fileID: 0}
   m_EulerEditorCurves:
   - curve:
       serializedVersion: 2
@@ -744,6 +807,36 @@ AnimationClip:
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
     path: WeaponSprite
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.x
+    path: Trigger
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.y
+    path: Trigger
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.z
+    path: Trigger
     classID: 4
     script: {fileID: 0}
   m_HasGenericRootTransform: 1
