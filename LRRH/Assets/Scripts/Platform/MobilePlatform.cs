@@ -33,23 +33,26 @@ public class MobilePlatform : MonoBehaviour {
 		activated = true;
 	}
 
+	void OnTriggerExit2D(Collider2D other){
+		activated = false;
+	}
+
 
 	// Update is called once per frame
 	void FixedUpdate()
 	{
-		if (activated == true) {
-			Vector3 newPos = Vector3.MoveTowards (transform.position, target, speed * Time.deltaTime);
-			if (newPos == target) {
-				activated = false;
-				if (target == A)
-					target = B;
-				else
-					target = A;
-			} else {
-				rigidbody.MovePosition (newPos);
-			}
+		Vector3 newPos = Vector3.MoveTowards (transform.position, target, speed * Time.deltaTime);
+		if (newPos == target) {
+			activated = false;
+			if (target == A)
+				target = B;
+			else
+				target = A;
+		} else {
+			rigidbody.MovePosition (newPos);
 		}
 	}
+
 
 	IEnumerator goTo(Vector3 pos){
 		activated = true;
