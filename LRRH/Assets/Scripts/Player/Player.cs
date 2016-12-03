@@ -65,6 +65,8 @@ public class Player : MonoBehaviour {
 	public ButtonScript BSWeaponStick;
 
 	public GameObject stopWalkDust;
+	public GameObject begingJumpDust;
+	public GameObject endJumpDust;
 
 	[HideInInspector]
 	public Spell CurrentSpell;
@@ -136,6 +138,7 @@ public class Player : MonoBehaviour {
 	private bool 		_thirdJump =  false;
 	private LayerMask 	_wallsMask;
     private LayerMask   _enemiesMask;
+	private LayerMask 	_mobilePlatformMask;
     private float 		_idleTimer = 0.0f;
 	private	bool 		_capJump = false;
 	private bool 		_attackWasUp = true;
@@ -174,6 +177,7 @@ public class Player : MonoBehaviour {
 		m_RigidBody2D = GetComponent<Rigidbody2D> ();
 		_wallsMask = LayerMask.GetMask("Walls");
         _enemiesMask = LayerMask.GetMask("Enemy");
+		_mobilePlatformMask = LayerMask.GetMask("mobilePlatform");
 
         m_BottomBox = GetComponents<BoxCollider2D> () [1];
 		m_BottomLeft = GetComponents<CircleCollider2D> () [0];
@@ -227,10 +231,10 @@ public class Player : MonoBehaviour {
 		bool stopWalk = _anim.GetBool(_StopWalkHash);
 		//Input Mobile + Keyboard
 		if ((BSMoveLeft.CurrentState == ButtonScript.ButtonState.Down || Input.GetKey(KeyCode.LeftArrow)) &&
-			!m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped && !m_BackDashing && !stopWalk)
+			!m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped && !m_BackDashing)
 			_move = -1.0f;
 		else if ((BSMoveRight.CurrentState == ButtonScript.ButtonState.Down || Input.GetKey(KeyCode.RightArrow)) && 
-			!m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped && !m_BackDashing && !stopWalk)
+			!m_BeingGroggy && !m_BeingHit && !UsingMagic && !m_Attacking && !m_Bumped && !m_BackDashing)
 			_move = 1.0f;
 
 
@@ -278,7 +282,16 @@ public class Player : MonoBehaviour {
 				_firstJump = true;
 				_firstJumpEnd = false;
 
+				Vector3 newScale = transform.localScale;
+				newScale.x = -newScale.x;
+				endJumpDust.transform.localScale = newScale;
+				Vector3 newPos = transform.position;
+				newPos.y -= 10;
+				newPos.x += -10 * newScale.x;
+				begingJumpDust.transform.position = newPos;
+				begingJumpDust.SetActive (true);
 				//m_RigidBody2D.velocity = new Vector2 (m_RigidBody2D.velocity.x, JumpSpeed);
+
 				StartCoroutine (Jump (JumpSpeed));
 			} else if (_firstJumpEnd && !_secondJump && _isDoubleJumpCollected) {
 				_secondJump = true;
@@ -458,8 +471,9 @@ public class Player : MonoBehaviour {
 
 		// Evalute states
 		m_BottomTouched = m_BottomBox.IsTouchingLayers (_wallsMask) || m_BottomLeft.IsTouchingLayers (_wallsMask) || m_BottomRight.IsTouchingLayers (_wallsMask)
-            || m_BottomBox.IsTouchingLayers(_enemiesMask) || m_BottomLeft.IsTouchingLayers(_enemiesMask) || m_BottomRight.IsTouchingLayers(_enemiesMask);
+			|| m_BottomBox.IsTouchingLayers(_enemiesMask) || m_BottomLeft.IsTouchingLayers(_enemiesMask) || m_BottomRight.IsTouchingLayers(_enemiesMask) || m_BottomBox.IsTouchingLayers (_mobilePlatformMask);
 		m_FrontTouched = /*_left_box.IsTouchingLayers (wallsMask) ||*/ m_RightBox.IsTouchingLayers (_wallsMask) || m_BottomRight.IsTouchingLayers (_wallsMask);
+		bool platformMobile = m_BottomBox.IsTouchingLayers (_mobilePlatformMask);
 
 		if (m_BottomTouched) {
 			_firstJump = false;
@@ -522,7 +536,9 @@ public class Player : MonoBehaviour {
 
 		else if (m_Attacking)
 			return;
-		else m_RigidBody2D.velocity = new Vector2 (0, m_RigidBody2D.velocity.y);
+		
+		else if(!platformMobile) 
+			m_RigidBody2D.velocity = new Vector2 (0, m_RigidBody2D.velocity.y);
 
 	}
 
@@ -685,12 +701,10 @@ public class Player : MonoBehaviour {
 		m_BeingHit = false;
 		m_invicible = true;
 		Invoke ("ResetInvicible",m_invicibleTimer);
-		GetComponentInChildren<Flashing> ().enabled = true;
 	}
 
 	public void ResetInvicible() {
 		m_invicible = false;
-		GetComponentInChildren<Flashing> ().enabled = false;
 	}
 
 	public void ResetGroggy()
