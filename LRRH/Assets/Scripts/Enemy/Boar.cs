@@ -49,9 +49,9 @@ public class Boar : Enemy {
 		base.Update ();
     }
 
-    public override void OnTriggerEnter2D(Collider2D other)
+    public override void OnCollisionEnter2D(Collision2D coll)
     {
-        Player player = other.gameObject.GetComponent<Player>();
+        Player player = coll.gameObject.GetComponent<Player>();
 
         if (player != null && !m_Stopped)
         {
@@ -62,7 +62,7 @@ public class Boar : Enemy {
 
             m_RigidBody.velocity = new Vector2(0, m_RigidBody.velocity.y);
 
-            base.OnTriggerEnter2D(other);
+            base.OnCollisionEnter2D(coll);
         }
     }
 
