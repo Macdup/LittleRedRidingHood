@@ -66,9 +66,10 @@ namespace AssemblyCSharp
            
         }
 
-		virtual public void OnTriggerEnter2D(Collider2D other) {
+		virtual public void OnCollisionEnter2D(Collision2D coll)
+        {
             
-			Player player = other.gameObject.GetComponent<Player> ();
+			Player player = coll.gameObject.GetComponent<Player> ();
 
 			if (player != null) {
                 player.Hit(this, DamagePerHit,staminaLossPerHit);
